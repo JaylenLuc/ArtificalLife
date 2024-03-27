@@ -19,8 +19,10 @@ const P5Sketch = () => {
 
     const ri_area = Math.PI * (ri*ri)
     const ra_area = (Math.PI * (ra*ra)) - (ri_area)
-
-
+    const alpha = 0.147
+    //αn = 0.028, αm = 0.147
+    //im just gonna assume there 
+    
     var cellsArray: number[][] = []
 
     //randomize the grid 
@@ -112,8 +114,8 @@ const P5Sketch = () => {
     /********************************************************
          * SIGMOIDS AND THE TRANSITION FUNCTION 
     ********************************************************/
-    const sigmoid1 = () => {
-        
+    const sigmoid1 = (x : number , a : number) => {
+        return 1/(1 + Math.exp(-(x-a) * 4/alpha))
     }
 
 
