@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 //https://arxiv.org/pdf/1111.1567.pdf
+
+
+
+
 const P5Sketch = () => {
 
 
@@ -8,7 +12,7 @@ const P5Sketch = () => {
     ********************************************************/
 
     const renderRef = useRef(null);
-    var WIDTH_HEIGHT = 200
+    var WIDTH_HEIGHT = 100
     //const HEIGHT = 150
     var SIZE = 1
     const RGB_MIN_RANGE = 255 //min range
@@ -39,7 +43,7 @@ const P5Sketch = () => {
     /**** 
      * delta time
      * ****/
-    var dt = 0.5 //time step
+    var dt = 0.4 //time step
 
 
     var cellsArray: number[][] = []
@@ -104,9 +108,10 @@ const P5Sketch = () => {
                 let m_n : Array<number> =  fillingIntegralN_M(row, col)
                 let new_value = transitionFunc_S(m_n[1], m_n[0]) // [-1,1]
                 //console.log(new_value)
-                new_value = dt *(2 * new_value -1)
+                new_value = dt *(2 * new_value -1) //smooth time stepping scheme 
                 //console.log("not clamped: ", new_value)
-                cellsArray[row][col] = clamp(cellsArray[row][col] + new_value, 0, 1 )
+                //f(~x, t + dt) = f(~x, t) + dt S[s(n, m)] f(~x, t)
+                cellsArray[row][col] = clamp(cellsArray[row][col] + new_value, 0, 1 ) 
 
 
             }
@@ -193,7 +198,7 @@ const P5Sketch = () => {
 
         const p5instance = new p5((p : any) => {
             p.setup = () => {
-                p.createCanvas(WIDTH_HEIGHT + 500, WIDTH_HEIGHT + 500).parent(renderRef.current);
+                p.createCanvas( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200).parent(renderRef.current);
                 randomizeGrid();
                 
             }
@@ -220,7 +225,10 @@ const P5Sketch = () => {
 
 
     return(
-        <div ref={renderRef}></div>
+        <>
+            <meta name="viewport" content="width=device-width, initial-scale=3"></meta>
+            <div id = "life_box" ref={renderRef}></div>
+        </>
     )
 }
 
