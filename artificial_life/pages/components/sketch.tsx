@@ -4,29 +4,42 @@ const P5Sketch = () => {
 
 
     /********************************************************
-         * CONSTANTS 
+         * UNIVERSAL LIFE CONSTANTS AND/OR VARS
     ********************************************************/
-    const renderRef = useRef(null);
-    const WIDTH_HEIGHT = 100
-    //const HEIGHT = 150
-    const SIZE = 1
-    const RENDER_THRESHOLD = .1
-    const RGB_MIN_RANGE = 255 //min range
-    const ra = 9 //outer radius 
-    const ri = ra/3 // inner radius 
-    const ri_area = Math.PI * (ri*ri)
-    const ra_area = (Math.PI * (ra*ra)) - (ri_area)
-    const alpha_n = 0.028
-    const alpha_m = 0.147
-    //αn = 0.028, αm = 0.147
-    //im just gonna assume there is only one alpha
-    const d1 = 0.267
-    const d2 = 0.445
-    const b1 = 0.278
-    const b2 = 0.365
-    // birth and death intervals are given by [b1, b2] and [d1, d2] 
 
-    const dt = 0.1 //time step
+    const renderRef = useRef(null);
+    var WIDTH_HEIGHT = 200
+    //const HEIGHT = 150
+    var SIZE = 1
+    const RGB_MIN_RANGE = 255 //min range
+
+    /**** 
+     * radius checks
+     * ****/
+    var ra = 11 //outer radius 
+    var ri = ra/3 // inner radius 
+    var ri_area = Math.PI * (ri*ri)
+    var ra_area = (Math.PI * (ra*ra)) - (ri_area)
+
+    /**** 
+     * sigmoid alpha values
+     * ****/
+    var alpha_n = 0.028
+    var alpha_m = 0.147
+    //αn = 0.028, αm = 0.147
+
+    /**** 
+     * birth and death interval values given by [b1, b2] and [d1, d2] 
+     * ****/
+    var d1 = 0.267
+    var d2 = 0.445
+    var b1 = 0.278
+    var b2 = 0.365
+
+    /**** 
+     * delta time
+     * ****/
+    var dt = 0.5 //time step
 
 
     var cellsArray: number[][] = []
@@ -61,36 +74,25 @@ const P5Sketch = () => {
                 
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
-                //if ( current_state > RENDER_THRESHOLD){
                 p.noStroke()
-                //35 - 255 -> array of length 220
-                // 0 to 220 + MIN_RANGE
-                
                 let fill_value = (current_state * RGB_MIN_RANGE);
-
-                // if (row ==10 && col == 3){
-                //     console.log(fill_value)
-                //     console.log(current_state)
-                // }
-
-                //console.log(fill_value )
+                /*
+                fill value is the rgb 255 * the decimal which 
+                is a percentage of how far it is from black until white
+                this can be changed with the fill value determining 
+                only some of the RGB values , play around 
+                */
                 p.fill(fill_value,fill_value , fill_value)
+
                 p.circle(yPos, xPos , SIZE);  
-            //}
+            
 
             }
             yPos = 0
         }
-        //console.log("here1")
+        
     }
 
-    // const clamp = (value : number, lower_b : number, upper_b : number) => {
-    //     if (value > upper_b ) return upper_b
-    //     else if (value < lower_b ) return lower_b
-    //     else return value
-
-
-    // }
 
     const clamp = function(value : number, lower_b : number, upper_b : number) {
         return Math.min(Math.max(value, lower_b), upper_b);
@@ -105,17 +107,12 @@ const P5Sketch = () => {
                 new_value = dt *(2 * new_value -1)
                 //console.log("not clamped: ", new_value)
                 cellsArray[row][col] = clamp(cellsArray[row][col] + new_value, 0, 1 )
-                //console.log("clamped: ", cellsArray[row][col] )
-                // if (row ==10 && col == 3){
-                //     console.log( "rgb: ",cellsArray[row][col] * RGB_MIN_RANGE)
-                //     console.log("curren value : " ,cellsArray[row][col])
-                // }
-                //console.log(cellsArray[row][col])
+
 
             }
 
         }
-        //console.log("here")
+
 
     }
 
@@ -162,10 +159,6 @@ const P5Sketch = () => {
         n /= ra_area
         //n = clamp(n , 0 ,1)
 
-        //console.log("m = ", m, " ", "n = ", n)
-
-        //console.log("tranisition value: ", transitionFunc_S(n,m))
-        //console.log(m, n)
         return [m,n] // inner, outer
     }
 
