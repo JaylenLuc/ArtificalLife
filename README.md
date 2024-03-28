@@ -8,6 +8,10 @@ We determine it by the number of nieghbors and their filling values based on a r
 # Papers used
 Smooth Life : https://arxiv.org/pdf/1111.1567.pdf
 
+Lenia Paper by Bert Wang-Chak Chan : https://arxiv.org/pdf/1812.05433.pdf
+
+RealLife Paper : https://arxiv.org/pdf/math/0503504.pdf
+
 state Integrals at time T for cell ~x:
 
 ![state Integrals](image.png)
