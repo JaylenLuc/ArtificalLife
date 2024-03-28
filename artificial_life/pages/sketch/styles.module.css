@@ -1,3 +1,4 @@
-life_box {
+#life_box {
     zoom: 5;
+    /* this is a temporary zoom for the small canvas sizing issue  */
 }
