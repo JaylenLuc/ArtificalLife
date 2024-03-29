@@ -20,7 +20,7 @@ const P5Sketch = () => {
     /**** 
      * radius checks
      * ****/
-    var ra = 9 //outer radius 
+    var ra = 11 //outer radius 
     var ri = ra/3 // inner radius 
     var ri_area = Math.PI * (ri*ri)
     var ra_area = (Math.PI * (ra*ra)) - (ri_area)
@@ -227,7 +227,7 @@ const P5Sketch = () => {
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
 
                 //randomizeFullGrid();
-                randomizeCenterGrid(0.5);
+                randomizeCenterGrid(0.35);
                 
             }
 
