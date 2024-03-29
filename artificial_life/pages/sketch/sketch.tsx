@@ -17,6 +17,7 @@ const P5Sketch = () => {
     var SIZE = 4
     const RGB_MIN_RANGE = 255 //min range
 
+    const [strokePolicy, setStrokePolicy] = useState(true)
     /**** 
      * radius checks
      * ****/
@@ -90,6 +91,7 @@ const P5Sketch = () => {
     }
 
     const randomizeCenterGrid = (centerWidth : number) => {
+        //setStrokePolicy(false)
         dt = 0.2
         let center_grid = (Math.floor(WIDTH_HEIGHT/2))
         let center_diff = (Math.floor((WIDTH_HEIGHT * centerWidth)/2))
@@ -109,7 +111,6 @@ const P5Sketch = () => {
         }
     }
 
-
     const fillGrid = (p : any) => {
         //it takes the rand nums in the grid and draws the color based on the numbers in the grid
         let xPos = 0 ;
@@ -120,7 +121,8 @@ const P5Sketch = () => {
                 
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
-                //p.noStroke()
+                if (!strokePolicy) p.noStroke()
+                
                 let fill_value = (current_state * RGB_MIN_RANGE);
                 /*
                 fill value is the rgb 255 * the decimal which 
@@ -249,6 +251,7 @@ const P5Sketch = () => {
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
 
                 //randomizeFullGrid();
+                
                 randomizeCenterGrid(0.35);
                 
             }
