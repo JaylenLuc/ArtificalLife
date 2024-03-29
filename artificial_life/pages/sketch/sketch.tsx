@@ -254,7 +254,7 @@ const P5Sketch = () => {
 
     return(
         <>
-            <meta name="viewport" content="width=device-width, initial-scale=3"></meta>
+            <meta name="viewport" content="width=device-height"></meta>
             <div id = "life_box" ref={renderRef}></div>
         </>
     )
