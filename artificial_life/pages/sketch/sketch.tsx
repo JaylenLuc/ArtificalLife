@@ -12,7 +12,7 @@ const P5Sketch = () => {
     ********************************************************/
 
     const renderRef = useRef(null);
-    var WIDTH_HEIGHT = 150 //the true number of cells WIDTH_HEIGHT ^ 2
+    var WIDTH_HEIGHT = 125 //the true number of cells WIDTH_HEIGHT ^ 2
     //const HEIGHT = 150
     var SIZE = 4
     const RGB_MIN_RANGE = 255 //min range
@@ -20,7 +20,7 @@ const P5Sketch = () => {
     /**** 
      * radius checks
      * ****/
-    var ra = 11 //outer radius 
+    var ra = 9 //outer radius 
     var ri = ra/3 // inner radius 
     var ri_area = Math.PI * (ri*ri)
     var ra_area = (Math.PI * (ra*ra)) - (ri_area)
@@ -55,16 +55,36 @@ const P5Sketch = () => {
          * GRID FUNCTIONS
     ********************************************************/
 
-    const randomizeGrid = () => {
+    const randomizeFullGrid = () => {
         for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
             cellsArray.push([])
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
                 cellsArray[row].push( Math.random());
-                //console.log(cellsArray[row][col])
+                
             }
-            //console.log("\n")
+        
         }
 
+    }
+
+    const randomizeCenterGrid = (centerWidth : number) => {
+        dt = 0.2
+        let center_grid = (Math.floor(WIDTH_HEIGHT/2))
+        let center_diff = (Math.floor((WIDTH_HEIGHT * centerWidth)/2))
+        let center_start = center_grid - center_diff
+        let center_end =   center_grid + center_diff
+
+        for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
+            cellsArray.push([])
+            for (let col = 0; col< WIDTH_HEIGHT; col ++){
+                if ((col > center_start && col <= center_end) && 
+                (row > center_start && row <= center_end)) cellsArray[row].push( Math.random());
+
+                else cellsArray[row].push(0);
+               
+            }
+            
+        }
     }
 
 
@@ -205,7 +225,9 @@ const P5Sketch = () => {
             p.setup = () => {
                 p.createCanvas( WIDTH_HEIGHT * SIZE, WIDTH_HEIGHT * SIZE).parent(renderRef.current);
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
-                randomizeGrid();
+
+                //randomizeFullGrid();
+                randomizeCenterGrid(0.5);
                 
             }
 
