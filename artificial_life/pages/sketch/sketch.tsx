@@ -1,4 +1,10 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from 'react';
+import { motion } from "framer-motion"
+import { useMotionValue, useTransform } from "framer-motion"
+import ButtonLayout from  "./buttonLayout"
+import styles from './styles.module.css'
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
@@ -10,7 +16,7 @@ const P5Sketch = () => {
     /********************************************************
          * UNIVERSAL LIFE CONSTANTS AND/OR VARS
     ********************************************************/
-
+    
     const renderRef = useRef(null);
     var WIDTH_HEIGHT = 125 //the true number of cells WIDTH_HEIGHT ^ 2
     //const HEIGHT = 150
@@ -18,6 +24,7 @@ const P5Sketch = () => {
     const RGB_MIN_RANGE = 255 //min range
 
     const [strokePolicy, setStrokePolicy] = useState(true)
+    const [initOption, setInitPolicy] = useState("center")
     /**** 
      * radius checks
      * ****/
@@ -62,10 +69,17 @@ const P5Sketch = () => {
     //determine from the randomziex numbers what we render
 
     /********************************************************
+         * Event handlers
+    ********************************************************/
+
+    
+
+    /********************************************************
          * GRID FUNCTIONS
     ********************************************************/
 
     const randomizeFullGrid = () => {
+        
         for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
             cellsArray.push([])
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
@@ -121,7 +135,9 @@ const P5Sketch = () => {
                 
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
-                if (!strokePolicy) p.noStroke()
+                if (!strokePolicy) {
+                    p.noStroke()
+                }
                 
                 let fill_value = (current_state * RGB_MIN_RANGE);
                 /*
@@ -249,11 +265,15 @@ const P5Sketch = () => {
             p.setup = () => {
                 p.createCanvas( WIDTH_HEIGHT * SIZE, WIDTH_HEIGHT * SIZE).parent(renderRef.current);
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
+                switch(initOption){
 
-                //randomizeFullGrid();
-                
-                randomizeCenterGrid(0.35);
-                
+                case "full":
+                    randomizeFullGrid();
+                    break;
+                case "center":
+                    randomizeCenterGrid(0.35);
+                    break;
+                }
             }
 
             p.draw = () => {
@@ -274,14 +294,20 @@ const P5Sketch = () => {
           };
 
 
-    }, [])
+    }, [strokePolicy])
 
 
     return(
-        <>
+        <div className={styles.master}>
             <meta name="viewport" content="width=device-height"></meta>
-            <div id = "life_box" ref={renderRef}></div>
-        </>
+            <section> 
+                <div className= {styles.life_box} ref={renderRef}></div>
+            </section>
+
+            
+            <ButtonLayout setStrokePolicy = {setStrokePolicy} strokePolicy = {strokePolicy}/>
+            
+        </div>
     )
 }
 

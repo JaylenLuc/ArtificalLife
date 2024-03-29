@@ -1,0 +1,40 @@
+"use client"
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
+import { motion } from "framer-motion"
+import { useMotionValue, useTransform } from "framer-motion"
+import styles from './styles.module.css'
+
+const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Dispatch<React.SetStateAction<boolean>>, strokePolicy: boolean}) =>{
+
+    const [strokeButtonText, setStrokeButtonText] = useState("Remove Cell Stroke") //Add Cell Stroke
+
+    const strokeButtonClicked = () => {
+        setStrokePolicy(!strokePolicy)
+        console.log(strokePolicy)
+        strokePolicy? setStrokeButtonText("Add Cell Stroke"):  setStrokeButtonText("Remove Cell Stroke") 
+    }
+
+    return (
+        <div className='buttonlayout'>
+            
+            <div className = "buttonDiv1">
+                <motion.div
+                className={styles.button_stroke}
+                
+                whileHover={{ scale : 1.2, rotate: 360,}}
+                whileTap={{
+                    scale: 0.5,
+                    borderRadius: "70%",
+                    
+                }}
+                onClick={() => strokeButtonClicked()}
+                >
+                    <span>{strokeButtonText} </span>
+                </motion.div>
+                {/* <button className='button' onClick={() => strokeButtonClicked()}>{strokeButtonText}</button> */}
+            </div>
+        </div>
+    )
+}
+
+export default ButtonLayout

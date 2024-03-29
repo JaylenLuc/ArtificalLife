@@ -1,4 +1,31 @@
-#life_box {
-    border-radius: 25px;
-    /* this is a temporary zoom for the small canvas sizing issue  */
+.life_box {
+    position: relative;
+    align-content: center;
+    height: 50%;
+    width: 50%;
+    bottom: 50%;
 }
+
+.button_stroke {
+    width: 120px;
+    height: 40px;
+    background: var(--accent);
+    border-radius: 30px;
+    background-color: rgb(133, 235, 184);
+    text-align: center;
+    
+  }
+  .buttonDiv1{
+    position: relative;
+    
+    
+  }
+
+  .buttonlayout{
+    position: absolute;
+
+  }
+
+  .master{
+    position: relative;
+  }
