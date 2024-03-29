@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
@@ -24,12 +24,15 @@ const P5Sketch = () => {
     var ri = ra/3 // inner radius 
     var ri_area = Math.PI * (ri*ri)
     var ra_area = (Math.PI * (ra*ra)) - (ri_area)
-
+    const ra_DEFAULT = 11 
     /**** 
      * sigmoid alpha values
      * ****/
     var alpha_n = 0.028
     var alpha_m = 0.147
+
+    const alpha_n_DEFAULT = 0.028
+    const alpha_m_DEFAULT = 0.147
     //αn = 0.028, αm = 0.147
 
     /**** 
@@ -39,11 +42,17 @@ const P5Sketch = () => {
     var d2 = 0.445
     var b1 = 0.278
     var b2 = 0.365
+    const d1_DEFAULT = 0.267
+    const d2_DEFAULT = 0.445
+    const b1_DEFAULT = 0.278
+    const b2_DEFAULT = 0.365
+
 
     /**** 
      * delta time
      * ****/
     var dt = 0.7 //time step
+    const dt_DEFAULT = 0.7 //time step
 
 
     var cellsArray: number[][] = []
@@ -60,6 +69,19 @@ const P5Sketch = () => {
             cellsArray.push([])
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
                 cellsArray[row].push( Math.random());
+                
+            }
+        
+        }
+
+    }
+
+    const initGridZero = () => {
+        //this function will likely be called first
+        for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
+            cellsArray.push([])
+            for (let col = 0; col< WIDTH_HEIGHT; col ++){
+                cellsArray[row].push( 0 );
                 
             }
         
@@ -98,7 +120,7 @@ const P5Sketch = () => {
                 
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
-                p.noStroke()
+                //p.noStroke()
                 let fill_value = (current_state * RGB_MIN_RANGE);
                 /*
                 fill value is the rgb 255 * the decimal which 
