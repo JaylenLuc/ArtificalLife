@@ -12,9 +12,9 @@ const P5Sketch = () => {
     ********************************************************/
 
     const renderRef = useRef(null);
-    var WIDTH_HEIGHT = 250 //the true number of cells WIDTH_HEIGHT ^ 2
+    var WIDTH_HEIGHT = 150 //the true number of cells WIDTH_HEIGHT ^ 2
     //const HEIGHT = 150
-    var SIZE = 5
+    var SIZE = 4
     const RGB_MIN_RANGE = 255 //min range
 
     /**** 
@@ -195,8 +195,7 @@ const P5Sketch = () => {
     }
 
 
-    /********************************************************
-         * MAIN DRIVER
+    /******************************************************
     ********************************************************/
 
     useEffect(() => {
@@ -204,7 +203,7 @@ const P5Sketch = () => {
 
         const p5instance = new p5((p : any) => {
             p.setup = () => {
-                p.createCanvas( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200).parent(renderRef.current);
+                p.createCanvas( WIDTH_HEIGHT * SIZE, WIDTH_HEIGHT * SIZE).parent(renderRef.current);
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
                 randomizeGrid();
                 
