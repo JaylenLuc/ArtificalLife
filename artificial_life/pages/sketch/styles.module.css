@@ -1,4 +1,4 @@
 #life_box {
-    zoom: 5;
+    border-radius: 25px;
     /* this is a temporary zoom for the small canvas sizing issue  */
 }

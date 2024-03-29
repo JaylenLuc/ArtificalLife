@@ -12,9 +12,9 @@ const P5Sketch = () => {
     ********************************************************/
 
     const renderRef = useRef(null);
-    var WIDTH_HEIGHT = 100
+    var WIDTH_HEIGHT = 250 //the true number of cells WIDTH_HEIGHT ^ 2
     //const HEIGHT = 150
-    var SIZE = 1
+    var SIZE = 5
     const RGB_MIN_RANGE = 255 //min range
 
     /**** 
@@ -43,7 +43,7 @@ const P5Sketch = () => {
     /**** 
      * delta time
      * ****/
-    var dt = 0.4 //time step
+    var dt = 0.7 //time step
 
 
     var cellsArray: number[][] = []
@@ -102,16 +102,22 @@ const P5Sketch = () => {
         return Math.min(Math.max(value, lower_b), upper_b);
       };
 
+      const clamp_test = function(value : number, lower_b : number, upper_b : number) {
+        if (value < lower_b ) return lower_b
+        else if (value > upper_b ) return upper_b
+        else return value
+      };
+
     const generalizeTransitionFunc = ( ) => {
         for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
             for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
                 let m_n : Array<number> =  fillingIntegralN_M(row, col)
-                let new_value = transitionFunc_S(m_n[1], m_n[0]) // [-1,1]
+                let new_value = dt * transitionFunc_S(m_n[1], m_n[0]) // [-1,1]
                 //console.log(new_value)
-                new_value = dt *(2 * new_value -1) //smooth time stepping scheme 
+                //smooth time stepping scheme 
                 //console.log("not clamped: ", new_value)
                 //f(~x, t + dt) = f(~x, t) + dt S[s(n, m)] f(~x, t)
-                cellsArray[row][col] = clamp(cellsArray[row][col] + new_value, 0, 1 ) 
+                cellsArray[row][col] = clamp_test(cellsArray[row][col] + new_value, 0, 1 ) 
 
 
             }
@@ -185,7 +191,7 @@ const P5Sketch = () => {
 
     const transitionFunc_S = (n : number, m : number ) => {
         //If the transition function in the discrete time-stepping scheme was sd(n, m) then the smooth one is s(n, m) = 2sd(n, m)−1.
-        return sigmoid2(n, sigmoidM(b1,d1,m), sigmoidM(b2,d2,m) )
+        return  2 * sigmoid2(n, sigmoidM(b1,d1,m), sigmoidM(b2,d2,m) ) - 1
     }
 
 
@@ -199,6 +205,7 @@ const P5Sketch = () => {
         const p5instance = new p5((p : any) => {
             p.setup = () => {
                 p.createCanvas( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200).parent(renderRef.current);
+                //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
                 randomizeGrid();
                 
             }
