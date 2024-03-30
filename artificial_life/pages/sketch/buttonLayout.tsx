@@ -26,7 +26,7 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
     return (
         <div className={styles.buttonlayout}>
             
-            <div className = {styles.button_stroke}>
+            <div >
                 <motion.div
                 className={styles.button_stroke}
                 style={{backgroundColor: buttonColor}}

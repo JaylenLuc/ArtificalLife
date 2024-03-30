@@ -1,4 +1,5 @@
 .life_box {
+    float: left;
     height: 100%;
     width: 100%;
 }
@@ -11,30 +12,66 @@
     /* background-color: #FFD1DC; */
     text-align: center;
     
-  }
-
-  .button_stroke:hover {
-    cursor: pointer;
 }
 
-  .buttonText{
+.button_stroke:hover {
+    cursor: pointer;
+    filter: sepia(50%) saturate(350%) brightness(100%) hue-rotate(180deg);
+    transition: filter 1.2s ease-in-out;
+}
+
+
+.buttonText{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
+}
 
-  .buttonlayout{
+.buttonlayout{
     position: inherit;
     float: right; 
     width: 70%;
 
-  }
+}
 
-  .master{
+.master{
 
-    height: 100%;
-    width: 100%;
+height: 100%;
+width: 100%;
+}
+
+.title{
+    position: absolute;
+    color: #fff;
+    font-size: 18vh;
+    text-align: center;
+    bottom: -145%;
+    opacity: 0 ;
+    pointer-events: none;
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    text-shadow: 5px 5px black;
+    border-right: 7px solid #181818;
+    animation: cursor 1s infinite step-end, typing 2.6s infinite steps(7);
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    
+    
+}
+
+@keyframes cursor{
+    0%, 100%{border-color: transparent;}
+    50%{border-color: #000;}
+}
+@keyframes typing{
+    0%{ width: 0ch} /*Text is hidden*/
+    33%{ width: 3ch;} /*The enitre header will be typed out*/
+    66%{ width: 6ch;} /*Text stays visible*/
+    100%{ width: 10.6ch;} /*Text stays hidden*/
   }
