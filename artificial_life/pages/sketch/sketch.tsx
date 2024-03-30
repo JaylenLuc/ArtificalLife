@@ -59,8 +59,8 @@ const P5Sketch = () => {
     /**** 
      * delta time
      * ****/
-    var dt = 0.7 //time step
-    const dt_DEFAULT = 0.7 //time step
+    var dt = 0.2 //time step
+    const dt_DEFAULT = 0.2 //time step
 
 
     var cellsArray: number[][] = []
@@ -106,7 +106,6 @@ const P5Sketch = () => {
 
     const randomizeCenterGrid = (centerWidth : number) => {
         //setStrokePolicy(false)
-        dt = 0.2
         let center_grid = (Math.floor(WIDTH_HEIGHT/2))
         let center_diff = (Math.floor((WIDTH_HEIGHT * centerWidth)/2))
         let center_start = center_grid - center_diff
@@ -118,7 +117,7 @@ const P5Sketch = () => {
                 if ((col > center_start && col <= center_end) && 
                 (row > center_start && row <= center_end)) cellsArray[row].push( Math.random());
 
-                else cellsArray[row].push(0);
+                else cellsArray[row].push(0.01);
                
             }
             

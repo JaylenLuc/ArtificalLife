@@ -24,9 +24,9 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
     }
 
     return (
-        <div className='buttonlayout'>
+        <div className={styles.buttonlayout}>
             
-            <div className = "button_stroke">
+            <div className = {styles.button_stroke}>
                 <motion.div
                 className={styles.button_stroke}
                 style={{backgroundColor: buttonColor}}
@@ -35,7 +35,7 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
                 
                 onClick={() => strokeButtonClicked()}
                 >
-                    <span className="buttonText"> {strokeButtonText} </span>
+                    <span className={styles.buttonText}> {strokeButtonText} </span>
                 </motion.div>
                 {/* <button className='button' onClick={() => strokeButtonClicked()}>{strokeButtonText}</button> */}
             </div>
