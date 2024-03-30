@@ -11,9 +11,9 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
     var bit = 0 
     const [buttonColor, seButtonColor] = useState(colors[bit])
     const strokeButtonClicked = () => {
-
-        setStrokePolicy(!strokePolicy)
         console.log(strokePolicy)
+        setStrokePolicy(!strokePolicy)
+        
         strokePolicy? setStrokeButtonText("Add Cell Stroke"):  setStrokeButtonText("Remove Cell Stroke") 
         strokePolicy ? bit = 1 : bit = 0
         
@@ -26,17 +26,12 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
     return (
         <div className='buttonlayout'>
             
-            <div className = "buttonDiv1">
+            <div className = "button_stroke">
                 <motion.div
                 className={styles.button_stroke}
                 style={{backgroundColor: buttonColor}}
-                whileHover={{ scale : 1.2, rotate: 360,}}
-                whileTap={{
-                    scale: 0.5,
-                    borderRadius: "70%",
-                    
-                }}
-                animate={{ x: 170, transition : {ease: "easeOut", duration: 1} }}
+                whileHover={{ scale : 1.5, rotate: 360}}
+                animate={{ x: 170, transition : {ease: "easeOut", duration: .7} }}
                 
                 onClick={() => strokeButtonClicked()}
                 >

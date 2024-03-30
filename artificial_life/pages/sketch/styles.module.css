@@ -1,9 +1,6 @@
 .life_box {
-    position: relative;
-    align-content: center;
-    height: 50%;
-    width: 50%;
-    bottom: 50%;
+    height: 100%;
+    width: 100%;
 }
 
 .button_stroke {
@@ -15,11 +12,10 @@
     text-align: center;
     
   }
-  .buttonDiv1{
-    position: relative;
-    
-    
-  }
+
+  .button_stroke:hover {
+    cursor: pointer;
+}
 
   .buttonText{
     -webkit-touch-callout: none;
@@ -37,4 +33,6 @@
 
   .master{
     position: relative;
+    height: 100%;
+    width: 100%;
   }
