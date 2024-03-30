@@ -11,7 +11,7 @@
     height: 40px;
     background: var(--accent);
     border-radius: 30px;
-    background-color: rgb(133, 235, 184);
+    /* background-color: #FFD1DC; */
     text-align: center;
     
   }
@@ -19,6 +19,15 @@
     position: relative;
     
     
+  }
+
+  .buttonText{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .buttonlayout{
