@@ -59,8 +59,8 @@ const P5Sketch = () => {
     /**** 
      * delta time
      * ****/
-    var dt = 0.2 //time step
-    const dt_DEFAULT = 0.2 //time step
+    var dt = 0.25 //time step
+    const dt_DEFAULT = 0.25 //time step
 
 
     var cellsArray: number[][] = []
