@@ -16,6 +16,15 @@
         
     }
 }
+
+.pathFill {
+    animation-name: glow;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+    background: bisque
+}
+
 .button_stroke {
     animation-name: glow;
     animation-duration: 1.3s;
@@ -35,10 +44,9 @@
     width: 120px;
     height: 40px;
     margin-left : 4px;
-    background: var(--accent);
-    border-radius: 20px;
     /* background-color: #FFD1DC; */
     text-align: center;
+    position: relative;
 }
 
 .buttonText{
