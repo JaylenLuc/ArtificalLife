@@ -3,9 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
-import ButtonLayout from  "../../components/buttonLayout"
+import ButtonLayout from  "../buttonComponents/buttonLayout"
 import styles from './styles.module.css'
-import BigBangButton from "../../components/bigBangButton"
+import BigBangButton from "../buttonComponents/bigBangButton"
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
