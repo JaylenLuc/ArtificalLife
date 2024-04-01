@@ -13,6 +13,11 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
         setStrokePolicy(!strokePolicy)
         
         strokePolicy? setStrokeButtonText("Add Cell Stroke"):  setStrokeButtonText("Remove Cell Stroke") 
+        // animate(scope.current, 
+
+
+        // )
+
         animate(scope.current, 
             {
                 rotate : 360
@@ -24,6 +29,25 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
                 animate(scope.current, { rotate: 0 }, { duration: 0 });
                 },
             })
+            //follow video for intrusctios on stars
+        
+        // { opacity: 1, scale: 1.5, transition : {
+        //     duration: 2.5,
+        //     ease: [0, 1, 0.3, 1.01],
+        //     scale: {
+        //       type: "spring",
+        //       damping: 5,
+        //       stiffness: 100,
+        //       restDelta: 0.001
+        //     }
+        //   }}
+        // ,
+        // {
+        //     duration: 0.5,
+        //     onComplete() {
+        //     animate(scope.current, { scale : 1});
+        //     },
+        // }
         
     }   
     return (

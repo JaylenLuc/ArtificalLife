@@ -13,7 +13,7 @@
     width: 100vw;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 483px) {
     .title{
         word-break:break-word;
         color: #e9e5e5;
@@ -37,7 +37,7 @@
 
   }
   
-  @media (max-width: 767px) {
+  @media (max-width: 482px) {
     .title{
         word-break:break-word;
         color: #e9e5e5;
