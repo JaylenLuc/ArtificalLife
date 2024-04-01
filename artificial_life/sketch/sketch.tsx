@@ -24,7 +24,7 @@ const P5Sketch = () => {
     var SIZE = 4
     const RGB_MIN_RANGE = 255 //min range
 
-    const [strokePolicy, setStrokePolicy] = useState(true)
+    const [strokePolicy, setStrokePolicy] = useState(false)
     const [initOption, setInitPolicy] = useState("center")
     /**** 
      * radius checks
@@ -144,6 +144,7 @@ const P5Sketch = () => {
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
                 if (!strokePolicy) p.noStroke()
+                
                 
                 
                 let fill_value = (current_state * RGB_MIN_RANGE);

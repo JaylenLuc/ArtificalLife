@@ -6,7 +6,7 @@ import styles from './styles.module.css'
 
 const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Dispatch<React.SetStateAction<boolean>>, strokePolicy: boolean}) =>{
     const [scope, animate] = useAnimate()
-    const [strokeButtonText, setStrokeButtonText] = useState("Remove Cell Stroke") //Add Cell Stroke
+    const [strokeButtonText, setStrokeButtonText] = useState("Add Cell Stroke") //Add Cell Stroke
 
     const strokeButtonClicked = () => {
         console.log(strokePolicy)
