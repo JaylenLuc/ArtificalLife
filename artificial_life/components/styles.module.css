@@ -1,0 +1,64 @@
+
+@keyframes glow{
+    /* 50% {
+        filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
+        padding: 1px 0 1px 1px;
+        margin: 2px 1px 3px 0;
+        box-shadow: 0 0 .5px rgb(255, 255, 255);
+        
+    } */
+
+    100% {
+        filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
+        padding: 4px 0 4px 4px;
+        margin: 2px 1px 3px 0;
+        box-shadow: 0 0 4px rgb(255, 255, 255);
+        
+    }
+}
+.button_stroke {
+    animation-name: glow;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+    margin-right: 4px;
+    width: 120px;
+    height: 40px;
+    background: var(--accent);
+    border-radius: 30px;
+    /* background-color: #FFD1DC; */
+    text-align: center;
+    
+}
+
+.bigBangButt {
+    width: 120px;
+    height: 40px;
+    margin-left : 4px;
+    background: var(--accent);
+    border-radius: 20px;
+    /* background-color: #FFD1DC; */
+    text-align: center;
+}
+
+.buttonText{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #ffffff;
+    -webkit-text-stroke-width: .9px;
+    -webkit-text-stroke-color: black;
+
+}
+
+.buttonlayout{
+    position: inherit;
+    float: right; 
+    width: 70%;
+    display: flex;
+
+
+}

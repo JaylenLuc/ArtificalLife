@@ -2,7 +2,7 @@
 import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import { animate, motion, useAnimate, useForceUpdate } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
-import ButtonProps from './ButtonProp';
+import {ButtonProps} from './ButtonProp';
 import styles from './styles.module.css'
 
 const BigBangButton = ({ onClick }: ButtonProps) =>{

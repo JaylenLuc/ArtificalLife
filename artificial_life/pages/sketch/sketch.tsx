@@ -3,9 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
-import ButtonLayout from  "./buttonLayout"
+import ButtonLayout from  "../../components/buttonLayout"
 import styles from './styles.module.css'
-import BigBangButton from "./bigBangButton"
+import BigBangButton from "../../components/bigBangButton"
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
@@ -129,7 +129,6 @@ const P5Sketch = () => {
     const resetGrid = () => {
         if (cellsArray.length > 0){
             cellsArray = []
-            arbitrateMode()
         }
         arbitrateMode()
     }
@@ -263,7 +262,6 @@ const P5Sketch = () => {
     }
 
     const arbitrateMode = () => {
-        console.log(initOption)
         switch(initOption){
             case "full":
                 randomizeFullGrid();
@@ -303,7 +301,7 @@ const P5Sketch = () => {
 
         })
         return () => {
-            console.log("cleaning up...");
+            //console.log("cleaning up...");
             
             // comment this out to get 2 canvases and 2 draw() loops
             p5instance.remove();
