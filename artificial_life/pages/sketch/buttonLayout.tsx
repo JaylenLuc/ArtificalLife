@@ -17,7 +17,7 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
             {
                 rotate : 360
             },
-                  
+
             {
                 duration: 0.5,
                 onComplete() {
@@ -27,8 +27,6 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
         
     }   
     return (
-        <div className={styles.buttonlayout}>
-            
             <div className = {styles.button_stroke}>
                 <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
@@ -53,7 +51,6 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
                 </motion.div>
                 
             </div>
-        </div>
     )
 }
 

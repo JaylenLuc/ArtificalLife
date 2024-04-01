@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
 import ButtonLayout from  "./buttonLayout"
 import styles from './styles.module.css'
+import BigBangButton from "./bigBangButton"
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
@@ -91,6 +92,7 @@ const P5Sketch = () => {
 
     }
 
+
     const initGridZero = () => {
         //this function will likely be called first
         for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
@@ -122,6 +124,14 @@ const P5Sketch = () => {
             }
             
         }
+    }
+
+    const resetGrid = () => {
+        if (cellsArray.length > 0){
+            cellsArray = []
+            arbitrateMode()
+        }
+        arbitrateMode()
     }
 
     const fillGrid = (p : any) => {
@@ -252,6 +262,20 @@ const P5Sketch = () => {
         return  2 * sigmoid2(n, sigmoidM(b1,d1,m), sigmoidM(b2,d2,m) ) - 1
     }
 
+    const arbitrateMode = () => {
+        console.log(initOption)
+        switch(initOption){
+            case "full":
+                randomizeFullGrid();
+                break;
+            case "center":
+                randomizeCenterGrid(0.35);
+                break;
+        }
+    }
+
+
+
 
     /******************************************************
     ********************************************************/
@@ -263,15 +287,9 @@ const P5Sketch = () => {
             p.setup = () => {
                 p.createCanvas( WIDTH_HEIGHT * SIZE, WIDTH_HEIGHT * SIZE).parent(renderRef.current);
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
-                switch(initOption){
+                arbitrateMode()
 
-                case "full":
-                    randomizeFullGrid();
-                    break;
-                case "center":
-                    randomizeCenterGrid(0.35);
-                    break;
-                }
+
             }
 
             p.draw = () => {
@@ -294,6 +312,7 @@ const P5Sketch = () => {
 
     }, [strokePolicy])
 
+
 //the entropy of the universe is tending to a maximum
     return(
         <div className={styles.master}>
@@ -303,9 +322,12 @@ const P5Sketch = () => {
                 <div className= {styles.life_box} ref={renderRef}></div>
             </section>
 
-            
-            <ButtonLayout setStrokePolicy = {setStrokePolicy} strokePolicy = {strokePolicy}/>
-            
+            <div className={styles.buttonlayout}>
+                
+                <ButtonLayout setStrokePolicy = {setStrokePolicy} strokePolicy = {strokePolicy}/>
+
+                <BigBangButton onClick={resetGrid}></BigBangButton>
+            </div>
         </div>
     )
 }

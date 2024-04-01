@@ -26,7 +26,7 @@
     animation-duration: 1.3s;
     animation-timing-function: ease-in-out;
     animation-iteration-count:infinite;
-
+    margin-right: 4px;
     width: 120px;
     height: 40px;
     background: var(--accent);
@@ -34,6 +34,16 @@
     /* background-color: #FFD1DC; */
     text-align: center;
     
+}
+
+.bigBangButt {
+    width: 120px;
+    height: 40px;
+    margin-left : 4px;
+    background: var(--accent);
+    border-radius: 20px;
+    /* background-color: #FFD1DC; */
+    text-align: center;
 }
 
 .buttonText{
@@ -53,6 +63,8 @@
     position: inherit;
     float: right; 
     width: 70%;
+    display: flex;
+
 
 }
 
