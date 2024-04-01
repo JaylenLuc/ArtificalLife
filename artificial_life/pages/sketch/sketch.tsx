@@ -117,7 +117,7 @@ const P5Sketch = () => {
                 if ((col > center_start && col <= center_end) && 
                 (row > center_start && row <= center_end)) cellsArray[row].push( Math.random());
 
-                else cellsArray[row].push(0.01);
+                else cellsArray[row].push(0.05);
                
             }
             
@@ -134,9 +134,8 @@ const P5Sketch = () => {
                 
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
-                if (!strokePolicy) {
-                    p.noStroke()
-                }
+                if (!strokePolicy) p.noStroke()
+                
                 
                 let fill_value = (current_state * RGB_MIN_RANGE);
                 /*
@@ -295,10 +294,11 @@ const P5Sketch = () => {
 
     }, [strokePolicy])
 
-
+//the entropy of the universe is tending to a maximum
     return(
         <div className={styles.master}>
             <meta name="viewport" content="width=device-height"></meta>
+            <div className={styles.title}>The Universe moves to an Entropic Maximum</div>
             <section> 
                 <div className= {styles.life_box} ref={renderRef}></div>
             </section>

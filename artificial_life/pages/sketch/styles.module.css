@@ -16,7 +16,7 @@
 
 .button_stroke:hover {
     cursor: pointer;
-    filter: sepia(50%) saturate(350%) brightness(100%) hue-rotate(180deg);
+    filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
     transition: filter 1.2s ease-in-out;
 }
 
@@ -39,39 +39,65 @@
 
 .master{
 
-height: 100%;
-width: 100%;
+    height: 90vh;
+    width: 100vw;
 }
 
-.title{
-    position: absolute;
-    color: #fff;
-    font-size: 18vh;
-    text-align: center;
-    bottom: -145%;
-    opacity: 0 ;
-    pointer-events: none;
-    user-select: none;
-    -ms-user-select: none;
-    -webkit-user-select: none;
-    text-shadow: 5px 5px black;
-    border-right: 7px solid #181818;
-    animation: cursor 1s infinite step-end, typing 2.6s infinite steps(7);
-    white-space: nowrap;
-    overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
-    
-    
-}
+@media (min-width: 768px) {
+    .title{
+        word-break:break-word;
+        color: #e9e5e5;
+        font-size: 3vh;
+        text-align: center;
+        opacity: 1 ;
+        pointer-events: none;
+        user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        text-shadow: 5px 5px rgb(126, 123, 123);
+        border-right: 7px solid #ffffff;
+        animation: cursor 1s infinite step-end, typing 4.6s infinite steps(41);
+        white-space: nowrap;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+        
+        
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .title{
+        word-break:break-word;
+        color: #e9e5e5;
+        font-size: 1.5vh;
+        text-align: center;
+        opacity: 1 ;
+        pointer-events: none;
+        user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        text-shadow: 5px 5px rgb(126, 123, 123);
+        border-right: 7px solid #ffffff;
+        animation: cursor 1s infinite step-end, typing 4.6s infinite steps(41);
+        white-space: nowrap;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+        
+        
+    }
+  }
+
 
 @keyframes cursor{
     0%, 100%{border-color: transparent;}
-    50%{border-color: #000;}
+    50%{border-color: #ffffff;}
 }
 @keyframes typing{
     0%{ width: 0ch} /*Text is hidden*/
-    33%{ width: 3ch;} /*The enitre header will be typed out*/
-    66%{ width: 6ch;} /*Text stays visible*/
-    100%{ width: 10.6ch;} /*Text stays hidden*/
+    25%{ width: 10ch;} /*The enitre header will be typed out*/
+    50%{ width: 20ch;} /*Text stays visible*/
+    75%{ width: 30ch;} /*Text stays hidden*/
+    100%{ width: 38ch;} /*Text stays hidden*/
   }
