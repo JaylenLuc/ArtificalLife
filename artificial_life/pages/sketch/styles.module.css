@@ -17,7 +17,7 @@
         filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
         padding: 4px 0 4px 4px;
         margin: 2px 1px 3px 0;
-        box-shadow: 0 0 5px rgb(255, 255, 255);
+        box-shadow: 0 0 4px rgb(255, 255, 255);
         
     }
 }

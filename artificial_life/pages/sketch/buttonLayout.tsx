@@ -5,37 +5,26 @@ import { useMotionValue, useTransform } from "framer-motion"
 import styles from './styles.module.css'
 
 const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Dispatch<React.SetStateAction<boolean>>, strokePolicy: boolean}) =>{
-    const buttonref = useRef(null)!;
     const [scope, animate] = useAnimate()
     const [strokeButtonText, setStrokeButtonText] = useState("Remove Cell Stroke") //Add Cell Stroke
-    const colors = ['#cebaa0','#C3B1E1']
-    var bit = 0 
-    const [buttonColor, setButtonColor] = useState(colors[bit])
-    const _strokeButtonUpdate = () => {
-        setButtonColor(colors[bit  % 2])
-        animate(scope.current, {
-            transition : {
-            duration: 0.3,
-            
-            scale: {
-            type: "spring",
-            damping: 5,
-            stiffness: 100,
-            restDelta: 0.001,
-            },
-        }})
-    }
+
     const strokeButtonClicked = () => {
         console.log(strokePolicy)
         setStrokePolicy(!strokePolicy)
         
         strokePolicy? setStrokeButtonText("Add Cell Stroke"):  setStrokeButtonText("Remove Cell Stroke") 
-        strokePolicy ? bit = 1 : bit = 0
+        animate(scope.current, 
+            {
+                rotate : 360
+            },
+                  
+            {
+                duration: 0.5,
+                onComplete() {
+                animate(scope.current, { rotate: 0 }, { duration: 0 });
+                },
+            })
         
-        animate(colors[0],colors[1], {
-            onUpdate: latest => _strokeButtonUpdate()
-        })
-
     }   
     return (
         <div className={styles.buttonlayout}>
@@ -44,7 +33,7 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
                 <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 className={styles.button_stroke}
-                style={{backgroundColor: buttonColor}}
+                style={{backgroundColor: "#cebaa0"}}
                 ref={scope}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{
