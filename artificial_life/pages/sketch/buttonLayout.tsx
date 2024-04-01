@@ -8,7 +8,7 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
     const buttonref = useRef(null)!;
     const [scope, animate] = useAnimate()
     const [strokeButtonText, setStrokeButtonText] = useState("Remove Cell Stroke") //Add Cell Stroke
-    const colors = ['#FFD1DC','#C3B1E1']
+    const colors = ['#cebaa0','#C3B1E1']
     var bit = 0 
     const [buttonColor, setButtonColor] = useState(colors[bit])
     const _strokeButtonUpdate = () => {
@@ -32,7 +32,7 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
         strokePolicy? setStrokeButtonText("Add Cell Stroke"):  setStrokeButtonText("Remove Cell Stroke") 
         strokePolicy ? bit = 1 : bit = 0
         
-        animate('#FFD1DC','#C3B1E1', {
+        animate(colors[0],colors[1], {
             onUpdate: latest => _strokeButtonUpdate()
         })
 
@@ -48,8 +48,8 @@ const ButtonLayout = ( {setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Di
                 ref={scope}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{
-                  duration: 0.3,
-                  ease: [0, 0.71, 0.2, 1.01],
+                  duration: 2.5,
+                  ease: [0, 1, 0.3, 1.01],
                   scale: {
                     type: "spring",
                     damping: 5,

@@ -4,7 +4,29 @@
     width: 100%;
 }
 
+@keyframes glow{
+    /* 50% {
+        filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
+        padding: 1px 0 1px 1px;
+        margin: 2px 1px 3px 0;
+        box-shadow: 0 0 .5px rgb(255, 255, 255);
+        
+    } */
+
+    100% {
+        filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
+        padding: 4px 0 4px 4px;
+        margin: 2px 1px 3px 0;
+        box-shadow: 0 0 5px rgb(255, 255, 255);
+        
+    }
+}
 .button_stroke {
+    animation-name: glow;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+
     width: 120px;
     height: 40px;
     background: var(--accent);
@@ -14,13 +36,6 @@
     
 }
 
-.button_stroke:hover {
-    cursor: pointer;
-    filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
-    transition: filter 1.2s ease-in-out;
-}
-
-
 .buttonText{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -28,6 +43,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    color: #ffffff;
+    -webkit-text-stroke-width: .9px;
+    -webkit-text-stroke-color: black;
+
 }
 
 .buttonlayout{
@@ -64,13 +83,14 @@
         
         
     }
+
   }
   
   @media (max-width: 767px) {
     .title{
         word-break:break-word;
         color: #e9e5e5;
-        font-size: 1.5vh;
+        font-size: 2vh;
         text-align: center;
         opacity: 1 ;
         pointer-events: none;
@@ -87,6 +107,9 @@
         
         
     }
+
+
+
   }
 
 
@@ -99,5 +122,5 @@
     25%{ width: 10ch;} /*The enitre header will be typed out*/
     50%{ width: 20ch;} /*Text stays visible*/
     75%{ width: 30ch;} /*Text stays hidden*/
-    100%{ width: 38ch;} /*Text stays hidden*/
+    100%{ width: 41ch;} /*Text stays hidden*/
   }
