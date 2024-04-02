@@ -119,7 +119,7 @@ const P5Sketch = () => {
                 if ((col > center_start && col <= center_end) && 
                 (row > center_start && row <= center_end)) cellsArray[row].push( Math.random());
 
-                else cellsArray[row].push(0.05);
+                else cellsArray[row].push(0);
                
             }
             
@@ -143,7 +143,7 @@ const P5Sketch = () => {
                 
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
-                p.noStroke()
+                if (!strokePolicy) p.noStroke()
                 
                 
                 
@@ -165,34 +165,7 @@ const P5Sketch = () => {
         
     }
 
-    const fillGridStroke = (p : any) => {
-        //it takes the rand nums in the grid and draws the color based on the numbers in the grid
-        let xPos = 0 ;
-        let yPos = 0 ;
-        for (let row = 0; row < WIDTH_HEIGHT; row ++){
-            xPos += SIZE
-            for (let col = 0; col< WIDTH_HEIGHT; col ++){
-                
-                yPos += SIZE
-                let current_state = cellsArray[row][col]
-  
-                let fill_value = (current_state * RGB_MIN_RANGE);
-                /*
-                fill value is the rgb 255 * the decimal which 
-                is a percentage of how far it is from black until white
-                this can be changed with the fill value determining 
-                only some of the RGB values , play around 
-                */
-                p.fill(fill_value,fill_value , fill_value)
 
-                p.circle(yPos, xPos , SIZE);  
-            
-
-            }
-            yPos = 0
-        }
-        
-    }
 
 
     const clamp = function(value : number, lower_b : number, upper_b : number) {
@@ -325,8 +298,8 @@ const P5Sketch = () => {
                 p.background(0,0,0);
 
                 generalizeTransitionFunc()
-                if (!strokePolicy) fillGrid(p);
-                else fillGridStroke(p)
+                
+                fillGrid(p);
             }
 
         })
