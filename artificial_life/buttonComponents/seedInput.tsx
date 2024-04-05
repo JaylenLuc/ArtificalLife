@@ -51,7 +51,7 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
         
     }   
     return (
-            <div >
+            <div>
                 <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 ref={scope}

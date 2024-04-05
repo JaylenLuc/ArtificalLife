@@ -71,7 +71,7 @@ const P5Sketch = () => {
     //randomize the grid 
     //determine from the randomziex numbers what we render
 
-    //A  PRESET
+    //One  PRESET
     // var d1 = 0.365
     // var d2 = 0.549
     // var b1 = 0.257

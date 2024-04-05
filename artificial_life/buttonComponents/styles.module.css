@@ -10,27 +10,38 @@
 
     100% {
         filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
-        padding: 4px 0 4px 4px;
-        margin: 2px 1px 3px 0;
-        box-shadow: 0 0 4px rgb(255, 255, 255);
         
     }
 }
 
+@keyframes shutter{
+    50%{
+        padding: 4px 0 4px 4px;
+        margin: 2px 1px 3px 0;
+        box-shadow: 0 0 4px rgb(255, 255, 255);
+    }
+    100%{
+        padding: 0px 0 0px 0px;
+        margin: 2px 1px 3px 0;
+        box-shadow: 0 0 0px rgb(255, 255, 255);
+    }
+}
+
+
 .pathFill {
-    animation-name: glow;
-    animation-duration: 1.3s;
+    animation-name: glow, shutter;
+    animation-duration: 1.8s;
     animation-timing-function: ease-in-out;
     animation-iteration-count:infinite;
     background: bisque
 }
 
 .button_stroke {
-    animation-name: glow;
-    animation-duration: 1.3s;
+    animation-name: glow, shutter;
+    animation-duration: 1.8s;
     animation-timing-function: ease-in-out;
     animation-iteration-count:infinite;
-    margin-right: 4px;
+    margin-right: 1px;
     width: 120px;
     height: 40px;
     background: var(--accent);
@@ -41,12 +52,15 @@
 }
 
 .bigBangButt {
+    animation-name: shutter;
+    animation-duration: 1.8s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
     width: 120px;
     height: 40px;
-    margin-left : 12px;
+    margin-right : 7px;
     /* background-color: #FFD1DC; */
     text-align: center;
-    position: relative;
     border-radius: 10px;
     /* border-radius: 50px;
     box-shadow: grey; */
@@ -69,14 +83,13 @@
 .seedButtonLayout {
     width: 180px;
     height: 100px;
-    margin-left : 12px;
+    margin-right : 7px;
     /* background-color: #FFD1DC; */
     text-align: center;
-    position: relative;
     background-color: #C3B1E1;
     border-radius: 10px;
-    animation-name: glow;
-    animation-duration: 1.3s;
+    animation-name: shutter;
+    animation-duration: 1.8s;
     animation-timing-function: ease-in-out;
     animation-iteration-count:infinite;
     
@@ -89,7 +102,7 @@
     color: #ffffff;
     margin-left: 4px;
     animation-name: glow;
-    animation-duration: 1.3s;
+    animation-duration: 1.8s;
     animation-timing-function: ease-in-out;
     animation-iteration-count:infinite;
     border-radius: 10px;

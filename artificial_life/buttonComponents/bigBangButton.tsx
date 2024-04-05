@@ -65,7 +65,7 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
     }
 
     return (
-            <div>
+            <div  className= {styles.bigBangButt}>
                 <motion.div
                 className= {styles.bigBangButt}
                 initial={{ opacity: 0, scale: 0.5 }}
