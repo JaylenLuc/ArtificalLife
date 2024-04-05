@@ -2,8 +2,9 @@
     position: inherit;
     /* float: right;  */
     width: 50%;
+    height: 100px;
     margin : auto;
-    margin-bottom: 10px;
+
     display: flex;
     /* margin-left: 10px; */
 
@@ -20,7 +21,7 @@
     height: 100%;
     width: 100%;
     background-color: black;
-    top: 10%;
+    bottom : 10%;
     margin: 25px;
 }
 

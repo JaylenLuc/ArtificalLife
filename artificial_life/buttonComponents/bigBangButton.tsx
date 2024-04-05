@@ -9,7 +9,8 @@ type AnimationSequence = Parameters<typeof animate>[0];
 
 const BigBangButton = ({ resetHandler }: ButtonProps) =>{
     const [scope, animate] = useAnimate()
-    const stars = Array.from({length: 48});    
+    const stars_num = 50
+    const stars = Array.from({length: stars_num});    
     const randomNumber = (max : number , min : number) => {
       return Math.floor(Math. random() * (max - min + 1) + min)
     }
@@ -17,7 +18,7 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
       `.sparkle-${index}`,
       {
         x : randomNumber(-300,300),
-        y : randomNumber(-400,400),
+        y : randomNumber(-400,0),
         scale : randomNumber(0.2,3.8),
         opacity : 1,
 
@@ -63,12 +64,13 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
       animate(scope.current, 
         {
             scale: 0.8,
+            
         },
 
         {
-            duration: 0.3,
+            duration: 0.1,
             onComplete() {
-            animate(scope.current, { scale : 1}, { duration: 0.2 }, );
+            animate(scope.current, { scale : 1}, { duration: 0.1 }, );
             },
         })
     
@@ -100,9 +102,9 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
                     <span className={styles.buttonText}>Reverse Entropy</span>
                     <span 
                       aria-hidden 
-                      className='absolute inset-0 opacity-0 -z-10 pointer-events-none'
+                      className='absolute inset-0 opacity-0 -z-100 pointer-events-none'
                     >
-                      {Array.from({length: 48}).map((_,index) => (
+                      {Array.from({length: stars_num}).map((_,index) => (
                         <svg key= {index} viewBox="0 0 122 117" width="10" height="10" className={`absolute  opacity-0 left-1/2 top-1/4 sparkle-${index}`}>
                             <path
                               fill=	"#FFFAA0"
