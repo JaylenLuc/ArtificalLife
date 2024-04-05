@@ -77,14 +77,14 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
                             className={styles.seedInputButton}
                             onClick={seedButtonClicked}
                             title="initiliaze Life Seed"
-                        >Set Life Seed</button>
+                        ><div className={styles.buttonText}> Set Life Seed</div></button>
                         
 
                         <button
                             className={styles.seedInputButton}
                             onClick={resetSeed}
                             title="Reset Life Seed to Default"
-                        >Reset Life Seed</button>
+                        ><div className={styles.buttonText}>Reset Life Seed</div></button>
 
 
                 </motion.div>

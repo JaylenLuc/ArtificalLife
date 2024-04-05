@@ -65,8 +65,9 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
     }
 
     return (
-            <div className= {styles.bigBangButt}>
+            <div>
                 <motion.div
+                className= {styles.bigBangButt}
                 initial={{ opacity: 0, scale: 0.5 }}
                 style={{backgroundColor: "#d2e7d6"}}
                 ref={scope}
@@ -91,7 +92,7 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
                       className='absolute inset-0 opacity-0 -z-10 pointer-events-none'
                     >
                       {Array.from({length: 48}).map((_,index) => (
-                        <svg key= {index} viewBox="0 0 122 117" width="10" height="10" className={`absolute  opacity-0 left-1/2 top-1/2 sparkle-${index}`}>
+                        <svg key= {index} viewBox="0 0 122 117" width="10" height="10" className={`absolute  opacity-0 left-1/2 top-1/4 sparkle-${index}`}>
                             <path
                               fill=	"#FFFAA0"
                               d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,
