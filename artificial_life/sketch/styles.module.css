@@ -20,6 +20,7 @@
     width: 100%;
     background-color: black;
     top: 10%;
+    margin: 10px;
 }
 
 @media (min-width: 701px) {
