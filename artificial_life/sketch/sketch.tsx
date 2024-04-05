@@ -27,7 +27,7 @@ const P5Sketch = () => {
 
     const [strokePolicy, setStrokePolicy] = useState(false)
     const [initOption, setInitPolicy] = useState("center")
-    const [seedUser, _setSeed] = useState(-1)
+    const [seedUser, _setSeed] = useState(0)
     /**** 
      * radius checks
      * ****/
@@ -86,7 +86,7 @@ const P5Sketch = () => {
     ********************************************************/
     const  random_number = (row: number, col : number, seed: number = seedUser) => {
         //console.log("random_number func : ", seed)
-        if (seed >= 0){
+        if (seed > 0){
 
             let random = Math.sin(seed + row * col) * 10000;
             // console.log(random - Math.floor(random))

@@ -7,17 +7,32 @@ import { ButtonProps } from './ButtonProp';
 //{setSeed, resetHandler}:{setSeed: React.Dispatch<React.SetStateAction<number>>, resetHandler : ButtonProps}
 const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , resetGrid : Function, seedUser : number}) =>{
     const [scope, animate] = useAnimate()
-    const [peelimSeed, setPrelimSeed] = useState("");
-    const [prevSeed, setPrev] = useState(-1);
+    const [seedInputText, setSeedText] = useState("");
+
+    const resetSeed = () => {
+        if (seedUser != 0){
+            setSeed(0)
+            setSeedText("")
+
+        }
+
+    }
+
+    const setSeedTextArea = (e : any) => {
+        setSeedText(e)
+
+
+    }
+
+
     const seedButtonClicked = () => {
 
         //if no input the default value is 0???
-        let newSeed = Number(peelimSeed)
-        if (!isNaN(newSeed) && newSeed >= 0 && prevSeed != newSeed) { 
+        let newSeed = Number (seedInputText)
+        if (!isNaN(newSeed) && newSeed > 0 && seedUser != newSeed) { 
             console.log("valid and set")
             setSeed(newSeed)
             console.log(seedUser)
-            setPrev(newSeed)
         } else{ 
             console.log("invalid seed")
         }
@@ -56,15 +71,21 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
                 //animate= {{ opacity : 1, scale : 1, x: 170, transition :  {ease: "easeOut", duration: .7} }}
                 >
 
-                    <input className={styles.seedInputArea} onChange={(e) => setPrelimSeed(e.target.value)}  placeholder="Enter number >= 0"/>
+                    <input className={styles.seedInputArea} onChange={(e) => setSeedTextArea(e.target.value)}  placeholder="Enter number > 0" value = {seedInputText}/>
                     
                         <button
                             className={styles.seedInputButton}
                             onClick={seedButtonClicked}
-                            
                             title="initiliaze Life Seed"
-                        >
-                            Set Life Seed</button>
+                        >Set Life Seed</button>
+                        
+
+                        <button
+                            className={styles.seedInputButton}
+                            onClick={resetSeed}
+                            title="Reset Life Seed to Default"
+                        >Reset Life Seed</button>
+
 
                 </motion.div>
                 
