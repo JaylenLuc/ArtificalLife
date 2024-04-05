@@ -6,6 +6,7 @@ import { useMotionValue, useTransform } from "framer-motion"
 import ButtonLayout from  "../buttonComponents/buttonLayout"
 import styles from './styles.module.css'
 import BigBangButton from "../buttonComponents/bigBangButton"
+import SeedInput from '../buttonComponents/seedInput';
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
@@ -26,6 +27,7 @@ const P5Sketch = () => {
 
     const [strokePolicy, setStrokePolicy] = useState(false)
     const [initOption, setInitPolicy] = useState("center")
+    const [seedUser, setSeed] = useState(-1)
     /**** 
      * radius checks
      * ****/
@@ -78,6 +80,17 @@ const P5Sketch = () => {
     /********************************************************
          * GRID FUNCTIONS
     ********************************************************/
+    const  random_number = (row: number, col : number, seed: number = seedUser) => {
+        //("random_number func : ", seed)
+        if (seed >= 0){
+            let random = Math.sin(seed + row * col) * 10000;
+            // console.log(random - Math.floor(random))
+            return random - Math.floor(random);
+        }else{
+            //console.log("default")
+            return Math.random();
+        }
+      }
 
     const randomizeFullGrid = () => {
         
@@ -117,7 +130,7 @@ const P5Sketch = () => {
             cellsArray.push([])
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
                 if ((col > center_start && col <= center_end) && 
-                (row > center_start && row <= center_end)) cellsArray[row].push( Math.random());
+                (row > center_start && row <= center_end)) cellsArray[row].push( random_number(row,col));
 
                 else cellsArray[row].push(0);
                
@@ -164,8 +177,6 @@ const P5Sketch = () => {
         }
         
     }
-
-
 
 
     const clamp = function(value : number, lower_b : number, upper_b : number) {
@@ -327,7 +338,9 @@ const P5Sketch = () => {
                 
                 <ButtonLayout setStrokePolicy = {setStrokePolicy} strokePolicy = {strokePolicy}/>
 
-                <BigBangButton onClick={resetGrid}></BigBangButton>
+                <BigBangButton resetHandler={resetGrid}></BigBangButton>
+
+                <SeedInput resetGrid = {resetGrid} setSeed={setSeed}/>
             </div>
         </div>
     )

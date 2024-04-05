@@ -47,6 +47,8 @@
     /* background-color: #FFD1DC; */
     text-align: center;
     position: relative;
+    /* border-radius: 50px;
+    box-shadow: grey; */
 }
 
 .buttonText{
@@ -69,4 +71,45 @@
     display: flex;
 
 
+}
+
+.seedButtonLayout {
+    width: 160px;
+    height: 100px;
+    margin-left : 4px;
+    /* background-color: #FFD1DC; */
+    text-align: center;
+    position: relative;
+    background-color: #C3B1E1;
+    border-radius: 10px;
+    margin-left: 4px;
+    animation-name: glow;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+    
+}
+
+
+.seedInputButton{
+    width: 70px;
+    height: 50px;
+    color: #ffffff;
+    margin-left: 4px;
+    animation-name: glow;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.seedInputArea{
+    margin-left: 4px;
+    width : 120px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
 }

@@ -7,7 +7,7 @@ import styles from './styles.module.css'
 
 type AnimationSequence = Parameters<typeof animate>[0];
 
-const BigBangButton = ({ onClick }: ButtonProps) =>{
+const BigBangButton = ({ resetHandler }: ButtonProps) =>{
     const [scope, animate] = useAnimate()
     const stars = Array.from({length: 48});    
     const randomNumber = (max : number , min : number) => {
@@ -81,7 +81,7 @@ const BigBangButton = ({ onClick }: ButtonProps) =>{
                     restDelta: 0.001
                   }
                 }}
-                onClick={onClick}
+                onClick={resetHandler}
                 onTap={animateStars}
                 //animate= {{ opacity : 1, scale : 1, x: 170, transition :  {ease: "easeOut", duration: .7} }}
                 >
