@@ -60,6 +60,17 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
     });
     
     const animateStars = () => {
+      animate(scope.current, 
+        {
+            scale: 0.8,
+        },
+
+        {
+            duration: 0.3,
+            onComplete() {
+            animate(scope.current, { scale : 1}, { duration: 0.2 }, );
+            },
+        })
     
       animate([...stars_animation_reset, ...stars_animation, ...stars_animation_fade_out])
     }

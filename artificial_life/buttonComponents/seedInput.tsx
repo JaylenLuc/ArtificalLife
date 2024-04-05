@@ -7,6 +7,8 @@ import { ButtonProps } from './ButtonProp';
 //{setSeed, resetHandler}:{setSeed: React.Dispatch<React.SetStateAction<number>>, resetHandler : ButtonProps}
 const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , resetGrid : Function, seedUser : number}) =>{
     const [scope, animate] = useAnimate()
+    const [scope1, animate1] = useAnimate()
+    const [scope2, animate2] = useAnimate()
     const [seedInputText, setSeedText] = useState("");
 
     const resetSeed = () => {
@@ -15,6 +17,18 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
             setSeedText("")
 
         }
+        animate(scope1.current, 
+            {
+                rotate : 360
+            },
+
+            {
+                duration: 0.5,
+                onComplete() {
+                animate(scope1.current, { rotate: 0 }, { duration: 0 });
+                },
+        })
+        animateWhole();
 
     }
 
@@ -36,6 +50,8 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
         } else{ 
             console.log("invalid seed")
         }
+
+
         animate(scope.current, 
             {
                 rotate : 360
@@ -46,16 +62,42 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
                 onComplete() {
                 animate(scope.current, { rotate: 0 }, { duration: 0 });
                 },
-            })
+        })
+
+        animateWhole();
+        
 
         
     }   
+
+
+    const animateWhole = () => {
+
+        
+        animate(scope2.current, 
+            {
+                scale: 0.8,
+                borderRadius: "30%",
+            },
+
+            {
+                duration: 0.3,
+                onComplete() {
+                animate(scope2.current, { scale : 1, borderRadius: "10%" }, { duration: 0.2 }, );
+                },
+            })
+    }
     return (
             <div>
                 <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
-                ref={scope}
                 className={styles.seedButtonLayout}
+                ref = {scope2}
+                // whileTap={{
+                //     scale: 0.8,
+                //     borderRadius: "100%",
+                //     transition: { duration: .3 }
+                // }}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{
                   duration: 2.5,
@@ -74,6 +116,7 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
                     <input className={styles.seedInputArea} onChange={(e) => setSeedTextArea(e.target.value)}  placeholder="Enter number > 0" value = {seedInputText} />
                     
                         <button
+                            ref={scope}
                             className={styles.seedInputButton}
                             onClick={seedButtonClicked}
                             title="initiliaze Life Seed"
@@ -81,6 +124,7 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
                         
 
                         <button
+                            ref={scope1}
                             className={styles.seedInputButton}
                             onClick={resetSeed}
                             title="Reset Life Seed to Default"
