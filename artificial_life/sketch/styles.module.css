@@ -1,8 +1,9 @@
 .buttonlayout{
     position: inherit;
-    float: right; 
-    width: 70%;
+    /* float: right;  */
+    width: 50%;
     display: flex;
+    margin-left: 10px;
 
 
 }
