@@ -71,6 +71,24 @@ const P5Sketch = () => {
     //randomize the grid 
     //determine from the randomziex numbers what we render
 
+    //A  PRESET
+    // var d1 = 0.365
+    // var d2 = 0.549
+    // var b1 = 0.257
+    // var b2 = 0.336
+
+
+    // var ra = 11 //outer radius 
+    // var ri = ra/3 // inner radius 
+    // var ri_area = Math.PI * (ri*ri)
+    // var ra_area = (Math.PI * (ra*ra)) - (ri_area)
+    // const ra_DEFAULT = 11
+
+    // var alpha_n = 0.028
+    // var alpha_m = 0.147
+
+    // var dt = 0.05 //time step 
+
     /********************************************************
          * Event handlers
     ********************************************************/

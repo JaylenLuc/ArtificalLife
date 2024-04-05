@@ -2,8 +2,7 @@
     position: inherit;
     /* float: right;  */
     width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    margin : auto;
     display: flex;
     /* margin-left: 10px; */
 
@@ -12,8 +11,7 @@
 
 .life_box{
     width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    margin : auto;
 }
 
 .master{
@@ -40,8 +38,7 @@
         animation: cursor 1s infinite step-end, typing 4.6s infinite steps(41);
         white-space: nowrap;
         overflow: hidden;
-        margin-left: auto;
-        margin-right: auto;
+        margin: auto;
         
         
     }
@@ -64,8 +61,7 @@
         animation: cursor 1s infinite step-end, typing 4.6s infinite steps(41);
         white-space: nowrap;
         overflow: hidden;
-        margin-left: auto;
-        margin-right: auto;
+        margin : auto;
         
         
     }
