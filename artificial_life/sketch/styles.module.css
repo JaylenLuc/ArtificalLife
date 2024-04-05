@@ -2,10 +2,16 @@
     position: inherit;
     /* float: right;  */
     width: 50%;
+    margin: auto;
     display: flex;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 
 
+}
+
+.life_box{
+    width: 50%;
+    margin: auto;
 }
 
 .master{

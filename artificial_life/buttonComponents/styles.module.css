@@ -43,7 +43,7 @@
 .bigBangButt {
     width: 120px;
     height: 40px;
-    margin-left : 4px;
+    margin-left : 12px;
     /* background-color: #FFD1DC; */
     text-align: center;
     position: relative;
@@ -69,13 +69,12 @@
 .seedButtonLayout {
     width: 180px;
     height: 100px;
-    margin-left : 4px;
+    margin-left : 12px;
     /* background-color: #FFD1DC; */
     text-align: center;
     position: relative;
     background-color: #C3B1E1;
     border-radius: 10px;
-    margin-left: 4px;
     animation-name: glow;
     animation-duration: 1.3s;
     animation-timing-function: ease-in-out;
