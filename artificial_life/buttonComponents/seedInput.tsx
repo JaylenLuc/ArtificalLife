@@ -71,7 +71,7 @@ const SeedInput = ( {setSeed, resetGrid, seedUser}: { setSeed : Function , reset
                 //animate= {{ opacity : 1, scale : 1, x: 170, transition :  {ease: "easeOut", duration: .7} }}
                 >
 
-                    <input className={styles.seedInputArea} onChange={(e) => setSeedTextArea(e.target.value)}  placeholder="Enter number > 0" value = {seedInputText}/>
+                    <input className={styles.seedInputArea} onChange={(e) => setSeedTextArea(e.target.value)}  placeholder="Enter number > 0" value = {seedInputText} />
                     
                         <button
                             className={styles.seedInputButton}
