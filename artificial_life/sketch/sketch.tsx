@@ -27,7 +27,7 @@ const P5Sketch = () => {
 
     const [strokePolicy, setStrokePolicy] = useState(false)
     const [initOption, setInitPolicy] = useState("center")
-    const [seedUser, setSeed] = useState(-1)
+    const [seedUser, _setSeed] = useState(-1)
     /**** 
      * radius checks
      * ****/
@@ -74,15 +74,20 @@ const P5Sketch = () => {
     /********************************************************
          * Event handlers
     ********************************************************/
+    const setSeed = (seed : number) => {
 
+        _setSeed(seed);
+        resetGrid();
+    };
     
 
     /********************************************************
          * GRID FUNCTIONS
     ********************************************************/
     const  random_number = (row: number, col : number, seed: number = seedUser) => {
-        //("random_number func : ", seed)
+        //console.log("random_number func : ", seed)
         if (seed >= 0){
+
             let random = Math.sin(seed + row * col) * 10000;
             // console.log(random - Math.floor(random))
             return random - Math.floor(random);
@@ -140,6 +145,7 @@ const P5Sketch = () => {
     }
 
     const resetGrid = () => {
+        console.log("in resetGrid: ",seedUser)
         if (cellsArray.length > 0){
             cellsArray = []
         }
@@ -281,6 +287,7 @@ const P5Sketch = () => {
                 randomizeFullGrid();
                 break;
             case "center":
+                console.log("center")
                 randomizeCenterGrid(0.35);
                 break;
         }
@@ -322,7 +329,7 @@ const P5Sketch = () => {
           };
 
 
-    }, [strokePolicy])
+    }, [strokePolicy, seedUser, initOption])
 
 
 //the entropy of the universe is tending to a maximum
@@ -340,7 +347,7 @@ const P5Sketch = () => {
 
                 <BigBangButton resetHandler={resetGrid}></BigBangButton>
 
-                <SeedInput resetGrid = {resetGrid} setSeed={setSeed}/>
+                <SeedInput resetGrid = {resetGrid} setSeed={setSeed} seedUser = {seedUser}/>
             </div>
         </div>
     )
