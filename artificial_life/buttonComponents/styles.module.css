@@ -13,6 +13,20 @@
         
     }
 }
+@keyframes glow_backdrop{
+    /* 50% {
+        filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
+        padding: 1px 0 1px 1px;
+        margin: 2px 1px 3px 0;
+        box-shadow: 0 0 .5px rgb(255, 255, 255);
+        
+    } */
+
+    100% {
+        filter: sepia(70%) saturate(300%) brightness(100%) hue-rotate(180deg);
+        
+    }
+}
 
 @keyframes shutter{
     50%{
@@ -122,7 +136,8 @@
 
 
 .paramNavBar {
-    filter: drop-shadow(1px 1px 1px #4700b3);
+    filter: drop-shadow(1px 1px 1px glow);
+
     width: 300px;
     background-color: #cab69e;
   }

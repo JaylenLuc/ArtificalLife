@@ -362,11 +362,11 @@ const P5Sketch = () => {
             </div>
             <Sparkles
                 color="random"
-                count={20}
-                minSize={8}
+                count={40}
+                minSize={12}
                 maxSize={16}
-                overflowPx={20}
-                fadeOutSpeed={20}
+                overflowPx={30}
+                fadeOutSpeed={30}
                 flicker={false}
             />
             
