@@ -48,7 +48,7 @@ return (
                 maxSize={10}
                 overflowPx={20}
                 fadeOutSpeed={50}
-                flicker={false}
+                
             />
 
            <span className = {styles.buttonText}>Adjust Artifical Life Constants</span>
