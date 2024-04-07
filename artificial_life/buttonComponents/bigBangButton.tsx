@@ -18,7 +18,7 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
       `.sparkle-${index}`,
       {
         x : randomNumber(-300,300),
-        y : randomNumber(-400,0),
+        y : randomNumber(-400,400),
         scale : randomNumber(0.2,3.8),
         opacity : 1,
 

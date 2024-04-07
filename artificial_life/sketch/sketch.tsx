@@ -7,6 +7,9 @@ import ButtonLayout from  "../buttonComponents/buttonLayout"
 import styles from './styles.module.css'
 import BigBangButton from "../buttonComponents/bigBangButton"
 import SeedInput from '../buttonComponents/seedInput';
+import Slider from '@/buttonComponents/slider';
+import ParamNav from '@/buttonComponents/paramNav'
+import Sparkles from 'react-sparkle'
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
@@ -354,7 +357,19 @@ const P5Sketch = () => {
     return(
         <div className={styles.master}>
             <meta name="viewport" content="width=device-height"></meta>
-            <div className={styles.title}>The Universe moves to an Entropic Maximum</div>
+            <div className={styles.title}>
+                The Universe moves to an Entropic Maximum
+            </div>
+            <Sparkles
+                color="random"
+                count={20}
+                minSize={8}
+                maxSize={16}
+                overflowPx={20}
+                fadeOutSpeed={20}
+                flicker={false}
+            />
+            
             <section> 
                 <div className= {styles.life_box} ref={renderRef}></div>
             </section>
@@ -366,6 +381,10 @@ const P5Sketch = () => {
                 <BigBangButton resetHandler={resetGrid}></BigBangButton>
 
                 <SeedInput resetGrid = {resetGrid} setSeed={setSeed} seedUser = {seedUser}/>
+            </div>
+            
+            <div className={styles.buttonlayout}>
+                <ParamNav/>
             </div>
         </div>
     )

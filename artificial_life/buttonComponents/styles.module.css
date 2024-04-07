@@ -119,3 +119,30 @@
     text-align: center;
     position: relative;
 }
+
+
+.paramNavBar {
+    filter: drop-shadow(1px 1px 1px #4700b3);
+    width: 300px;
+    background-color: #cab69e;
+  }
+
+  .navul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: whitesmoke;
+  }
+  
+  .navli {
+    color: #C3B1E1;
+    display: block;
+  }
+  
+  .navul,
+  .navli {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+  }
+  
