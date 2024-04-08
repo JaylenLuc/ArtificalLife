@@ -42,7 +42,7 @@ return (
                 }}
                 
             >
-            <Sparkles
+            {/* <Sparkles
                 color="white"
                 count={20}
                 minSize={5}
@@ -50,7 +50,7 @@ return (
                 overflowPx={8}
                 fadeOutSpeed={50}
                 
-            />
+            /> */}
 
             <span className = {styles.buttonText}>Adjust Artifical Life Constants</span>
                 <motion.div
