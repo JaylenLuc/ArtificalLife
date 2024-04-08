@@ -42,31 +42,36 @@ const P5Sketch = () => {
     /**** 
      * sigmoid alpha values
      * ****/
-    var alpha_n = 0.028
-    var alpha_m = 0.147
 
     const alpha_n_DEFAULT = 0.028
     const alpha_m_DEFAULT = 0.147
     //αn = 0.028, αm = 0.147
-
+    const [alpha_n, setAlphaN] = useState(alpha_n_DEFAULT)
+    const [alpha_m, setAlphaM] = useState(alpha_m_DEFAULT)
     /**** 
      * birth and death interval values given by [b1, b2] and [d1, d2] 
      * ****/
-    var d1 = 0.267
-    var d2 = 0.445
-    var b1 = 0.278
-    var b2 = 0.365
     const d1_DEFAULT = 0.267
     const d2_DEFAULT = 0.445
     const b1_DEFAULT = 0.278
     const b2_DEFAULT = 0.365
-
+    const [d1, _setd1] = useState(d1_DEFAULT)
+    const [d2, _setd2] = useState(d2_DEFAULT)
+    const [b1, _setb1] = useState(b1_DEFAULT)
+    const [b2, _setb2] = useState(b2_DEFAULT)
 
     /**** 
-     * delta time
+     * delta time/ time stepping
      * ****/
-    var dt = 0.25 //time step
     const dt_DEFAULT = 0.25 //time step
+    const [dt, setDeltaT] = useState(dt_DEFAULT)
+
+    const setDefaultParams = () => {
+
+        setAlphaM(alpha_m_DEFAULT)
+        setAlphaN(alpha_n_DEFAULT)
+        setDeltaT(dt_DEFAULT)
+    }
 
 
     var cellsArray: number[][] = []
@@ -100,6 +105,10 @@ const P5Sketch = () => {
         _setSeed(seed);
         resetGrid();
     };
+
+
+
+
     
 
     /********************************************************
@@ -350,25 +359,28 @@ const P5Sketch = () => {
           };
 
 
-    }, [strokePolicy, seedUser, initOption])
+    }, [strokePolicy, seedUser, initOption, b1,b2,d1,d2])
 
 
 //the entropy of the universe is tending to a maximum
     return(
-        <div className={styles.master}>
+    
+        <div className={styles.foreground}>
+
+                <Sparkles
+                    color="random"
+                    count={80}
+                    minSize={7}
+                    maxSize={12}
+                    overflowPx={80}
+                    fadeOutSpeed={30}
+                    flicker={true}
+                />
             <meta name="viewport" content="width=device-height"></meta>
             <div className={styles.title}>
                 The Universe moves to an Entropic Maximum
             </div>
-            <Sparkles
-                color="random"
-                count={40}
-                minSize={12}
-                maxSize={16}
-                overflowPx={30}
-                fadeOutSpeed={30}
-                flicker={false}
-            />
+
             
             <section> 
                 <div className= {styles.life_box} ref={renderRef}></div>
@@ -380,13 +392,15 @@ const P5Sketch = () => {
 
                 <BigBangButton resetHandler={resetGrid}></BigBangButton>
 
-                <SeedInput resetGrid = {resetGrid} setSeed={setSeed} seedUser = {seedUser}/>
+                <SeedInput setSeed={setSeed} seedUser = {seedUser}/>
             </div>
             
             <div className={styles.buttonlayout}>
-                <ParamNav/>
+                <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
+                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2}/>
             </div>
         </div>
+
     )
 }
 

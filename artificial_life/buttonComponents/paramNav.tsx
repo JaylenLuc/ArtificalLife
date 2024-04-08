@@ -1,8 +1,10 @@
-import { useState } from "react";
+"use client"
+import { MouseEventHandler, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import styles from './styles.module.css'
 import Slider from "./slider";
 import Sparkles from 'react-sparkle'
+import {ButtonProps} from './ButtonProp';
 const itemVariants: Variants = {
     open: {
       opacity: 1,
@@ -12,10 +14,14 @@ const itemVariants: Variants = {
     closed: { opacity: 0, y: 20, transition: { duration: 0.2 } }
   };
   
-export default function ParamNav() {
+export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2}:
+    {
+        setb1: Function, b1: number,
+        setb2:  Function, b2: number,
+        setd1: Function, d1: number,
+        setd2 : Function, d2: number,
+    }) {
 const [isOpen, setIsOpen] = useState(false);
-
-
 
 return (
     <div>
@@ -42,15 +48,6 @@ return (
                 }}
                 
             >
-            {/* <Sparkles
-                color="white"
-                count={20}
-                minSize={5}
-                maxSize={10}
-                overflowPx={8}
-                fadeOutSpeed={50}
-                
-            /> */}
 
             <span className = {styles.buttonText}>Adjust Artifical Life Constants</span>
                 <motion.div
@@ -92,7 +89,8 @@ return (
                 style={{ pointerEvents: isOpen ? "auto" : "none" }}
             >
                 <motion.li className={styles.navli} variants={itemVariants}>
-                    <Slider/>
+                    <Slider setd1 = {setd1} d1 = {d1} setd2= {setd2}
+                 d2 = {d2} setb1={setb1} b1={b1} setb2={setb2} b2={b2} />
                 </motion.li>
 
             </motion.ul>
