@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
 import ButtonLayout from  "../buttonComponents/buttonLayout"
@@ -15,7 +15,7 @@ import Sparkles from 'react-sparkle'
 
 
 
-const P5Sketch = () => {
+export const P5Sketch = () => {
 
 
     /********************************************************
@@ -34,11 +34,13 @@ const P5Sketch = () => {
     /**** 
      * radius checks
      * ****/
-    var ra = 11 //outer radius 
-    var ri = ra/3 // inner radius 
+    const ra_DEFAULT = 11
+    // const ra_DEFAULT = 11 
+    const [ra, _setOuterRadius] = useState(ra_DEFAULT)
+    const [ri, _setInnerRadius] = useState(ra_DEFAULT/3)
     var ri_area = Math.PI * (ri*ri)
-    var ra_area = (Math.PI * (ra*ra)) - (ri_area)
-    const ra_DEFAULT = 11 
+    var ra_area  = (Math.PI * (ra*ra)) - (ri_area)
+
     /**** 
      * sigmoid alpha values
      * ****/
@@ -55,6 +57,10 @@ const P5Sketch = () => {
     const d2_DEFAULT = 0.445
     const b1_DEFAULT = 0.278
     const b2_DEFAULT = 0.365
+    // const d1_DEFAULT = 0.365
+    // const d2_DEFAULT = 0.549
+    // const b1_DEFAULT = 0.257
+    // const b2_DEFAULT = 0.336
     const [d1, _setd1] = useState(d1_DEFAULT)
     const [d2, _setd2] = useState(d2_DEFAULT)
     const [b1, _setb1] = useState(b1_DEFAULT)
@@ -63,13 +69,17 @@ const P5Sketch = () => {
     /**** 
      * delta time/ time stepping
      * ****/
-    const dt_DEFAULT = 0.25 //time step
+    const dt_DEFAULT = 0.2 //time step
     const [dt, setDeltaT] = useState(dt_DEFAULT)
 
     const setDefaultParams = () => {
 
         setAlphaM(alpha_m_DEFAULT)
         setAlphaN(alpha_n_DEFAULT)
+        _setd1(d1_DEFAULT)
+        _setd2(d2_DEFAULT)
+        _setb1(b1_DEFAULT)
+        _setb2(b2_DEFAULT)
         setDeltaT(dt_DEFAULT)
     }
 
@@ -105,6 +115,13 @@ const P5Sketch = () => {
         _setSeed(seed);
         resetGrid();
     };
+
+    const setRadius = (e : number) =>{
+        if (e <= 30){
+            _setOuterRadius(e)
+            _setInnerRadius(e/3)
+        }
+    }
 
 
 
@@ -175,7 +192,10 @@ const P5Sketch = () => {
     }
 
     const resetGrid = () => {
-        console.log("in resetGrid: ",seedUser)
+        // console.log("in resetGrid: ", ra)
+        // console.log("in resetGrid: ", ri)
+        // console.log("in resetGrid: ", ri_area)
+
         if (cellsArray.length > 0){
             cellsArray = []
         }
@@ -310,14 +330,19 @@ const P5Sketch = () => {
         //If the transition function in the discrete time-stepping scheme was sd(n, m) then the smooth one is s(n, m) = 2sd(n, m)−1.
         return  2 * sigmoid2(n, sigmoidM(b1,d1,m), sigmoidM(b2,d2,m) ) - 1
     }
+    
 
     const arbitrateMode = () => {
+
+        ri_area = (Math.PI * (ri*ri))
+        ra_area = ((Math.PI * (ra*ra)) - (ri_area))
+ 
+
         switch(initOption){
             case "full":
                 randomizeFullGrid();
                 break;
             case "center":
-                console.log("center")
                 randomizeCenterGrid(0.35);
                 break;
         }
@@ -359,7 +384,7 @@ const P5Sketch = () => {
           };
 
 
-    }, [strokePolicy, seedUser, initOption, b1,b2,d1,d2])
+    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area])
 
 
 //the entropy of the universe is tending to a maximum
@@ -397,11 +422,10 @@ const P5Sketch = () => {
             
             <div className={styles.buttonlayout}>
                 <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
-                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2}/>
+                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra}/>
             </div>
         </div>
 
     )
 }
 
-export default P5Sketch;

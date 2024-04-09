@@ -10,6 +10,7 @@ interface InputProps {
     set:  Function;
     min?: number;
     max?: number;
+    step? : number
 
   }
   //{setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Dispatch<React.SetStateAction<boolean>>, strokePolicy: boolean}
@@ -18,11 +19,14 @@ interface InputProps {
     children,
     set,
     min = 0,
-    max = 1, 
+    max = 1,
+    step = 0.001
   }: InputProps) {
 
     const change = (e : any ) => {
+        console.log("val being set: ",parseFloat(e.target.value))
         set(parseFloat(e.target.value))
+        
         
     }
 
@@ -32,31 +36,31 @@ interface InputProps {
         <input
           value={value}
           type="range"
-          step={0.001}
+          step={step}
           min={min}
           max={max}
-          onChange={change}
+          onChange={(e) => change(e)}
         />
         <input
           type="number"
           value={value}
-          step={0.001}
+          step={step}
           min={min}
           max={max}
-          onChange= {change}
+          onChange= {(e) => change(e)}
         />
       </label>
     );
   }
   
 
-const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2}:
+const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad}:
     {
         setb1: Function, b1: number,
         setb2:  Function, b2: number,
         setd1:  Function, d1: number,
         setd2 : Function, d2: number,
-       
+        setrad : Function , rad : number
     }) => {
 
 
@@ -78,8 +82,13 @@ const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2}:
                 </Input>
             </div>
             <div>            
-                <Input value={d2} set={setd2} >
+                <Input value={d2} set={setd2}>
                 Death 2
+                </Input>
+            </div>
+            <div>            
+                <Input value={rad} set={setrad} step = {1} max={30} min={1}>
+                Radius
                 </Input>
             </div>
 

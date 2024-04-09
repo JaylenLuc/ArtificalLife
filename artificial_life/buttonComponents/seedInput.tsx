@@ -5,7 +5,7 @@ import { useMotionValue, useTransform } from "framer-motion"
 import styles from './styles.module.css'
 import { ButtonProps } from './ButtonProp';
 //{setSeed, resetHandler}:{setSeed: React.Dispatch<React.SetStateAction<number>>, resetHandler : ButtonProps}
-const SeedInput = ( {setSeed, seedUser}: { setSeed : Function , seedUser : number}) =>{
+const SeedInput = ( {setSeed, seedUser }: { setSeed : Function , seedUser : number}) =>{
     const [scope, animate] = useAnimate()
     const [scope1, animate1] = useAnimate()
     const [scope2, animate2] = useAnimate()

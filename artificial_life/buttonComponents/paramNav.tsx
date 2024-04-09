@@ -14,12 +14,13 @@ const itemVariants: Variants = {
     closed: { opacity: 0, y: 20, transition: { duration: 0.2 } }
   };
   
-export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2}:
+export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad}:
     {
         setb1: Function, b1: number,
         setb2:  Function, b2: number,
         setd1: Function, d1: number,
         setd2 : Function, d2: number,
+        setrad : Function, rad : number
     }) {
 const [isOpen, setIsOpen] = useState(false);
 
@@ -90,7 +91,7 @@ return (
             >
                 <motion.li className={styles.navli} variants={itemVariants}>
                     <Slider setd1 = {setd1} d1 = {d1} setd2= {setd2}
-                 d2 = {d2} setb1={setb1} b1={b1} setb2={setb2} b2={b2} />
+                 d2 = {d2} setb1={setb1} b1={b1} setb2={setb2} b2={b2} setrad = {setrad} rad = {rad}/>
                 </motion.li>
 
             </motion.ul>

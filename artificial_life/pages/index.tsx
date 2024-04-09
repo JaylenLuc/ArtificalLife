@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import React, {useEffect } from "react";
-import P5Sketch from "../sketch/sketch";
+import {P5Sketch} from "../sketch/sketch";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
