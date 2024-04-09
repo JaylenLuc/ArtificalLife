@@ -53,14 +53,14 @@ export const P5Sketch = () => {
     /**** 
      * birth and death interval values given by [b1, b2] and [d1, d2] 
      * ****/
-    const d1_DEFAULT = 0.267
-    const d2_DEFAULT = 0.445
-    const b1_DEFAULT = 0.278
-    const b2_DEFAULT = 0.365
-    // const d1_DEFAULT = 0.365
-    // const d2_DEFAULT = 0.549
-    // const b1_DEFAULT = 0.257
-    // const b2_DEFAULT = 0.336
+    // const d1_DEFAULT = 0.267
+    // const d2_DEFAULT = 0.445
+    // const b1_DEFAULT = 0.278
+    // const b2_DEFAULT = 0.365
+    const d1_DEFAULT = 0.365
+    const d2_DEFAULT = 0.549
+    const b1_DEFAULT = 0.257
+    const b2_DEFAULT = 0.336
     const [d1, _setd1] = useState(d1_DEFAULT)
     const [d2, _setd2] = useState(d2_DEFAULT)
     const [b1, _setb1] = useState(b1_DEFAULT)
