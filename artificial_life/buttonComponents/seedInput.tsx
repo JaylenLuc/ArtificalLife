@@ -43,11 +43,12 @@ const SeedInput = ( {setSeed, seedUser }: { setSeed : Function , seedUser : numb
 
         //if no input the default value is 0???
         let newSeed = Number (seedInputText)
-        if (!isNaN(newSeed) && newSeed > 0 && seedUser != newSeed) { 
+        if (!isNaN(newSeed) && newSeed > 0 && seedUser != newSeed && newSeed <= 10000) { 
             console.log("valid and set")
             setSeed(newSeed)
             console.log(seedUser)
         } else{ 
+            setSeedText("")
             console.log("invalid seed")
         }
 
