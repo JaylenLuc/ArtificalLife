@@ -39,7 +39,11 @@ interface InputProps {
           step={step}
           min={min}
           max={max}
-          onChange={(e) => change(e)}
+          onChange={(e) => {
+            
+            change(e)
+            return false;
+        }}
         />
         <input
           type="number"
@@ -47,7 +51,10 @@ interface InputProps {
           step={step}
           min={min}
           max={max}
-          onChange= {(e) => change(e)}
+          onChange= {(e) => {
+            change(e)
+            return false;
+        }}
         />
       </label>
     );
