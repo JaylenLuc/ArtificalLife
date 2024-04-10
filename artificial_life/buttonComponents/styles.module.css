@@ -98,9 +98,9 @@
     width: 180px;
     height: 100px;
     margin-right : 7px;
-    /* background-color: #FFD1DC; */
+    background-color: #AFCBFF;
     text-align: center;
-    background-color: #C3B1E1;
+
     border-radius: 10px;
     animation-name: shutter;
     animation-duration: 1.8s;
@@ -136,22 +136,26 @@
 
 
 .paramNavBar {
-    filter: drop-shadow(1px 1px 1px glow);
-
+    /* animation-name: shutter;
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite; */
     width: 300px;
     background-color: #cab69e;
   }
 
   .navul {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    
+    display: absolute;
+    /* flex-direction: column; */
+    gap: 30px;
     background: whitesmoke;
   }
   
   .navli {
     color: #C3B1E1;
     display: block;
+    
   }
   
   .navul,
@@ -166,3 +170,16 @@
     width: 50px;
     height: 50px;
   }
+  .slider_thumb{
+    animation-name: glow;
+    animation-duration: 1.7s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  /* .slider_thumb::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    animation-name: glow;
+    animation-duration: 1.7s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+  } */

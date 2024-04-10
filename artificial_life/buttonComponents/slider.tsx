@@ -5,7 +5,7 @@ import { useMotionValue, useTransform } from "framer-motion"
 import styles from './styles.module.css'
 import {ButtonProps} from './ButtonProp';
 interface InputProps {
-    children: string;
+    children: any;
     value: number;
     set:  Function;
     min?: number;
@@ -42,6 +42,7 @@ interface InputProps {
       <label>
         <code>{children}</code>
         <input
+        className={styles.slider_thumb}
           value={value}
           type="range"
           step={step}
@@ -83,27 +84,27 @@ const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad}:
         <div>
             <div >
                 <Input value={b1} set={setb1}>
-                Birth 1
+                    <span className = {styles.buttonText}>Birth 1</span>
                 </Input>
             </div>
             <div>
                 <Input value={b2} set={setb2} >
-                Birth 2
+                <span className = {styles.buttonText}>Birth 2</span>
                 </Input>
             </div>
             <div>            
                 <Input value={d1} set={setd1}>
-                Death 1
+                <span className = {styles.buttonText}>Death 1</span>
                 </Input>
             </div>
             <div>            
                 <Input value={d2} set={setd2}>
-                Death 2
+                <span className = {styles.buttonText}>Death 2</span>
                 </Input>
             </div>
             <div>            
-                <Input value={rad} set={setrad} step = {1} max={30} min={1}>
-                Radius
+                <Input value={rad} set={setrad} step = {1} max={25} min={1}>
+                <span className = {styles.buttonText}>Radius</span>
                 </Input>
             </div>
 

@@ -10,12 +10,13 @@ import SeedInput from '../buttonComponents/seedInput';
 import Slider from '@/buttonComponents/slider';
 import ParamNav from '@/buttonComponents/paramNav'
 import Sparkles from 'react-sparkle'
+import { memo } from "react";
 //https://arxiv.org/pdf/1111.1567.pdf
 
 
 
 
-export const P5Sketch = () => {
+const P5Sketch = () => {
 
 
     /********************************************************
@@ -25,7 +26,7 @@ export const P5Sketch = () => {
     const renderRef = useRef(null);
     var WIDTH_HEIGHT = 125 //the true number of cells WIDTH_HEIGHT ^ 2
     //const HEIGHT = 150
-    var SIZE = 4
+    var SIZE = 3.7
     const RGB_MIN_RANGE = 255 //min range
 
     const [strokePolicy, setStrokePolicy] = useState(false)
@@ -69,7 +70,7 @@ export const P5Sketch = () => {
     /**** 
      * delta time/ time stepping
      * ****/
-    const dt_DEFAULT = 0.2 //time step
+    const dt_DEFAULT = 0.25 //time step
     const [dt, setDeltaT] = useState(dt_DEFAULT)
 
     const setDefaultParams = () => {
@@ -117,7 +118,7 @@ export const P5Sketch = () => {
     };
 
     const setRadius = (e : number) =>{
-        if (e <= 30){
+        if (e <= 25){
             _setOuterRadius(e)
             _setInnerRadius(e/3)
         }
@@ -184,7 +185,7 @@ export const P5Sketch = () => {
                 if ((col > center_start && col <= center_end) && 
                 (row > center_start && row <= center_end)) cellsArray[row].push( random_number(row,col));
 
-                else cellsArray[row].push(0);
+                else cellsArray[row].push(seedUser != 0? random_number(row,col)/10 : 0);
                
             }
             
@@ -246,8 +247,11 @@ export const P5Sketch = () => {
       };
 
     const generalizeTransitionFunc = ( ) => {
-        for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
-            for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
+        let row = 0
+        let col = 0 
+        while ( row < WIDTH_HEIGHT){
+
+            while(col < WIDTH_HEIGHT){
                 let m_n : Array<number> =  fillingIntegralN_M(row, col)
                 let new_value = dt * transitionFunc_S(m_n[1], m_n[0]) // [-1,1]
                 //console.log(new_value)
@@ -255,9 +259,12 @@ export const P5Sketch = () => {
                 //console.log("not clamped: ", new_value)
                 //f(~x, t + dt) = f(~x, t) + dt S[s(n, m)] f(~x, t)
                 cellsArray[row][col] = clamp_test(cellsArray[row][col] + new_value, 0, 1 ) 
+                col++
 
 
             }
+            col = 0 
+            row += 1
 
         }
 
@@ -282,8 +289,6 @@ export const P5Sketch = () => {
         let c_col : number = _col
         let m : number = 0 
         let n : number = 0 
-        let M : number = 0 
-        let N : number = 0 
 
         for (let d_row = -(ra - 1) ; d_row < (ra - 1); ++d_row){ //iterate over the outer radius 
             let real_pos_row = emod(d_row + c_row, WIDTH_HEIGHT)
@@ -429,3 +434,4 @@ export const P5Sketch = () => {
     )
 }
 
+export default memo(P5Sketch)
