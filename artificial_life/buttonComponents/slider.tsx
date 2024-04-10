@@ -24,9 +24,17 @@ interface InputProps {
   }: InputProps) {
 
     const change = (e : any ) => {
-        console.log("val being set: ",parseFloat(e.target.value))
-        set(parseFloat(e.target.value))
-        
+        let targetVal = parseFloat(e.target.value)
+        //console.log("val being set: ",parseFloat(e.target.value))
+        if (!isNaN(targetVal)){
+            if (value == 0){
+                set(targetVal/10)
+            }else{
+                set(targetVal)
+            }
+        }else{
+            set(0)
+        }
         
     }
 
@@ -46,7 +54,7 @@ interface InputProps {
         }}
         />
         <input
-          type="number"
+          type="float"
           value={value}
           step={step}
           min={min}
