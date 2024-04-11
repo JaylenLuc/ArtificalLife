@@ -9,6 +9,7 @@ import BigBangButton from "../buttonComponents/bigBangButton"
 import SeedInput from '../buttonComponents/seedInput';
 import Slider from '@/buttonComponents/slider';
 import ParamNav from '@/buttonComponents/paramNav'
+import FourDButton from '@/buttonComponents/4DButton';
 import Sparkles from 'react-sparkle'
 import { memo } from "react";
 //https://arxiv.org/pdf/1111.1567.pdf
@@ -26,7 +27,7 @@ const P5Sketch = () => {
     const renderRef = useRef(null);
     var WIDTH_HEIGHT = 125 //the true number of cells WIDTH_HEIGHT ^ 2
     //const HEIGHT = 150
-    var SIZE = 3.7
+    var SIZE = 4
     const RGB_MIN_RANGE = 255 //min range
 
     const [strokePolicy, setStrokePolicy] = useState(false)
@@ -37,6 +38,10 @@ const P5Sketch = () => {
      * ****/
     const ra_DEFAULT = 11
     // const ra_DEFAULT = 11 
+    var noLoop = false
+    const setnoLoop = (loopVal : boolean = !noLoop) => {
+        noLoop = loopVal
+    }
     const [ra, _setOuterRadius] = useState(ra_DEFAULT)
     const [ri, _setInnerRadius] = useState(ra_DEFAULT/3)
     var ri_area = Math.PI * (ri*ri)
@@ -86,6 +91,11 @@ const P5Sketch = () => {
 
 
     var cellsArray: number[][] = []
+
+    const compute_index = (row : number, col : number )  => {
+
+        
+    }
 
     //randomize the grid 
     //determine from the randomziex numbers what we render
@@ -200,6 +210,7 @@ const P5Sketch = () => {
         if (cellsArray.length > 0){
             cellsArray = []
         }
+        setnoLoop(false)
         arbitrateMode()
     }
 
@@ -372,12 +383,19 @@ const P5Sketch = () => {
             }
 
             p.draw = () => {
-                    
                 p.background(0,0,0);
 
-                generalizeTransitionFunc()
-                
+                // console.time('generalizeTransitionFunc')
+                if (!noLoop){
+                    generalizeTransitionFunc()
+
+                    // console.timeEnd('generalizeTransitionFunc')
+
+                    //console.log( "loooping", cellsArray[13][55])
+                   
+                }
                 fillGrid(p);
+                //console.log( "OUTTA", cellsArray[13][55])
             }
 
         })
@@ -389,7 +407,7 @@ const P5Sketch = () => {
           };
 
 
-    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area])
+    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop,])
 
 
 //the entropy of the universe is tending to a maximum
@@ -428,6 +446,8 @@ const P5Sketch = () => {
             <div className={styles.buttonlayout}>
                 <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
                  d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra}/>
+
+                <FourDButton setNoLoop = {setnoLoop} noLoop = {noLoop}/>
             </div>
         </div>
 
