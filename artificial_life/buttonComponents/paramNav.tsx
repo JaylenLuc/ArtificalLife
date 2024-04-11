@@ -5,6 +5,7 @@ import styles from './styles.module.css'
 import Slider from "./slider";
 import Sparkles from 'react-sparkle'
 import {ButtonProps} from './ButtonProp';
+import ResetButton from "./resetButton";
 const itemVariants: Variants = {
     open: {
       opacity: 1,
@@ -14,13 +15,14 @@ const itemVariants: Variants = {
     closed: { opacity: 0, y: 20, transition: { duration: 0.2 } }
   };
   
-export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad}:
+export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad, resetSettings}:
     {
         setb1: Function, b1: number,
         setb2:  Function, b2: number,
         setd1: Function, d1: number,
         setd2 : Function, d2: number,
-        setrad : Function, rad : number
+        setrad : Function, rad : number,
+        resetSettings : Function
     }) {
     const [scope, animate] = useAnimate()
      const setIsOpen = (val : boolean) => {
@@ -113,7 +115,7 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
                         <Slider setd1 = {setd1} d1 = {d1} setd2= {setd2}
                     d2 = {d2} setb1={setb1} b1={b1} setb2={setb2} b2={b2} setrad = {setrad} rad = {rad}/>
                     </motion.li>
-
+                    <ResetButton resetSettings = {resetSettings}/>
                 </motion.ul>
 
                 

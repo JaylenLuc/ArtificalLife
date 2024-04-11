@@ -80,13 +80,11 @@ const P5Sketch = () => {
 
     const setDefaultParams = () => {
 
-        setAlphaM(alpha_m_DEFAULT)
-        setAlphaN(alpha_n_DEFAULT)
         _setd1(d1_DEFAULT)
         _setd2(d2_DEFAULT)
         _setb1(b1_DEFAULT)
         _setb2(b2_DEFAULT)
-        setDeltaT(dt_DEFAULT)
+
     }
 
 
@@ -445,7 +443,7 @@ const P5Sketch = () => {
             
             <div className={styles.buttonlayout}>
                 <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
-                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra}/>
+                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}/>
 
                 <FourDButton setNoLoop = {setnoLoop} noLoop = {noLoop}/>
             </div>

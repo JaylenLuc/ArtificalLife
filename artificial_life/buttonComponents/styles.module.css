@@ -150,6 +150,10 @@
     /* flex-direction: column; */
     gap: 30px;
     background: whitesmoke;
+    background: linear-gradient(-45deg, #faedcb, #c6def1, #dbcdf0, #f2c6de);
+	background-size: 400% 400%;
+	animation: gradient 5s ease infinite;
+  
   }
   
   .navli {
@@ -198,3 +202,28 @@
     /* border-radius: 50px;
     box-shadow: grey; */
   }
+
+  .resetButton {
+    width: 120px;
+    height: 40px;
+    margin-right : 7px;
+    /* background-color: #FFD1DC; */
+    text-align: center;
+    border-radius: 10px;
+    stroke-width: 10px;
+    /* border-radius: 50px;
+    box-shadow: grey; */
+  }
+
+  @keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
