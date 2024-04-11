@@ -82,7 +82,7 @@ const ResetButton = ({ resetSettings } :{resetSettings : Function}) =>{
                 <motion.div
                 className= {styles.bigBangButt}
                 initial={{ opacity: 0, scale: 0.5 }}
-                style={{backgroundColor: "#b0b5ed"}}
+                style={{backgroundColor: "#dab894"}}
                 ref={scope}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{

@@ -150,9 +150,9 @@
     /* flex-direction: column; */
     gap: 30px;
     background: whitesmoke;
-    background: linear-gradient(-45deg, #faedcb, #c6def1, #dbcdf0, #f2c6de);
+    background: linear-gradient(-45deg, #ffadad, #ffd6a5,#fdffb6,#caffbf,#9bf6ff,#a0c4ff,#bdb2ff,#ffc6ff );
 	background-size: 400% 400%;
-	animation: gradient 5s ease infinite;
+	animation: gradient 3s ease infinite;
   
   }
   
