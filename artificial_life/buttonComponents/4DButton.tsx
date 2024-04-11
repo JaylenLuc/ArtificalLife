@@ -79,11 +79,11 @@ const FourDButton = ({ setNoLoop, noLoop }: {setNoLoop : Function, noLoop : bool
     }
 
     return (
-            <div  className= {styles.bigBangButt}>
+            <div  className= {styles.fourd}>
                 <motion.div
                 className= {styles.bigBangButt}
                 initial={{ opacity: 0, scale: 0.5 }}
-                style={{backgroundColor: "#d2e7d6"}}
+                style={{backgroundColor: "#FFFAA0"}}
                 ref={scope}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{

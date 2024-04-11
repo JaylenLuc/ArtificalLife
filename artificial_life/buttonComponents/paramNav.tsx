@@ -56,7 +56,7 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
                     whileTap={{ scale: 0.5 }}
                     onClick={() => setIsOpen(!isOpen)}
                     transition={{
-                        duration: 2.5,
+                        duration: 3.5,
                         ease: [0, 1, 0.3, 1.01],
                         scale: {
                         type: "spring",

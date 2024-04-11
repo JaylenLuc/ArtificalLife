@@ -101,7 +101,7 @@ const SeedInput = ( {setSeed, seedUser }: { setSeed : Function , seedUser : numb
                 // }}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{
-                  duration: 2.5,
+                  duration: 4.5,
                   ease: [0, 1, 0.3, 1.01],
                   scale: {
                     type: "spring",

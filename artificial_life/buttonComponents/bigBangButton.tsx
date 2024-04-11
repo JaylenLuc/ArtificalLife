@@ -86,7 +86,7 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
                 ref={scope}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{
-                  duration: 2.5,
+                  duration: 2,
                   ease: [0, 1, 0.3, 1.01],
                   scale: {
                     type: "spring",
