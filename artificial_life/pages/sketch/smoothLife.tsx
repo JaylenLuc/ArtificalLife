@@ -462,12 +462,12 @@ export default function P5Sketch () {
                 <Sparkles
                     color="random"
                     count={80}
-                    minSize={7}
-                    maxSize={12}
+                    minSize={9}
+                    maxSize={14}
                     overflowPx={80}
                     fadeOutSpeed={30}
                     flicker={true}
-                />
+            />
             <meta name="viewport" content="width=device-height"></meta>
             <div className={styles.title}>
                 The Universe moves to an Entropic Maximum
