@@ -202,6 +202,26 @@
     box-shadow: grey; */
   }
 
+  .colorchange{
+    background: linear-gradient(-95deg,#C1E1C1, #C3B1E1, #A7C7E7, #F8C8DC);
+    background-size: 400% 300%;
+    animation-name: shutter, gradient;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+    width: 120px;
+    height: 40px;
+
+    /* background-color: #FFD1DC; */
+    text-align: center;
+    border-radius: 10px;
+    /* border-radius: 50px;
+    box-shadow: grey; */
+
+    /* animation: gradient 1s ease infinite; */
+  }
+
+
   .resetButton {
     width: 120px;
     height: 40px;

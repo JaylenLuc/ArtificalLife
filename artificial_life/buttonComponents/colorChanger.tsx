@@ -24,11 +24,11 @@ const ColorButton = ({ changeColor } :{changeColor : Function}) =>{
     }
 
     return (
-            <div  className= {styles.fourd}>
+            <div >
                 <motion.div
-                className= {styles.bigBangButt}
+                className= {styles.colorchange}
                 initial={{ opacity: 0, scale: 0.5 }}
-                style={{backgroundColor: "#FAC898"}}
+                
                 ref={scope}
                 animate={ { opacity: 1, scale: 1}}
                 transition={{
