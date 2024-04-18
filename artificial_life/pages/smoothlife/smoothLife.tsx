@@ -100,10 +100,14 @@ export default function P5Sketch () {
     }
 
 
-    var cellsArray: number[][] = []
+    var cellsArray: number[] = []
 
-    const compute_index = (row : number, col : number )  => {
-
+    const push_cellsAray = (row : number, col : number, val : number )  => {
+        cellsArray[WIDTH_HEIGHT * row + col] = val;  
+        
+    }
+    const get_cellsAray = (row : number, col : number )  => {
+        return cellsArray[WIDTH_HEIGHT * row + col];
         
     }
 
@@ -167,14 +171,14 @@ export default function P5Sketch () {
 
     const randomizeFullGrid = () => {
         
-        for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
-            cellsArray.push([])
-            for (let col = 0; col< WIDTH_HEIGHT; col ++){
-                cellsArray[row].push( Math.random());
+        // for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
+        //     cellsArray.push([])
+        //     for (let col = 0; col< WIDTH_HEIGHT; col ++){
+        //         cellsArray[row].push( Math.random());
                 
-            }
+        //     }
         
-        }
+        // }
 
     }
 
@@ -182,9 +186,9 @@ export default function P5Sketch () {
     const initGridZero = () => {
         //this function will likely be called first
         for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
-            cellsArray.push([])
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
-                cellsArray[row].push( 0 );
+                
+                push_cellsAray(row, col, 0)
                 
             }
         
@@ -200,12 +204,10 @@ export default function P5Sketch () {
         let center_end =   center_grid + center_diff
 
         for (let row = 0 ; row < WIDTH_HEIGHT; row ++){
-            cellsArray.push([])
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
                 if ((col > center_start && col <= center_end) && 
-                (row > center_start && row <= center_end)) cellsArray[row].push( random_number(row,col));
-
-                else cellsArray[row].push(seedUser != 0? random_number(row,col)/10 : 0);
+                (row > center_start && row <= center_end)) push_cellsAray(row, col, random_number(row,col));
+                else push_cellsAray(row, col, seedUser != 0? random_number(row,col)/10 : 0);
                
             }
             
@@ -233,7 +235,7 @@ export default function P5Sketch () {
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
                 
                 yPos += SIZE
-                let current_state = cellsArray[row][col]
+                let current_state = get_cellsAray(row, col)
                 
                 
                 
@@ -282,7 +284,7 @@ export default function P5Sketch () {
                 //smooth time stepping scheme 
                 //console.log("not clamped: ", new_value)
                 //f(~x, t + dt) = f(~x, t) + dt S[s(n, m)] f(~x, t)
-                cellsArray[row][col] = clamp_test(cellsArray[row][col] + new_value, 0, 1 ) 
+                push_cellsAray(row, col, clamp_test(get_cellsAray(row, col) + new_value, 0, 1 )) 
                 col++
 
 
@@ -321,11 +323,12 @@ export default function P5Sketch () {
                 let real_pos_col = emod(d_col + c_col, WIDTH_HEIGHT)
 
                 if (d_row*d_row + d_col* d_col  <= ri*ri){ //inner
-                    m  += cellsArray[real_pos_row][real_pos_col]
+                    
+                    m  += get_cellsAray(real_pos_row,real_pos_col)
                     //M ++
 
                 }else if (d_row*d_row + d_col* d_col  <= ra*ra) {//outer
-                    n += cellsArray[real_pos_row][real_pos_col]
+                    n +=  get_cellsAray(real_pos_row,real_pos_col)
                     //N ++
                 }
                 
@@ -438,12 +441,11 @@ export default function P5Sketch () {
                 if (!strokePolicy) p.noStroke()
                 let color = ""
                 switch(colorScheme){
-                    case 0 : color = p.RGB; break;
-                    case 1 : color = p.HSB; break;
-                    case 2: color = p.HSL; break;
-                    default: color = p.RGB
+                    case 0 :  p.colorMode(p.RGB); break;
+                    case 1 :  p.colorMode(p.HSB); break;
+                    case 2:  p.colorMode(p.HSL); break;
+                    default:  p.colorMode(p.RGB);
                 }
-                p.colorMode(color);
 
                 arbitrateMode()
                 
@@ -468,6 +470,7 @@ export default function P5Sketch () {
                 fillGrid(p, myShader);
                 //console.log( "OUTTA", cellsArray[13][55])
                 //console.log("FPS: " + fps.toFixed(2));
+                console.log(p.frameRate());
             }
 
         })
