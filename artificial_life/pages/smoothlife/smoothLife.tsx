@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { motion } from "framer-motion"
+import { color, motion } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
 import ButtonLayout from  "../../buttonComponents/buttonLayout"
 import styles from './styles.module.css'
@@ -11,8 +11,10 @@ import Slider from '@/buttonComponents/slider';
 import ParamNav from '@/buttonComponents/paramNav'
 import FourDButton from '@/buttonComponents/4DButton';
 import Sparkles from 'react-sparkle'
+import ColorButton from '@/buttonComponents/colorChanger';
 import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
+import { Color } from 'p5';
 //https://arxiv.org/pdf/1111.1567.pdf
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
@@ -34,6 +36,12 @@ export default function P5Sketch () {
     const [strokePolicy, setStrokePolicy] = useState(false)
     const [initOption, setInitPolicy] = useState("center")
     const [seedUser, _setSeed] = useState(0)
+    const [colorScheme, _setColorScheme] = useState(0)
+    const setColorScheme = () => {
+        _setColorScheme((colorScheme + 1) % 3)
+        //console.log(colorScheme)
+
+    }
     /**** 
      * radius checks
      * ****/
@@ -86,6 +94,8 @@ export default function P5Sketch () {
         _setd2(d2_DEFAULT)
         _setb1(b1_DEFAULT)
         _setb2(b2_DEFAULT)
+        setRadius(ra_DEFAULT)
+
 
     }
 
@@ -410,23 +420,40 @@ export default function P5Sketch () {
     //     }`;
     useEffect(() => {
         const p5 = require("p5");
+        
+        p5.disableFriendlyErrors = true;
         var myShader: any;
+        var fps ;
         const p5instance = new p5((p : any) => {
-
+            
             //  p.preload = () => {
             //     // load each shader file (don't worry, we will come back to these!)
             //     myShader = p.createShader(vertex, fragment);
             //   }
             p.setup = () => {
+                
+                //console.log("HERE:", p5.disableFriendlyErrors )
                 p.createCanvas( WIDTH_HEIGHT * SIZE, WIDTH_HEIGHT * SIZE).parent(renderRef.current);
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
                 if (!strokePolicy) p.noStroke()
+                let color = ""
+                switch(colorScheme){
+                    case 0 : color = p.RGB; break;
+                    case 1 : color = p.HSB; break;
+                    case 2: color = p.HSL; break;
+                    default: color = p.RGB
+                }
+                p.colorMode(color);
+
                 arbitrateMode()
+                
+                
 
 
             }
 
             p.draw = () => {
+               //fps = p.frameRate();
                 p.background(0,0,0);
                 //p.shader(myShader)
                 // console.time('generalizeTransitionFunc')
@@ -440,6 +467,7 @@ export default function P5Sketch () {
                 }
                 fillGrid(p, myShader);
                 //console.log( "OUTTA", cellsArray[13][55])
+                //console.log("FPS: " + fps.toFixed(2));
             }
 
         })
@@ -451,7 +479,7 @@ export default function P5Sketch () {
           };
 
 
-    }, [ strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop,])
+    }, [ strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop, colorScheme])
 
 
 //the entropy of the universe is tending to a maximum
@@ -488,10 +516,15 @@ export default function P5Sketch () {
             </div>
             <br></br>
             <div className={styles.buttonlayout}>
-                <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
-                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}/>
+                <ColorButton changeColor = {setColorScheme}/>
                 <FourDButton setNoLoop = {setnoLoop} noLoop = {noLoop}/>
             </div>
+            <div className={styles.buttonlayout}>
+                <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
+                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}/>
+                
+            </div>
+            
 
         </div>
 
