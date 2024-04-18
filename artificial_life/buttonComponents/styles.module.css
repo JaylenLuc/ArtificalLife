@@ -55,7 +55,6 @@
     animation-duration: 1.8s;
     animation-timing-function: ease-in-out;
     animation-iteration-count:infinite;
-    margin-right: 1px;
     width: 120px;
     height: 40px;
     background: var(--accent);
@@ -72,7 +71,7 @@
     animation-iteration-count:infinite;
     width: 120px;
     height: 40px;
-    margin-right : 7px;
+
     /* background-color: #FFD1DC; */
     text-align: center;
     border-radius: 10px;
@@ -195,7 +194,7 @@
     animation-iteration-count:infinite;
     width: 120px;
     height: 40px;
-    margin-right : 7px;
+
     /* background-color: #FFD1DC; */
     text-align: center;
     border-radius: 10px;
@@ -206,7 +205,6 @@
   .resetButton {
     width: 120px;
     height: 40px;
-    margin-right : 7px;
     /* background-color: #FFD1DC; */
     text-align: center;
     border-radius: 10px;

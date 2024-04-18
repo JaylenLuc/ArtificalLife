@@ -3,21 +3,22 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
-import ButtonLayout from  "../buttonComponents/buttonLayout"
+import ButtonLayout from  "../../buttonComponents/buttonLayout"
 import styles from './styles.module.css'
-import BigBangButton from "../buttonComponents/bigBangButton"
-import SeedInput from '../buttonComponents/seedInput';
+import BigBangButton from "../../buttonComponents/bigBangButton"
+import SeedInput from '../../buttonComponents/seedInput';
 import Slider from '@/buttonComponents/slider';
 import ParamNav from '@/buttonComponents/paramNav'
 import FourDButton from '@/buttonComponents/4DButton';
 import Sparkles from 'react-sparkle'
 import { memo } from "react";
+import { Mystery_Quest } from 'next/font/google';
 //https://arxiv.org/pdf/1111.1567.pdf
 
+//FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
 
-
-const P5Sketch = () => {
+export default function P5Sketch () {
 
 
     /********************************************************
@@ -67,6 +68,7 @@ const P5Sketch = () => {
     // const d2_DEFAULT = 0.549
     // const b1_DEFAULT = 0.257
     // const b2_DEFAULT = 0.336
+    //var d1 = d1_DEFAULT
     const [d1, _setd1] = useState(d1_DEFAULT)
     const [d2, _setd2] = useState(d2_DEFAULT)
     const [b1, _setb1] = useState(b1_DEFAULT)
@@ -212,17 +214,16 @@ const P5Sketch = () => {
         arbitrateMode()
     }
 
-    const fillGrid = (p : any) => {
+    const fillGrid = (p : any, myShader : any) => {
         //it takes the rand nums in the grid and draws the color based on the numbers in the grid
-        let xPos = 0 ;
-        let yPos = 0 ;
+        let xPos = 0;
+        let yPos = 0;
         for (let row = 0; row < WIDTH_HEIGHT; row ++){
-            xPos += SIZE
+            xPos += SIZE 
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
                 
                 yPos += SIZE
                 let current_state = cellsArray[row][col]
-                if (!strokePolicy) p.noStroke()
                 
                 
                 
@@ -233,9 +234,13 @@ const P5Sketch = () => {
                 this can be changed with the fill value determining 
                 only some of the RGB values , play around 
                 */
-                p.fill(fill_value,fill_value , fill_value)
 
+                //myShader.setUniform('myColor', [fill_value,fill_value,fill_value])
+                p.fill(fill_value,fill_value,fill_value)
                 p.circle(yPos, xPos , SIZE);  
+
+                // p.fill(70,70,70)
+                // p.circle(yPos, xPos , 5);  
             
 
             }
@@ -367,14 +372,55 @@ const P5Sketch = () => {
 
     /******************************************************
     ********************************************************/
+    // const vertex  = `
+    //     precision highp float;
+    //     uniform mat4 uModelViewMatrix;
+    //     uniform mat4 uProjectionMatrix;
 
+    //     attribute vec3 aPosition;
+    //     attribute vec2 aTexCoord;
+    //     varying vec2 vTexCoord;
+
+    //     void main() {
+    //     vTexCoord = aTexCoord;
+    //     vec4 positionVec4 = vec4(aPosition, 1.0);
+    //     gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;
+    //     }
+    //     `;
+
+
+    //     // the fragment shader is called for each pixel
+    // const fragment  = `
+    //     precision highp float;
+    //     uniform vec2 p;
+    //     uniform float r;
+    //     const int I = 500;
+    //     varying vec2 vTexCoord;
+    //     void main() {
+    //         vec2 c = p + gl_FragCoord.xy * r, z = c;
+    //         float n = 0.0;
+    //         for (int i = I; i > 0; i --) {
+    //         if(z.x*z.x+z.y*z.y > 4.0) {
+    //             n = float(i)/float(I);
+    //             break;
+    //         }
+    //         z = vec2(z.x*z.x-z.y*z.y, 2.0*z.x*z.y) + c;
+    //         }
+    //         gl_FragColor = vec4(0.5-cos(n*17.0)/2.0,0.5-cos(n*13.0)/2.0,0.5-cos(n*23.0)/2.0,1.0);
+    //     }`;
     useEffect(() => {
         const p5 = require("p5");
-
+        var myShader: any;
         const p5instance = new p5((p : any) => {
+
+            //  p.preload = () => {
+            //     // load each shader file (don't worry, we will come back to these!)
+            //     myShader = p.createShader(vertex, fragment);
+            //   }
             p.setup = () => {
                 p.createCanvas( WIDTH_HEIGHT * SIZE, WIDTH_HEIGHT * SIZE).parent(renderRef.current);
                 //p.createGraphics( WIDTH_HEIGHT + 200,WIDTH_HEIGHT + 200)
+                if (!strokePolicy) p.noStroke()
                 arbitrateMode()
 
 
@@ -382,7 +428,7 @@ const P5Sketch = () => {
 
             p.draw = () => {
                 p.background(0,0,0);
-
+                //p.shader(myShader)
                 // console.time('generalizeTransitionFunc')
                 if (!noLoop){
                     generalizeTransitionFunc()
@@ -392,7 +438,7 @@ const P5Sketch = () => {
                     //console.log( "loooping", cellsArray[13][55])
                    
                 }
-                fillGrid(p);
+                fillGrid(p, myShader);
                 //console.log( "OUTTA", cellsArray[13][55])
             }
 
@@ -405,7 +451,7 @@ const P5Sketch = () => {
           };
 
 
-    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop,])
+    }, [ strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop,])
 
 
 //the entropy of the universe is tending to a maximum
@@ -440,16 +486,16 @@ const P5Sketch = () => {
 
                 <SeedInput setSeed={setSeed} seedUser = {seedUser}/>
             </div>
-            
+            <br></br>
             <div className={styles.buttonlayout}>
                 <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
                  d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}/>
-
                 <FourDButton setNoLoop = {setnoLoop} noLoop = {noLoop}/>
             </div>
+
         </div>
 
     )
 }
 
-export default memo(P5Sketch)
+//export default memo(P5Sketch)
