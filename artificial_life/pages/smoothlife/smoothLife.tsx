@@ -3,15 +3,15 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { color, motion } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
-import ButtonLayout from  "../../buttonComponents/buttonLayout"
+import ButtonLayout from  "../../SmoothLifeComponents/buttonLayout"
 import styles from './styles.module.css'
-import BigBangButton from "../../buttonComponents/bigBangButton"
-import SeedInput from '../../buttonComponents/seedInput';
-import Slider from '@/buttonComponents/slider';
-import ParamNav from '@/buttonComponents/paramNav'
-import FourDButton from '@/buttonComponents/4DButton';
+import BigBangButton from "../../SmoothLifeComponents/bigBangButton"
+import SeedInput from '../../SmoothLifeComponents/seedInput';
+import Slider from '@/SmoothLifeComponents/slider';
+import ParamNav from '@/SmoothLifeComponents/paramNav'
+import FourDButton from '@/SmoothLifeComponents/4DButton';
 import Sparkles from 'react-sparkle'
-import ColorButton from '@/buttonComponents/colorChanger';
+import ColorButton from '@/SmoothLifeComponents/colorChanger';
 import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
 import { Color } from 'p5';

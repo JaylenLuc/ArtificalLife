@@ -1,0 +1,11 @@
+.foreground{
+    height: 120vh;
+    width: 100vw;
+    position: relative;
+    background-color: black;
+}
+
+.julia_box{
+    width: 50%;
+    margin : auto;
+}

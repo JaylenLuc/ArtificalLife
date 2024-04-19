@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles.module.css'
+import C_inout from '@/JuliaComponents/C_inout';
 import { add, complex, multiply } from 'mathjs';
 //https://arxiv.org/pdf/1111.1567.pdf
 
@@ -10,13 +11,17 @@ import { add, complex, multiply } from 'mathjs';
 
 export default function JuliaMain () {
     const renderRef = useRef(null);
-    const WIDTH = 600
-    const HEIGHT = 300
+    const WIDTH_HEIGHT = 760
     const MAX_ITER = 100;
-    const c_DEFUALT = [0.274, .008]
+    const c_DEFUALT = [-.70176, -.3842] // must be bounded by |c| <= R
     const R = 2
-    var c = c_DEFUALT // - (.008 * Math.)
-    const [free, setFree ] = useState(true)
+    const [c, _setC] = useState(c_DEFUALT) // - (.008 * Math.)
+    const [c_alias, _setC_alias] = useState(c_DEFUALT) // - (.008 * Math.)
+    
+
+    const minzoom = -0.5
+    const maxzoom = 0.5
+
     const normalize_to_scale = (a : number, b : number, value : number, min_value : number, max_value : number) => {
         let res =  (b - a) * ((value - min_value)/(max_value - min_value)) + a
         //console.log(res)
@@ -31,46 +36,53 @@ export default function JuliaMain () {
         )
     }
 
-    const generateJuliaSet = (p : any) => {
+
+    const push_cellsAray = (p: any, row : number, col : number, val : number[] )  => {
+        let pixel = (WIDTH_HEIGHT * row + col) * 4
+        p.pixels[pixel] = val[0];  
+        p.pixels[pixel + 1] = val[1];  
+        p.pixels[pixel + 2] = val[2];  
+        p.pixels[pixel + 3] = val[3];  
         
-        for  (let row = 0 ; row < HEIGHT; row ++){
-            let rest_row_value = normalize_to_scale(-R, R, row, 0, HEIGHT)
-            //console.log(rest_row_value)
-            for (let col = 0 ; col < WIDTH; col ++){
-                let zcol = normalize_to_scale(-R, R, col, 0, WIDTH)
-                let zrow = rest_row_value
+    }
 
-               // console.log(zrow,zcol)
+    const generate_julia = (p : any ) => {
+        for  (let row = 0 ; row < WIDTH_HEIGHT; row ++){
+            for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
+                let b = normalize_to_scale(-R, R, row, 0, WIDTH_HEIGHT)
+                let a = normalize_to_scale(-R, R, col, 0, WIDTH_HEIGHT)
+                let ca = a
+                let cb = b
                 let iterations = 0 
-                let z = [zcol, zrow]
-                
-                //find the magnitude of the complex number 
-                while( (zrow * zrow + zcol * zcol < R*R) && (iterations < MAX_ITER)){
-                     
-                    z = julia_function(z[0], z[1]) 
-                    let xtemp = zrow * zrow - zcol * zcol;
-                    zrow = 2 * zcol * zrow  + c[1];
-                    zcol = xtemp + c[0];
-                    //z = julia_function(z[0], z[1])
-                    //console.log(z)
-                    iterations += 1
+                // Math.abs(a + b) < R &&
+                while (a + b < R && iterations < MAX_ITER){
+                    //here you want to calculate z^2 -> a^2 - b^2 + 2abi
+                    let newa = (a * a - b * b) + c[0]
+                    let newb = (2 * a * b) + c[1]
+                    a = newa
+                    b = newb
+                    iterations ++
+                    
 
+                }
+                let color = 15
+                if (iterations == MAX_ITER){ //bounded
+                    
+                    color = 0
+                   
+                }else{
+                    //log2(log2|z|) 
+                    iterations = iterations - Math.log2(Math.log2(Math.abs(a + b)))
+                    //color = normalize_to_scale(0, 1, iterations, 0, MAX_ITER) 
+                    color = normalize_to_scale(0, 255, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER)), 0, 1)
                     
                 }
-                if (iterations < MAX_ITER ){
-                    
-                    let fill_val = normalize_to_scale(0, 255, iterations, 0, 499)
-                    //console.log(fill_val)
-                    p.fill(fill_val,fill_val,fill_val)
-               
-                }
-                // console.log(iterations)
-                p.circle(col, row ,1);  
-
+                push_cellsAray(p, row, col, [89,color,177,255])
             }
+
         }
-        setFree(false)
-    }   
+
+    }
 
 
 
@@ -84,14 +96,32 @@ export default function JuliaMain () {
             //     myShader = p.createShader(vertex, fragment);
             //   }
             p.setup = () => {
-                p.createCanvas( WIDTH, HEIGHT).parent(renderRef.current);
-                p.noStroke()
+                p.createCanvas( WIDTH_HEIGHT, WIDTH_HEIGHT).parent(renderRef.current);
+                p.pixelDensity(1)
+                p.willReadFrequently = true
+                
+                
+
             }
 
             p.draw = () => {
+                if (p.mouseIsPressed){
+                    //a : number, b : number, value : number, min_value : number, max_value : number
 
-                p.background(0,0,0);
-                if (free) generateJuliaSet(p);
+                    let newC = [normalize_to_scale(-1,1, p.mouseX, 0, WIDTH_HEIGHT),
+                    normalize_to_scale(-1,1, p.mouseY, 0, WIDTH_HEIGHT)]
+                    c[0] = newC[0]
+                    c[1] = newC[1]
+                    _setC_alias(newC)
+                    //console.log(c)
+                    
+
+                }
+                p.loadPixels()
+                generate_julia(p)
+                p.updatePixels();
+                //p.background(0,0,0);
+                //if (free) generateJuliaSet(p);
                 // console.log(p.frameRate());
             }
         })
@@ -108,10 +138,12 @@ export default function JuliaMain () {
 
     
 return (
-    
-        <div ref={renderRef}>
 
-        </div>
+    <div className = {styles.foreground}>
+        <meta name="viewport" content="width=device-height"></meta>
+        <div className={styles.julia_box} ref={renderRef}></div>
+        <C_inout c= {c_alias} setC = {_setC_alias}/> 
+    </div>
 
     )
 }

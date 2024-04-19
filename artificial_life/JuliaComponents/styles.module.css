@@ -1,0 +1,10 @@
+.c_inout{
+    margin-left: 4px;
+    width : 120px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+}
