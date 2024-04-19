@@ -51,8 +51,8 @@ export default function JuliaMain () {
             for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
                 let b = normalize_to_scale(-R, R, row, 0, WIDTH_HEIGHT)
                 let a = normalize_to_scale(-R, R, col, 0, WIDTH_HEIGHT)
-                let ca = a
-                let cb = b
+                // let ca = a
+                // let cb = b
                 let iterations = 0 
                 // Math.abs(a + b) < R &&
                 while (a + b < R && iterations < MAX_ITER){
