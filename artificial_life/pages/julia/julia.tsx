@@ -62,22 +62,24 @@ export default function JuliaMain () {
                     a = newa
                     b = newb
                     iterations ++
-                    
 
                 }
                 let color = 15
+                
                 if (iterations == MAX_ITER){ //bounded
                     
-                    color = 0
+                    color = 255
                    
                 }else{
                     //log2(log2|z|) 
-                    iterations = iterations - Math.log2(Math.log2(Math.abs(a + b)))
+                    //√(a^2 + b^2)
+                    let complex_abs = Math.sqrt(a*a + b*b)
+                    iterations = iterations - Math.log2(Math.log2(complex_abs))
                     //color = normalize_to_scale(0, 1, iterations, 0, MAX_ITER) 
-                    color = normalize_to_scale(0, 255, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER)), 0, 1)
+                    color = normalize_to_scale(0, 255, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
                     
                 }
-                push_cellsAray(p, row, col, [89,color,177,255])
+                push_cellsAray(p, row, col, [color,50,50,255])
             }
 
         }
@@ -89,6 +91,7 @@ export default function JuliaMain () {
     useEffect(() => {
         const p5 = require("p5");
         var myShader: any;
+        p5.disableFriendlyErrors = true;
         const p5instance = new p5((p : any) => {
 
             //  p.preload = () => {
@@ -98,6 +101,7 @@ export default function JuliaMain () {
             p.setup = () => {
                 p.createCanvas( WIDTH_HEIGHT, WIDTH_HEIGHT).parent(renderRef.current);
                 p.pixelDensity(1)
+                p.colorMode(p.HSB, 1);
                 p.willReadFrequently = true
                 
                 
