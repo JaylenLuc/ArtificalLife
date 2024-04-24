@@ -16,9 +16,10 @@ export default function Home() {
         <title>artificial life</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <P5Sketch/> */}
       <Link href="/smoothlife/smoothLife"><span >GO TO SMOOTHLIFE- THIS IS TEMP</span></Link>
+      <br></br>
       <Link href="/julia/julia"><span >GO TO julia- THIS IS TEMP</span></Link>
+      <div className={styles.background}></div>
     </>
   );
 }

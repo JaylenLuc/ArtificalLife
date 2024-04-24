@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles.module.css'
 import C_inout from '@/JuliaComponents/C_inout';
 import { add, complex, multiply } from 'mathjs';
-//https://arxiv.org/pdf/1111.1567.pdf
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
@@ -12,15 +11,13 @@ import { add, complex, multiply } from 'mathjs';
 export default function JuliaMain () {
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 760
-    const MAX_ITER = 100;
+    const MAX_ITER =100;
     const c_DEFUALT = [-.70176, -.3842] // must be bounded by |c| <= R
     const R = 2
     const [c, _setC] = useState(c_DEFUALT) // - (.008 * Math.)
     const [c_alias, _setC_alias] = useState(c_DEFUALT) // - (.008 * Math.)
-    
+    const I_CONSTANT: number = Math.sqrt(-1);
 
-    const minzoom = -0.5
-    const maxzoom = 0.5
 
     const normalize_to_scale = (a : number, b : number, value : number, min_value : number, max_value : number) => {
         let res =  (b - a) * ((value - min_value)/(max_value - min_value)) + a
@@ -46,6 +43,24 @@ export default function JuliaMain () {
         
     }
 
+    const oneFoldSymmetry = (a :number , b: number) => {
+        //here you want to calculate z^2 -> a^2 - b^2 + 2abi
+        let newa = (a * a - b * b) + c[0] //real number
+        let newb = (2 * a * b) + c[1] //imaginary number 
+        return [newa,newb]
+
+    }
+
+    const twoFoldSymmetry = (a :number , b: number) => {
+        
+    //\(a^3-( 3a * b^2)  - (3a^2 * bi)-( b^3 * -IMG_CONSTANT))
+    //
+    let newa = (a*a*a -( 3 *a * b*b))+ c[0] //real number
+    let newb =  - (3*a*a * b) + ( b*b*b)+ c[1]//imaginary number 
+    return [newa,newb]
+
+    }
+
     const generate_julia = (p : any ) => {
         for  (let row = 0 ; row < WIDTH_HEIGHT; row ++){
             for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
@@ -56,15 +71,14 @@ export default function JuliaMain () {
                 let iterations = 0 
                 // Math.abs(a + b) < R &&
                 while (a + b < R && iterations < MAX_ITER){
-                    //here you want to calculate z^2 -> a^2 - b^2 + 2abi
-                    let newa = (a * a - b * b) + c[0]
-                    let newb = (2 * a * b) + c[1]
-                    a = newa
-                    b = newb
+
+                    let newvals = oneFoldSymmetry(a,b)
+                    a = newvals[0]
+                    b = newvals[1]
                     iterations ++
 
                 }
-                let color = 15
+                let color;
                 
                 if (iterations == MAX_ITER){ //bounded
                     
@@ -79,7 +93,7 @@ export default function JuliaMain () {
                     color = normalize_to_scale(0, 255, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
                     
                 }
-                push_cellsAray(p, row, col, [color,50,50,255])
+                push_cellsAray(p, row, col, [color,70,130,255])
             }
 
         }
@@ -110,6 +124,7 @@ export default function JuliaMain () {
 
             p.draw = () => {
                 if (p.mouseIsPressed){
+                    
                     //a : number, b : number, value : number, min_value : number, max_value : number
 
                     let newC = [normalize_to_scale(-1,1, p.mouseX, 0, WIDTH_HEIGHT),
