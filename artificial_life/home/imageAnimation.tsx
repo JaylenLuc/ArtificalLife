@@ -14,7 +14,6 @@ const MainImage = () => {
             './images/main5.jpg',
             './images/main6.jpg',
             './images/main7.jpg',
-            './images/main7.jpg',
             './images/main8.jpg',
             './images/main9.jpg',
             './images/main10.jpg',
