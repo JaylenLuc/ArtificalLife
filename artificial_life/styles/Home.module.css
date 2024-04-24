@@ -7,10 +7,16 @@
 }
 
 .images {
-    width: 70vw; 
-    height : 100vh;
-    align-self: center;
-    margin-left: 25vw;
+    /* align-items and justify-content properties to center. */
+ 
+    max-width: 50%;
+    height : 100%;
+
+
+
+
+
+
 }
 
 .main{
