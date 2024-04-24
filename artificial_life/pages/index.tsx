@@ -5,10 +5,10 @@ import styles from "@/styles/Home.module.css";
 import React, {useEffect } from "react";
 import P5Sketch from "./smoothlife/smoothLife";
 import Link from "next/link";
+import MainImage from '@/home/imageAnimation'
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
 
   return (
     <>
@@ -19,7 +19,7 @@ export default function Home() {
       <Link href="/smoothlife/smoothLife"><span >GO TO SMOOTHLIFE- THIS IS TEMP</span></Link>
       <br></br>
       <Link href="/julia/julia"><span >GO TO julia- THIS IS TEMP</span></Link>
-      <div className={styles.background}></div>
+      <MainImage />
     </>
   );
 }
