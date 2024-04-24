@@ -11,15 +11,15 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
 
   return (
-    <>
+    <div className={styles.main}>
       <Head>
         <title>artificial life</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Link href="/smoothlife/smoothLife"><span >GO TO SMOOTHLIFE- THIS IS TEMP</span></Link>
+      <Link href="/smoothlife/smoothLife"><span className={styles.linkers}>GO TO SMOOTHLIFE- THIS IS TEMP</span></Link>
       <br></br>
-      <Link href="/julia/julia"><span >GO TO julia- THIS IS TEMP</span></Link>
+      <Link href="/julia/julia"><span className={styles.linkers}>GO TO julia- THIS IS TEMP</span></Link>
       <MainImage />
-    </>
+    </div>
   );
 }

@@ -7,6 +7,9 @@ const MainImage = () => {
             './images/main1.jpg',
             './images/main2.jpg',
             './images/main3.jpg',
+            './images/main2.jpg',
+            './images/main3.jpg',
+            './images/main2.jpg',
             './images/main4.jpg',
             './images/main5.jpg',
             './images/main6.jpg',
@@ -15,6 +18,13 @@ const MainImage = () => {
             './images/main9.jpg',
             './images/main10.jpg',
             './images/main11.jpg',
+            './images/main9.jpg',
+            './images/main10.jpg',
+            './images/main11.jpg',
+            './images/main9.jpg',
+            './images/main10.jpg',
+            './images/main11.jpg',
+            './images/main9.jpg',
             
     ]
 
@@ -25,15 +35,15 @@ const MainImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
-  // Use useEffect to update the index and loop through images
+
   useEffect(() => {
-    const interval = setInterval(loopImages, 200); // Change the delay as needed
+    const interval = setInterval(loopImages, 100);
     return () => clearInterval(interval);
-  }, [currentIndex]); // Add currentIndex as dependency to re-run effect when index changes
+  }, [currentIndex]); 
 
   return (
     <div className = {styles.background}>
-      <img src={images[currentIndex]} width="600" height="700" alt={`Image ${currentIndex}`} />
+      <img className = {styles.images} src={images[currentIndex]}  alt={`Image ${currentIndex}`} />
     </div>
   );
 };
