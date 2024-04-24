@@ -9,6 +9,8 @@
 .images {
     width: 50vw; 
     height : 100vh;
+    align-self: center;
+    margin-left: 25vw;
 }
 
 .main{
