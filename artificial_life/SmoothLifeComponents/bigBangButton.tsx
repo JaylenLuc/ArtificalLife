@@ -58,7 +58,7 @@ const BigBangButton = ({ resetHandler }: ButtonProps) =>{
     useEffect(() => {
       // Update the document title using the browser API
       animate([...stars_animation_reset, ...stars_animation, ...stars_animation_fade_out])
-    });
+    }, []);
     
     const animateStars = () => {
       animate(scope.current, 

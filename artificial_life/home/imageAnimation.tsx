@@ -27,6 +27,7 @@ const MainImage = () => {
             './images/main9.jpg',
             
     ]
+        
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
