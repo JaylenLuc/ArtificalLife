@@ -221,6 +221,10 @@
     /* animation: gradient 1s ease infinite; */
   }
 
+  .bar {
+    margin-top: 120px;
+  }
+
 
   .resetButton {
     width: 120px;

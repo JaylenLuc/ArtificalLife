@@ -470,7 +470,7 @@ export default function P5Sketch () {
                 fillGrid(p, myShader);
                 //console.log( "OUTTA", cellsArray[13][55])
                 //console.log("FPS: " + fps.toFixed(2));
-                console.log(p.frameRate());
+                //console.log(p.frameRate());
             }
 
         })
@@ -521,11 +521,13 @@ export default function P5Sketch () {
             <div className={styles.buttonlayout}>
                 <ColorButton changeColor = {setColorScheme}/>
                 <FourDButton setNoLoop = {setnoLoop} noLoop = {noLoop}/>
+                
             </div>
+
             <div className={styles.buttonlayout}>
                 <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
-                 d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}/>
-                
+                    d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}/>
+                    
             </div>
             
 

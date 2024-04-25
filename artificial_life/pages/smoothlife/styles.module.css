@@ -1,8 +1,7 @@
 .buttonlayout{
-    margin-top: 10px;
+    margin-top: 30px;
     position: inherit;
-    /* float: right;  */
-    width: 50%;
+
     height: 100px;
     margin : auto;
 
@@ -33,6 +32,7 @@
     width: 100vw;
     position: relative;
     background-color: black;
+    
 
 }
 /* .background {

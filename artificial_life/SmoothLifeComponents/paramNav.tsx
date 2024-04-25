@@ -44,7 +44,7 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
     const [isOpen, _setIsOpen] = useState(false);
 
     return (
-        <div>
+        <div className = {styles.bar}>
             <motion.nav
             initial = {false}
             animate={isOpen ? "open" : "closed"}
