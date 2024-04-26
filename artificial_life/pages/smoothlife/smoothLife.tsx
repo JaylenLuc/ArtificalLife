@@ -85,7 +85,7 @@ export default function P5Sketch () {
     /**** 
      * delta time/ time stepping
      * ****/
-    const dt_DEFAULT = 0.25 //time step
+    const dt_DEFAULT = 0.15 //time step
     const [dt, setDeltaT] = useState(dt_DEFAULT)
 
     const setDefaultParams = () => {
