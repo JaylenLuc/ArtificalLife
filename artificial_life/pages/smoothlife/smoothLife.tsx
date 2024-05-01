@@ -15,7 +15,7 @@ import ColorButton from '@/SmoothLifeComponents/colorChanger';
 import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
 import { Color } from 'p5';
-const fft = require('jsfft');
+// const fft = require('jsfft');
 //https://arxiv.org/pdf/1111.1567.pdf
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
@@ -158,6 +158,7 @@ export default function P5Sketch () {
     /********************************************************
          * GRID FUNCTIONS
     ********************************************************/
+
     const  random_number = (row: number, col : number, seed: number = seedUser) => {
         //console.log("random_number func : ", seed)
         if (seed > 0){
@@ -309,6 +310,30 @@ export default function P5Sketch () {
     /********************************************************
          * INTEGRAL FUNCTIONS
     ********************************************************/
+   //code from https://stackoverflow.com/questions/78350773/how-to-increase-performance-framerate-of-smoothlife-in-p5js
+    // function makeKernel(width : number, height : number, realFunction : Function) {
+    //     const kernel = new fft.ComplexArray(WIDTH_HEIGHT * WIDTH_HEIGHT)
+    //     for (let y = 0; y < height; y++) {
+    //       for (let x = 0; x < width; x++) {
+    //         kernel.real[x + width * y] = realFunction(x, y)
+    //       }
+    //     }
+    //     const fftKernel = kernel.FFT()
+    //     const scale = 1 / Math.sqrt(fftKernel.real[0]**2 + fftKernel.imag[0]**2)
+    //     for (let i = 0; i < kernel.length; i++) {
+    //       fftKernel.real[i] *= scale
+    //       fftKernel.imag[i] *= scale
+    //     }
+    //     return fftKernel;
+    // }
+    // const mKernel = makeKernel(WIDTH_HEIGHT, WIDTH_HEIGHT, (x : number, y : number) => {
+    //     const dx = Math.min(x, WIDTH_HEIGHT - x), dy = Math.min(y, WIDTH_HEIGHT - y), dist = Math.sqrt(dx**2 + dy**2)
+    //     return clamp_test(ri + 0.5 - dist, 0, 1)
+    //   })
+    //   const nKernel = makeKernel(WIDTH_HEIGHT, WIDTH_HEIGHT, (x : number, y : number) => {
+    //     const dx = Math.min(x, WIDTH_HEIGHT - x), dy = Math.min(y, WIDTH_HEIGHT - y), dist = Math.sqrt(dx**2 + dy**2)
+    //     return clamp_test(ra + 0.5 - dist,0, 1) * (1 - clamp_test(ri + 0.5 - dist, 0, 1))
+    //   })
 
     const emod = (pos : number, size : number  ) => {
         return ((pos % size) + size ) % size  
