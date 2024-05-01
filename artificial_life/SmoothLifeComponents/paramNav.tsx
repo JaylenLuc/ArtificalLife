@@ -15,14 +15,18 @@ const itemVariants: Variants = {
     closed: { opacity: 0, y: 20, transition: { duration: 0.2 } }
   };
   
-export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad, resetSettings}:
+export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad, resetSettings, setm, m ,setn, n}:
     {
         setb1: Function, b1: number,
         setb2:  Function, b2: number,
         setd1: Function, d1: number,
         setd2 : Function, d2: number,
         setrad : Function, rad : number,
-        resetSettings : Function
+        resetSettings : Function,
+        setm :Function,
+        m : number,
+        setn : Function,
+        n : number
     }) {
     const [scope, animate] = useAnimate()
      const setIsOpen = (val : boolean) => {
@@ -113,7 +117,7 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
                 >
                     <motion.li className={styles.navli} variants={itemVariants}>
                         <Slider setd1 = {setd1} d1 = {d1} setd2= {setd2}
-                    d2 = {d2} setb1={setb1} b1={b1} setb2={setb2} b2={b2} setrad = {setrad} rad = {rad}/>
+                    d2 = {d2} setb1={setb1} b1={b1} setb2={setb2} b2={b2} setrad = {setrad} rad = {rad} setm = {setm} setn = {setn} n ={n} m  ={m}/>
                     </motion.li>
                     <ResetButton resetSettings = {resetSettings}/>
                 </motion.ul>

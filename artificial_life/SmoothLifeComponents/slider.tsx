@@ -12,6 +12,7 @@ interface InputProps {
     max?: number;
     step? : number
 
+
   }
   //{setStrokePolicy,strokePolicy}:{setStrokePolicy: React.Dispatch<React.SetStateAction<boolean>>, strokePolicy: boolean}
   function Input({
@@ -20,21 +21,20 @@ interface InputProps {
     set,
     min = 0,
     max = 1,
-    step = 0.001
+    step = 0.001,
+
   }: InputProps) {
 
     const change = (e : any ) => {
         let targetVal = parseFloat(e.target.value)
-        //console.log("val being set: ",parseFloat(e.target.value))
-        if (!isNaN(targetVal)){
-            if (value == 0){
-                set(targetVal/10)
-            }else{
-                set(targetVal)
-            }
-        }else{
-            set(0)
-        }
+        console.log("val being set: ",e.target.value)
+        // if (!isNaN(targetVal) ){
+        set(e.target.value)
+        // }else if (e.target.value == "." || e.target.value == "0."){
+        //     set(e.target.value)
+        // }else{
+        //     set("")
+        // }
         
     }
 
@@ -70,41 +70,52 @@ interface InputProps {
   }
   
 
-const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad}:
+const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad,setm,setn,n,m}:
     {
         setb1: Function, b1: number,
         setb2:  Function, b2: number,
         setd1:  Function, d1: number,
         setd2 : Function, d2: number,
-        setrad : Function , rad : number
+        setrad : Function , rad : number,
+        setm : Function ,setn : Function,n : number,m : number
     }) => {
 
 
     return (
         <div>
             <div >
-                <Input value={b1} set={setb1}>
+                <Input value={b1} set={setb1}  max={1} min={0}>
                     <span className = {styles.buttonText}>Birth 1</span>
                 </Input>
             </div>
             <div>
-                <Input value={b2} set={setb2} >
-                <span className = {styles.buttonText}>Birth 2</span>
+                <Input value={b2} set={setb2}  max={1} min={0}>
+                <span className = {styles.buttonText} >Birth 2</span>
                 </Input>
             </div>
             <div>            
-                <Input value={d1} set={setd1}>
+                <Input value={d1} set={setd1}  max={1} min={0}>
                 <span className = {styles.buttonText}>Death 1</span>
                 </Input>
             </div>
             <div>            
-                <Input value={d2} set={setd2}>
+                <Input value={d2} set={setd2}  max={1} min={0}>
                 <span className = {styles.buttonText}>Death 2</span>
                 </Input>
             </div>
             <div>            
-                <Input value={rad} set={setrad} step = {1} max={25} min={1}>
+                <Input value={rad} set={setrad} step = {1} max={16} min={1}>
                 <span className = {styles.buttonText}>Radius</span>
+                </Input>
+            </div>
+            <div>            
+                <Input value={n} set={setn}  max={1} min={0}>
+                <span className = {styles.buttonText}>alphaN</span>
+                </Input>
+            </div>
+            <div>            
+                <Input value={m} set={setm} max={1} min={0} >
+                <span className = {styles.buttonText}>alphaM</span>
                 </Input>
             </div>
 

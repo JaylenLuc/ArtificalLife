@@ -15,6 +15,7 @@ import ColorButton from '@/SmoothLifeComponents/colorChanger';
 import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
 import { Color } from 'p5';
+const fft = require('jsfft');
 //https://arxiv.org/pdf/1111.1567.pdf
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
@@ -28,7 +29,7 @@ export default function P5Sketch () {
     ********************************************************/
     
     const renderRef = useRef(null);
-    var WIDTH_HEIGHT = 125 //the true number of cells WIDTH_HEIGHT ^ 2
+    var WIDTH_HEIGHT = 128 //the true number of cells WIDTH_HEIGHT ^ 2
     //const HEIGHT = 150
     var SIZE = 4
     const RGB_MIN_RANGE = 255 //min range
@@ -85,7 +86,7 @@ export default function P5Sketch () {
     /**** 
      * delta time/ time stepping
      * ****/
-    const dt_DEFAULT = 0.15 //time step
+    const dt_DEFAULT = 0.25 //time step
     const [dt, setDeltaT] = useState(dt_DEFAULT)
 
     const setDefaultParams = () => {
@@ -101,6 +102,7 @@ export default function P5Sketch () {
 
 
     var cellsArray: number[] = []
+    
 
     const push_cellsAray = (row : number, col : number, val : number )  => {
         cellsArray[WIDTH_HEIGHT * row + col] = val;  
@@ -197,6 +199,10 @@ export default function P5Sketch () {
     }
 
     const randomizeCenterGrid = (centerWidth : number) => {
+    //         const data = new fft.ComplexArray(WIDTH_HEIGHT*WIDTH_HEIGHT).map((value :number, i :number) => {
+    //     // value.real = (i > n/3 && i < 2*n/3) ? 1 : 0;
+    //     console.log(value, i)
+    //   });
         //setStrokePolicy(false)
         let center_grid = (Math.floor(WIDTH_HEIGHT/2))
         let center_diff = (Math.floor((WIDTH_HEIGHT * centerWidth)/2))
@@ -278,14 +284,15 @@ export default function P5Sketch () {
         while ( row < WIDTH_HEIGHT){
 
             while(col < WIDTH_HEIGHT){
-                let m_n : Array<number> =  fillingIntegralN_M(row, col)
-                let new_value = dt * transitionFunc_S(m_n[1], m_n[0]) // [-1,1]
-                //console.log(new_value)
-                //smooth time stepping scheme 
-                //console.log("not clamped: ", new_value)
-                //f(~x, t + dt) = f(~x, t) + dt S[s(n, m)] f(~x, t)
-                push_cellsAray(row, col, clamp_test(get_cellsAray(row, col) + new_value, 0, 1 )) 
-                col++
+
+                    let m_n : Array<number> =  fillingIntegralN_M(row, col)
+                    let new_value = dt * transitionFunc_S(m_n[1], m_n[0]) // [-1,1]
+                    //console.log(new_value)
+                    //smooth time stepping scheme 
+                    //console.log("not clamped: ", new_value)
+                    //f(~x, t + dt) = f(~x, t) + dt S[s(n, m)] f(~x, t)
+                    push_cellsAray(row, col, clamp_test(get_cellsAray(row, col) + new_value, 0, 1 )) 
+                    col++
 
 
             }
@@ -482,7 +489,7 @@ export default function P5Sketch () {
           };
 
 
-    }, [ strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop, colorScheme])
+    }, [ strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop, colorScheme, alpha_n, alpha_m])
 
 
 //the entropy of the universe is tending to a maximum
@@ -526,7 +533,8 @@ export default function P5Sketch () {
 
             <div className={styles.buttonlayout}>
                 <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
-                    d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}/>
+                    d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}
+                    setm ={setAlphaM} setn ={setAlphaN} n = {alpha_n} m = {alpha_m}/>
                     
             </div>
             
