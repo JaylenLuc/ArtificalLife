@@ -96,6 +96,8 @@ export default function P5Sketch () {
         _setb1(b1_DEFAULT)
         _setb2(b2_DEFAULT)
         setRadius(ra_DEFAULT)
+        setAlphaM(alpha_m_DEFAULT)
+        setAlphaN(alpha_n_DEFAULT)
 
 
     }

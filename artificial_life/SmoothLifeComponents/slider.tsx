@@ -104,7 +104,7 @@ const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad,setm,se
                 </Input>
             </div>
             <div>            
-                <Input value={rad} set={setrad} step = {1} max={16} min={1}>
+                <Input value={rad} set={setrad} step = {1} max={13} min={1}>
                 <span className = {styles.buttonText}>Radius</span>
                 </Input>
             </div>
