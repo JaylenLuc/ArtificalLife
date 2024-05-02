@@ -15,7 +15,8 @@ import ColorButton from '@/SmoothLifeComponents/colorChanger';
 import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
 import { Color } from 'p5';
-// const fft = require('jsfft');
+//const fft = require('fftjs')
+const fft = require('jsfft');
 //https://arxiv.org/pdf/1111.1567.pdf
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
@@ -103,7 +104,9 @@ export default function P5Sketch () {
     }
 
 
-    var cellsArray: number[] = []
+    //var cellsArray: number[] = []
+    var cellsArray : Float32Array = new Float32Array(WIDTH_HEIGHT*WIDTH_HEIGHT);
+
     
 
     const push_cellsAray = (row : number, col : number, val : number )  => {
@@ -229,7 +232,7 @@ export default function P5Sketch () {
         // console.log("in resetGrid: ", ri_area)
 
         if (cellsArray.length > 0){
-            cellsArray = []
+            cellsArray.fill(0)
         }
         setnoLoop(false)
         arbitrateMode()
@@ -414,6 +417,55 @@ export default function P5Sketch () {
         }
     }
 
+    function makeKernel(width : number, height : number, realFunction : Function) {
+        const kernel = new fft.ComplexArray(WIDTH_HEIGHT * WIDTH_HEIGHT)
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            kernel.real[x + width * y] = realFunction(x, y)
+          }
+        }
+        const fftKernel = kernel.FFT()
+        const scale = 1 / Math.sqrt(fftKernel.real[0]**2 + fftKernel.imag[0]**2)
+        for (let i = 0; i < kernel.length; i++) {
+          fftKernel.real[i] *= scale
+          fftKernel.imag[i] *= scale
+        }
+        return fftKernel;
+    }
+    //intergral kernal version
+    const mKernel = makeKernel(WIDTH_HEIGHT, WIDTH_HEIGHT, (x : number, y : number) => {
+        const dx = Math.min(x, WIDTH_HEIGHT - x), dy = Math.min(y, WIDTH_HEIGHT - y), dist = Math.sqrt(dx**2 + dy**2)
+        return clamp_test(ri + 0.5 - dist, 0, 1)
+      })
+      const nKernel = makeKernel(WIDTH_HEIGHT, WIDTH_HEIGHT, (x : number, y : number) => {
+        const dx = Math.min(x, WIDTH_HEIGHT - x), dy = Math.min(y, WIDTH_HEIGHT - y), dist = Math.sqrt(dx**2 + dy**2)
+        return clamp_test(ra + 0.5 - dist,0, 1) * (1 - clamp_test(ri + 0.5 - dist, 0, 1))
+      })
+    //-------------------------------------------------------------------------------------
+
+ 
+    function fftConvolve(freqs : any, kernel : any) {
+        const output = new fft.ComplexArray(freqs.length)
+        for (let i = 0; i < freqs.length; i++) {
+          // Complex number multiplication: (a + bi)*(c + di) = (ac - bd) + (ad + bc)i
+          output.real[i] = freqs.real[i] * kernel.real[i] - freqs.imag[i] * kernel.imag[i]
+          output.imag[i] = freqs.real[i] * kernel.imag[i] + freqs.imag[i] * kernel.real[i]
+        }
+        return output.InvFFT().real
+      }
+
+      function smoothLifeStep() {
+        const freqs = new fft.ComplexArray(cellsArray).FFT()
+        const m = fftConvolve(freqs, mKernel)
+
+        const n = fftConvolve(freqs, nKernel)
+        for (let i = 0; i < cellsArray.length; i++) {
+            cellsArray[i] = clamp_test(cellsArray[i] + (dt * transitionFunc_S(n[i], m[i])), 0, 1)
+          // Alternative (smoother) update rule:
+          //cellsArray[i] = (1-dt) * cellsArray[i] + dt * transitionFunc_S(n[i], m[i])
+        }
+      }
+
 
 
 
@@ -494,7 +546,7 @@ export default function P5Sketch () {
                 //p.shader(myShader)
                 // console.time('generalizeTransitionFunc')
                 if (!noLoop){
-                    generalizeTransitionFunc()
+                    smoothLifeStep()
 
                     // console.timeEnd('generalizeTransitionFunc')
 
