@@ -151,9 +151,12 @@ export default function P5Sketch () {
     const setRadius = (e : number|string) =>{
         let targetVal = parseFloat(e.toString())
         console.log(targetVal)
-        if (!isNaN(targetVal) && targetVal <= 60){
+        if (targetVal <= 60){
             _setOuterRadius(targetVal)
             _setInnerRadius(targetVal/3)
+        }else if (isNaN(targetVal)){
+            _setOuterRadius(0)
+            _setInnerRadius(0)
         }
     }
 
@@ -436,12 +439,18 @@ export default function P5Sketch () {
     }
     //intergral kernal version
     const mKernel = makeKernel(WIDTH_HEIGHT, WIDTH_HEIGHT, (x : number, y : number) => {
-        const dx = Math.min(x, WIDTH_HEIGHT - x), dy = Math.min(y, WIDTH_HEIGHT - y), dist = Math.sqrt(dx**2 + dy**2)
-        return clamp_test(ri + 0.5 - dist, 0, 1)
+        const dx = Math.min(x, WIDTH_HEIGHT - x)
+        const dy = Math.min(y, WIDTH_HEIGHT - y) 
+        const dist = Math.sqrt(dx**2 + dy**2)
+        let u =  (clamp_test(ri + 0.5 - dist, 0, 1)) 
+        return u /= ri_area
       })
       const nKernel = makeKernel(WIDTH_HEIGHT, WIDTH_HEIGHT, (x : number, y : number) => {
-        const dx = Math.min(x, WIDTH_HEIGHT - x), dy = Math.min(y, WIDTH_HEIGHT - y), dist = Math.sqrt(dx**2 + dy**2)
-        return clamp_test(ra + 0.5 - dist,0, 1) * (1 - clamp_test(ri + 0.5 - dist, 0, 1))
+        const dx = Math.min(x, WIDTH_HEIGHT - x) 
+        const dy = Math.min(y, WIDTH_HEIGHT - y) 
+        const dist = Math.sqrt(dx**2 + dy**2)
+        let u=  (clamp_test(ra + 0.5 - dist,0, 1) * (1 - clamp_test(ri + 0.5 - dist, 0, 1)) ) 
+        return u /= ra_area
       })
     //-------------------------------------------------------------------------------------
 
@@ -462,7 +471,7 @@ export default function P5Sketch () {
 
         const n = fftConvolve(freqs, nKernel)
         for (let i = 0; i < cellsArray.length; i++) {
-            cellsArray[i] = clamp_test(cellsArray[i] + (dt * transitionFunc_S(n[i], m[i])), 0, 1)
+        cellsArray[i] = clamp_test(cellsArray[i] + (dt * transitionFunc_S(n[i], m[i])) , 0, 1)
           // Alternative (smoother) update rule:
           //cellsArray[i] = (1-dt) * cellsArray[i] + dt * transitionFunc_S(n[i], m[i])
         }
