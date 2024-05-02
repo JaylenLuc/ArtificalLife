@@ -148,10 +148,12 @@ export default function P5Sketch () {
         resetGrid();
     };
 
-    const setRadius = (e : number) =>{
-        if (e <= 25){
-            _setOuterRadius(e)
-            _setInnerRadius(e/3)
+    const setRadius = (e : number|string) =>{
+        let targetVal = parseFloat(e.toString())
+        console.log(targetVal)
+        if (!isNaN(targetVal) && targetVal <= 60){
+            _setOuterRadius(targetVal)
+            _setInnerRadius(targetVal/3)
         }
     }
 
@@ -556,7 +558,7 @@ export default function P5Sketch () {
                 fillGrid(p, myShader);
                 //console.log( "OUTTA", cellsArray[13][55])
                 //console.log("FPS: " + fps.toFixed(2));
-                //console.log(p.frameRate());
+                console.log(p.frameRate());
             }
 
         })

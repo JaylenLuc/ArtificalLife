@@ -27,7 +27,7 @@ interface InputProps {
 
     const change = (e : any ) => {
         let targetVal = parseFloat(e.target.value)
-        console.log("val being set: ",e.target.value)
+        console.log("val being set: ",e.target.value, " ", targetVal)
         // if (!isNaN(targetVal) ){
         set(e.target.value)
         // }else if (e.target.value == "." || e.target.value == "0."){
@@ -104,7 +104,7 @@ const Slider = ({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad,setm,se
                 </Input>
             </div>
             <div>            
-                <Input value={rad} set={setrad} step = {1} max={13} min={1}>
+                <Input value={rad} set={setrad} max={60} min={1}>
                 <span className = {styles.buttonText}>Radius</span>
                 </Input>
             </div>
