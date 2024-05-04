@@ -17,5 +17,16 @@
     text-align: center;
     bottom: 0;
     right: 150px;
-    position: absolute;
+    position: fixed;
+}
+
+.colormode{
+    margin-left: 4px;
+    width : 120px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    bottom: 0;
+    right: 300px;
+    position: fixed;
 }
