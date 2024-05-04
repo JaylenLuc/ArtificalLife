@@ -79,11 +79,13 @@ export default function JuliaMain () {
         }
         return [f(5),f(3),f(1)];  
     }
-
+    function magn(a : number, b : number) {
+        return a * a + b * b;
+      }
     //MODE 3 would be a LERP between 
 
     const generate_julia = (p : any, slider : any ) => {
-        if (colorMode == 2) MAX_ITER =100
+        if (colorMode == 2) MAX_ITER = 75
         else MAX_ITER = 200
         for  (let row = 0 ; row < WIDTH_HEIGHT; row ++){
             for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
@@ -94,7 +96,7 @@ export default function JuliaMain () {
                 let iterations = 0 
                 let maxIteration = colorMode == 2? slider.value() : 0 ;
                 // Math.abs(a + b) < R &&
-                while (a + b < R && iterations < MAX_ITER){
+                while (magn(a,b) <= R && iterations < MAX_ITER){
                     let newvals = [a,b]
                     //if (magn(a,b) <= 4){
                         switch (nFold){
