@@ -16,6 +16,7 @@ export default function Home() {
         <title>artificial life</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <h1 className = {styles.bigwords}>I am the matter of my own work and everyone that I hold to high regard.</h1>
       <Link href="/smoothlife/smoothLife"><span className={styles.linkers}>GO TO SMOOTHLIFE- THIS IS TEMP</span></Link>
       <br></br>
       <Link href="/julia/julia"><span className={styles.linkers}>GO TO julia- THIS IS TEMP</span></Link>

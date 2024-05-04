@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles.module.css'
 import C_inout from '@/JuliaComponents/C_inout';
+import NfoldChooser from '@/JuliaComponents/Nfoldchooser';
 import { add, complex, multiply } from 'mathjs';
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
@@ -12,12 +13,14 @@ export default function JuliaMain () {
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 760
     const MAX_ITER =100;
-    const c_DEFUALT = [-.70176, -.3842] // must be bounded by |c| <= R
+    const c_DEFUALT = [-.8, -.156] // must be bounded by |c| <= R
+    const c2_DEFUALT = [-.06, -.40526]
     const R = 2
     const [c, _setC] = useState(c_DEFUALT) // - (.008 * Math.)
     const [c_alias, _setC_alias] = useState(c_DEFUALT) // - (.008 * Math.)
     const I_CONSTANT: number = Math.sqrt(-1);
-
+    const FOLD_DEFUALT = 1
+    const [nFold, setFold] = useState(FOLD_DEFUALT)
 
     const normalize_to_scale = (a : number, b : number, value : number, min_value : number, max_value : number) => {
         let res =  (b - a) * ((value - min_value)/(max_value - min_value)) + a
@@ -71,8 +74,18 @@ export default function JuliaMain () {
                 let iterations = 0 
                 // Math.abs(a + b) < R &&
                 while (a + b < R && iterations < MAX_ITER){
-
-                    let newvals = oneFoldSymmetry(a,b)
+                    let newvals = null
+                    switch (nFold){
+                        case 1 : 
+                            newvals = oneFoldSymmetry(a,b)
+                            break;
+                        case 2 : 
+                            newvals = twoFoldSymmetry(a,b) 
+                            break
+                        default :
+                            newvals = oneFoldSymmetry(a,b)
+                    }
+                    
                     a = newvals[0]
                     b = newvals[1]
                     iterations ++
@@ -113,10 +126,11 @@ export default function JuliaMain () {
             //     myShader = p.createShader(vertex, fragment);
             //   }
             p.setup = () => {
+                //getContext('2d', { willReadFrequently: true });
                 p.createCanvas( WIDTH_HEIGHT, WIDTH_HEIGHT).parent(renderRef.current);
                 p.pixelDensity(1)
                 p.colorMode(p.HSB, 1);
-                p.willReadFrequently = true
+
                 
                 
 
@@ -153,7 +167,7 @@ export default function JuliaMain () {
         
 
 
-    }, [ ])
+    }, [nFold, c])
 
     
 return (
@@ -162,6 +176,7 @@ return (
         <meta name="viewport" content="width=device-height"></meta>
         <div className={styles.julia_box} ref={renderRef}></div>
         <C_inout c= {c_alias} setC = {_setC_alias}/> 
+        <NfoldChooser fold = {nFold} setFold={setFold} setC = {_setC_alias} def={c_DEFUALT} c = {c} def2 = {c2_DEFUALT}/>
     </div>
 
     )

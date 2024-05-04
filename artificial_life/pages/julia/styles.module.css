@@ -8,4 +8,9 @@
 .julia_box{
     margin : auto;
     touch-action: none;
+        
+    margin : auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

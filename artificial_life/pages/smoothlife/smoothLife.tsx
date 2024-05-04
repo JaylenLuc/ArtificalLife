@@ -224,7 +224,7 @@ export default function P5Sketch () {
             for (let col = 0; col< WIDTH_HEIGHT; col ++){
                 if ((col > center_start && col <= center_end) && 
                 (row > center_start && row <= center_end)) push_cellsAray(row, col, random_number(row,col));
-                else push_cellsAray(row, col, seedUser != 0? random_number(row,col)/10 : 0);
+                else push_cellsAray(row, col,0);
                
             }
             

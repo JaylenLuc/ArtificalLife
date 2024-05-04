@@ -4,7 +4,6 @@ import { animate, motion, useAnimate, useForceUpdate } from "framer-motion"
 import { useMotionValue, useTransform } from "framer-motion"
 
 import styles from './styles.module.css'
-//BROKEN COMPONENT
 
 const C_inout = ( {c, setC }: { setC : React.Dispatch<React.SetStateAction<number[]>> , c : number[]}) => {
     const changeC = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,17 +11,19 @@ const C_inout = ( {c, setC }: { setC : React.Dispatch<React.SetStateAction<numbe
         setC(newValue)
       };
     const format = () => {
-        return c[0].toFixed(5) + ' ' + c[1].toFixed(5) + 'i';
+        return c[0].toFixed(5) + ( c[1] > 0 ? ' + ' : ' ') + c[1].toFixed(5) + 'i';
     }
 
     useEffect(() => {
         //console.log("here",c)
-      }, [c]);
+      }, []);
     return (
         <input 
             className = {styles.c_inout} 
             value = {format() } 
             onChange={(e) => changeC(e)}
+            readOnly
+            
         />
 
     ) 

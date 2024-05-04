@@ -6,24 +6,34 @@ import { useMotionValue, useTransform } from "framer-motion"
 import styles from './styles.module.css'
 //BROKEN COMPONENT
 
-const NfoldChooser = ( {c, setC }: { setC : React.Dispatch<React.SetStateAction<number[]>> , c : number[]}) => {
-    const changeC = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value.split(' ').map(parseFloat);
-        setC(newValue)
+const NfoldChooser = ( {fold, setFold, setC, def, c, def2} : { setFold : React.Dispatch<React.SetStateAction<number>> , 
+    fold : number, setC : React.Dispatch<React.SetStateAction<number[]>> , def : number[], c : number[], def2 : number[]}) => {
+    const changeFold = () => {
+        
+        setFold(fold == 1? 2 : 1)
+        if (fold == 2){
+            c[0] = def[0]
+            c[1] = def[1]
+            setC(def)
+           // console.log(fold)
+        }else if (fold == 1){
+            c[0] = def2[0]
+            c[1] = def2[1]
+            setC(def2)
+            //console.log("else if " , fold)
+        }
+
       };
-    const format = () => {
-        return c[0].toFixed(5) + ' ' + c[1].toFixed(5) + 'i';
-    }
+
 
     useEffect(() => {
         //console.log("here",c)
-      }, [c]);
+      }, [fold, c]);
     return (
-        <input 
-            className = {styles.c_inout} 
-            value = {format() } 
-            onChange={(e) => changeC(e)}
-        />
+        <button 
+            className = {styles.nfoldbutt} 
+            onClick={(e) => changeFold()}
+        >{ (fold == 1? "2 fold symmetry" : "3 fold symmetry")}</button>
 
     ) 
 }
