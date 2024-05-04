@@ -230,7 +230,7 @@ return (
 
     <div className = {styles.foreground}>
         <meta name="viewport" content="width=device-height"></meta>
-                
+                {/* TEMP */}
         <div className={styles.wavy}> 
             <span className="--i:1">J</span> 
             <span className="--i:2">u</span> 
@@ -243,6 +243,7 @@ return (
             <span className="--i:9">t</span> 
             <span className="--i:9">s</span> 
         </div> 
+        {/* END TEMP */}
         <div className={styles.julia_box} ref={renderRef}></div>
         <C_inout c= {c_alias} setC = {_setC_alias}/> 
         <NfoldChooser fold = {nFold} setFold={setFold} setC = {_setC_alias} def={c_DEFUALT} c = {c} def2 = {c2_DEFUALT}/>
