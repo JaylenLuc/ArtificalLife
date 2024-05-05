@@ -540,7 +540,7 @@ export default function P5Sketch () {
                 switch(colorScheme){
                     case 0 :  p.colorMode(p.RGB); break;
                     case 1 :  p.colorMode(p.HSB); break;
-                    case 2:  p.colorMode(p.HSL); break;
+                    case 2:  p.colorMode(p.HSL, 200,150,255); break;
                     default:  p.colorMode(p.RGB);
                 }
 
@@ -567,7 +567,7 @@ export default function P5Sketch () {
                 fillGrid(p, myShader);
                 //console.log( "OUTTA", cellsArray[13][55])
                 //console.log("FPS: " + fps.toFixed(2));
-                console.log(p.frameRate());
+                //console.log(p.frameRate());
             }
 
         })
