@@ -125,13 +125,14 @@ export default function JuliaMain () {
                     green = 255
                     red = 255
                     if (colorMode == 2) color = 0
-                    else if (colorMode == 1) color = 225
+                    else if (colorMode == 1) color = 255
                    
                 }else{
                     //log2(log2|z|) 
                     //√(a^2 + b^2)
                     let complex_abs = Math.sqrt(a*a + b*b)
                     iterations = (iterations) - Math.log2(Math.log2(complex_abs))
+                    
                     if (colorMode == 2){
                         [red, green, blue] = hsv2rgb(
                             Math.pow(iterations / maxIteration * 360, 1.2) % 360,
