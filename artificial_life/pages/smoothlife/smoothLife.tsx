@@ -125,7 +125,7 @@ export default function P5Sketch () {
             setRadius(presets[set]["ra"])
             setAlphaM(presets[set]["alphaM"])
             setAlphaN(presets[set]["alphaN"])
-            setSeed(presets[set]["seedUser"])
+            setSeed(presets[set]["seed"])
             _setColorScheme(presets[set]["color"])
             //console.log(presets[set]["color"], " ",colorScheme)
             // if (seedUser != 0 ){
