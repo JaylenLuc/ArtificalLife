@@ -5,7 +5,7 @@ import styles from './styles.module.css'
 
 type AnimationSequence = Parameters<typeof animate>[0];
 
-const ColorButton = ({ changeColor,colorscheme } :{changeColor : Function,colorscheme : number}) =>{
+const Savepreset = ({ savePreset } :{savePreset : Function}) =>{
     const [scope, animate] = useAnimate()
     const animateBounce = () => {
       animate(scope.current, 
@@ -22,15 +22,11 @@ const ColorButton = ({ changeColor,colorscheme } :{changeColor : Function,colors
         })
 
     }
-    useEffect(() => {
-      // Update the document title using the browser API
-      
-    }, [colorscheme]);
 
     return (
             <div >
                 <motion.div
-                className= {styles.colorchange}
+                className= {styles.savepreset}
                 initial={{ opacity: 0, scale: 0.5 }}
                 
                 ref={scope}
@@ -45,11 +41,11 @@ const ColorButton = ({ changeColor,colorscheme } :{changeColor : Function,colors
                     restDelta: 0.001
                   }
                 }}
-                onClick={(e) => changeColor()}
+                onClick={(e) => savePreset()}
                 onTap={animateBounce}
                 //animate= {{ opacity : 1, scale : 1, x: 170, transition :  {ease: "easeOut", duration: .7} }}
                 >
-                    <span className={styles.buttonText}>Change Color</span>
+                    <span className={styles.buttonText}>save current settings</span>
 
                 </motion.div>
                 
@@ -57,4 +53,4 @@ const ColorButton = ({ changeColor,colorscheme } :{changeColor : Function,colors
     )
 }
 
-export default ColorButton;
+export default Savepreset;

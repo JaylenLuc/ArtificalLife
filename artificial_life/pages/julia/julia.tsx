@@ -149,9 +149,9 @@ export default function JuliaMain () {
                     //color = (255 * iterations / MAX_ITER)
                     color = normalize_to_scale(0, 255, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
                     if (colorMode == 1){
-                        blue = color - 30 % 256
-                        green = color 
-                        red = 50
+                        blue = color * 255
+                        green = color *255
+                        red = color  
                     }
                 }
                 //console.log("out : ",red," ",green, " ",blue)

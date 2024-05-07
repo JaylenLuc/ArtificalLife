@@ -1,5 +1,5 @@
 "use client"
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { animate, motion, useAnimate, Variants } from "framer-motion";
 import styles from './styles.module.css'
 import Slider from "./slider";
@@ -15,7 +15,7 @@ const itemVariants: Variants = {
     closed: { opacity: 0, y: 20, transition: { duration: 0.2 } }
   };
   
-export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad, resetSettings, setm, m ,setn, n}:
+export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, setrad, rad, resetSettings, setm, m ,setn, n, presets, setParameters}:
     {
         setb1: Function, b1: number,
         setb2:  Function, b2: number,
@@ -26,7 +26,9 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
         setm :Function,
         m : number,
         setn : Function,
-        n : number
+        n : number,
+        setParameters : Function
+        presets : {[key: string]: {[key: string] : number }} | null
     }) {
     const [scope, animate] = useAnimate()
      const setIsOpen = (val : boolean) => {
@@ -46,6 +48,16 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
             })
      }
     const [isOpen, _setIsOpen] = useState(false);
+    const getPreset = (e : any) => {
+        let k = e.target.innerText
+        setParameters(k)
+        
+    }
+
+    useEffect(() => {
+        // Update the document title using the browser API
+        
+      }, []);
 
     return (
         <div className = {styles.bar}>
@@ -119,6 +131,26 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
                         <Slider setd1 = {setd1} d1 = {d1} setd2= {setd2}
                     d2 = {d2} setb1={setb1} b1={b1} setb2={setb2} b2={b2} setrad = {setrad} rad = {rad} setm = {setm} setn = {setn} n ={n} m  ={m}/>
                     </motion.li>
+                    <br></br>
+                    <br></br>
+                    { 
+                    presets != null?
+                    
+                        <div className = {styles.presetdiv}>
+                            PRESETS:
+                            <br></br>
+                            {Object.entries(presets).map((entry : any) => (
+                                <motion.li className={styles.navlipre} variants={itemVariants} key={entry[0]} onClick = { getPreset}>
+                                    <p className = {styles.presetN}><span className = {styles.presetText}>{entry[0]}</span></p>
+                                </motion.li>
+                            ))}
+                            </div> 
+                        : <div className = {styles.presetdiv}> PRESETS: NONE</div>
+                    
+                    }
+
+
+
                     <ResetButton resetSettings = {resetSettings}/>
                 </motion.ul>
 

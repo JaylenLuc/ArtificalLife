@@ -1,4 +1,4 @@
-.buttonlayout{
+.buttonlayout, .parambuttonlayout{
     margin-top: 30px;
     position: inherit;
 
@@ -12,6 +12,7 @@
 
 
 }
+
 /* .buttonlayout > * {
     display: block;
     margin: 5px;

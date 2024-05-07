@@ -92,6 +92,18 @@
 
 }
 
+.presetText {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #0e0d0d;
+  -webkit-text-stroke-width: .9px;
+  -webkit-text-stroke-color: black;
+}
+
 
 .seedButtonLayout {
     width: 180px;
@@ -155,11 +167,20 @@
   
   }
   
-  .navli {
+  .navli , .navlipre{
     color: #C3B1E1;
     display: block;
     
   }
+
+  .navlipre {
+    border-radius: 10px;
+    background-color: #a0c4ff;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 50%;
+  }
+  
   
   .navul,
   .navli {
@@ -202,7 +223,7 @@
     box-shadow: grey; */
   }
 
-  .colorchange{
+  .colorchange, .savepreset{
     background: linear-gradient(-95deg,#C1E1C1, #C3B1E1, #A7C7E7, #F8C8DC);
     background-size: 400% 300%;
     animation-name: shutter, gradient;
@@ -221,11 +242,35 @@
     /* animation: gradient 1s ease infinite; */
   }
 
-  .bar {
-    margin-top: 120px;
+  .presetdiv {
+    border-radius: 10px;
+    border-color: black;
+    height: 80px;
+    overflow: scroll;
+    scrollbar-color: black;
+    background: linear-gradient(-95deg,#232222, #2f2f2f, #424342, #6e6e6e);
+    background-size: 400% 300%;
+    animation-name:  gradient;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  .savepreset {
+    background: linear-gradient(-95deg,#dbe1c1, #b9e1b1, #a7e7db, #c8dcf8);
+    background-size: 400% 300%;
+    animation-name: shuter, gradient;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
   }
 
+  .bar {
+    margin-top: 240px;
+  }
 
+  .presetN{
+    pointer-events: all;
+  }
   .resetButton {
     width: 120px;
     height: 40px;

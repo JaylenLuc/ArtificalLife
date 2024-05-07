@@ -12,6 +12,7 @@ import ParamNav from '@/SmoothLifeComponents/paramNav'
 import FourDButton from '@/SmoothLifeComponents/4DButton';
 import Sparkles from 'react-sparkle'
 import ColorButton from '@/SmoothLifeComponents/colorChanger';
+import Savepreset from '@/SmoothLifeComponents/SavePreset';
 import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
 import { Color } from 'p5';
@@ -34,7 +35,11 @@ export default function P5Sketch () {
     //const HEIGHT = 150
     var SIZE = 4
     const RGB_MIN_RANGE = 255 //min range
-
+    
+    const [preset_length, setpreset_length] = useState(0)
+    const inc_length = () => {
+        setpreset_length(preset_length + 1)
+    }
     const [strokePolicy, setStrokePolicy] = useState(false)
     const [initOption, setInitPolicy] = useState("center")
     const [seedUser, _setSeed] = useState(0)
@@ -43,6 +48,9 @@ export default function P5Sketch () {
         _setColorScheme((colorScheme + 1) % 3)
         //console.log(colorScheme)
 
+    }
+    const presetColorScheme = (e : number) => {
+        _setColorScheme(e)
     }
     /**** 
      * radius checks
@@ -103,6 +111,64 @@ export default function P5Sketch () {
 
     }
 
+    const PRESET = "preset "
+
+    const[presets, _savepreset] = useState<{[key: string]: {[key: string] : number }} | null>(null);
+
+    const setParameters = (set : string) => {
+        if (presets != null){
+            console.log(presets)
+            _setd1(presets[set]["d1"])
+            _setd2(presets[set]["d2"])
+            _setb1(presets[set]["b1"])
+            _setb2(presets[set]["b2"])
+            setRadius(presets[set]["ra"])
+            setAlphaM(presets[set]["alphaM"])
+            setAlphaN(presets[set]["alphaN"])
+            setSeed(presets[set]["seedUser"])
+            _setColorScheme(presets[set]["color"])
+            //console.log(presets[set]["color"], " ",colorScheme)
+            // if (seedUser != 0 ){
+
+            // }
+        }
+    }
+    const savePreset = () => {
+        let newPresets : {[key: string]: {[key: string] : number }} = {}
+        inc_length();
+        let length : string= preset_length.toString()
+        console.log(length)
+        //const copyOfState = structuredClone(state);
+        newPresets[PRESET + length] = {"d1" : d1, "d2" : d2, "b1" : b1, "b2": b2,
+         "ra" : ra, "ri" : ri, "alphaM" : alpha_m, "alphaN" : alpha_n, "color" : colorScheme, "seed": seedUser}
+
+        if (presets != null && Object.keys(presets).length < 10){
+            Object.entries(presets).map((entry : any) => (
+                newPresets[entry[0]] = {"d1" : entry[1]["d1"], "d2" :  entry[1]["d2"], "b1" :  entry[1]["b1"], "b2":  entry[1]["b2"],
+                "ra" :  entry[1]["ra"], "ri" :  entry[1]["ri"], "alphaM" :  entry[1]["alphaM"], "alphaN" :  entry[1]["alphaN"], 
+                "color" :  entry[1]["color"], "seed":  entry[1]["seed"]}
+
+            ))
+        }else if (presets != null &&  Object.keys(presets).length >= 10){
+            delete presets[PRESET + (preset_length - 10).toString()]
+            Object.entries(presets).map((entry : any) => (
+                newPresets[entry[0]] = {"d1" : entry[1]["d1"], "d2" :  entry[1]["d2"], "b1" :  entry[1]["b1"], "b2":  entry[1]["b2"],
+                "ra" :  entry[1]["ra"], "ri" :  entry[1]["ri"], "alphaM" :  entry[1]["alphaM"], "alphaN" :  entry[1]["alphaN"], 
+                "color" :  entry[1]["color"], "seed":  entry[1]["seed"]}
+
+            ))
+
+        }
+        
+        
+        _savepreset(newPresets)
+        console.log("p: ",presets)
+    }
+
+    const delPreset = () => {
+
+    }
+
 
     //var cellsArray: number[] = []
     var cellsArray : Float32Array = new Float32Array(WIDTH_HEIGHT*WIDTH_HEIGHT);
@@ -150,7 +216,7 @@ export default function P5Sketch () {
 
     const setRadius = (e : number|string) =>{
         let targetVal = parseFloat(e.toString())
-        console.log(targetVal)
+        //console.log(targetVal)
         if (targetVal <= 60){
             _setOuterRadius(targetVal)
             _setInnerRadius(targetVal/3)
@@ -616,17 +682,21 @@ export default function P5Sketch () {
             </div>
             <br></br>
             <div className={styles.buttonlayout}>
-                <ColorButton changeColor = {setColorScheme}/>
+                <ColorButton changeColor = {setColorScheme} colorscheme = {colorScheme}/>
                 <FourDButton setNoLoop = {setnoLoop} noLoop = {noLoop}/>
+                <Savepreset savePreset={savePreset}/>
                 
             </div>
-
+            <br></br>
             <div className={styles.buttonlayout}>
                 <ParamNav setd1 = {_setd1} d1 = {d1} setd2= {_setd2}
                     d2 = {d2} setb1={_setb1} b1={b1} setb2={_setb2} b2={b2} setrad={setRadius} rad = {ra} resetSettings={setDefaultParams}
-                    setm ={setAlphaM} setn ={setAlphaN} n = {alpha_n} m = {alpha_m}/>
+                    setm ={setAlphaM} setn ={setAlphaN} n = {alpha_n} m = {alpha_m} presets={presets} setParameters= {setParameters}/>
+
+                
                     
             </div>
+            
             
 
         </div>
