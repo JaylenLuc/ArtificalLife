@@ -88,6 +88,11 @@ const SeedInput = ( {setSeed, seedUser }: { setSeed : Function , seedUser : numb
                 },
             })
     }
+    useEffect(() => {
+        // Update the document title using the browser API
+        //seedInputText
+        if (seedUser != 0) setSeedTextArea(seedUser.toString())
+      }, [seedUser,seedInputText]);
     return (
             <div>
                 <motion.div
