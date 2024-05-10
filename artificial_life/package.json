@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/postgres": "^0.8.0",
     "framer-motion": "^11.0.24",
     "i": "^0.3.7",
     "jsfft": "^0.0.4",
     "mathjs": "^12.4.1",
     "next": "14.1.4",
+    "next-auth": "^5.0.0-beta.17",
     "p5": "^1.9.2",
     "react": "^18",
     "react-dom": "^18",

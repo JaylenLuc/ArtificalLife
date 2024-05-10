@@ -137,7 +137,7 @@ export default function P5Sketch () {
     const savePreset = () => {
         let newPresets : {[key: string]: {[key: string] : number }} = {}
         inc_length();
-        let length : string= preset_length.toString()
+        let length : string=  (preset_length% 10).toString()
         console.log(length)
         //const copyOfState = structuredClone(state);
         newPresets[PRESET + length] = {"d1" : d1, "d2" : d2, "b1" : b1, "b2": b2,
@@ -151,7 +151,7 @@ export default function P5Sketch () {
 
             ))
         }else if (presets != null &&  Object.keys(presets).length >= 10){
-            delete presets[PRESET + (preset_length - 10).toString()]
+            delete presets[PRESET + (preset_length% 10).toString()]
             Object.entries(presets).map((entry : any) => (
                 newPresets[entry[0]] = {"d1" : entry[1]["d1"], "d2" :  entry[1]["d2"], "b1" :  entry[1]["b1"], "b2":  entry[1]["b2"],
                 "ra" :  entry[1]["ra"], "ri" :  entry[1]["ri"], "alphaM" :  entry[1]["alphaM"], "alphaN" :  entry[1]["alphaN"], 
