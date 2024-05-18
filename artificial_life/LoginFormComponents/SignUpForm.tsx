@@ -9,6 +9,7 @@ import GoogleSignInButton from './GoogleSignInButton';
 import styles from './styles.module.css'
 import { useState } from 'react';
 import { NextApiRequest, NextApiResponse } from 'next';
+import supabase from '@/lib/supabaseclient';
 //{ message: "Firstname is required" }
 const FormSchema = z
   .object({
@@ -65,27 +66,43 @@ const SignUpForm = () => {
       console.log(values.email)
       console.log(values.password)
 
-      const resp = await fetch('/api/signup',{
-        method: 'POST',
-        headers: {
-          'Content-Type' : 'application/json',
-
-        },
-        body:  JSON.stringify({
-          username : values.username,
-          email: values.email,
-          password: values.password
-        })
+      const { data, error } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
       })
-      if (resp.ok ){
-        console.log("resp: ",resp)
-        router.push('/userauth/signin')
+      if (error != null ){
+        //set_val_msg(json['message'])
+        console.log("resp: ",error)
       }else{
-        let response = resp.json().then(json => {
-          set_val_msg(json['message'])
-        })
-        
+        router.push('/userauth/signin')
+          
       }
+        
+
+
+
+
+      // const resp = await fetch('/api/signup',{
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type' : 'application/json',
+
+      //   },
+      //   body:  JSON.stringify({
+      //     username : values.username,
+      //     email: values.email,
+      //     password: values.password
+      //   })
+      // })
+      // if (resp.ok ){
+      //   console.log("resp: ",resp)
+      //   router.push('/userauth/signin')
+      // }else{
+      //   let response = resp.json().then(json => {
+      //     set_val_msg(json['message'])
+      //   })
+        
+      // }
     };
   
     return (
