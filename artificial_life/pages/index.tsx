@@ -14,14 +14,7 @@ import supabase from "@/lib/supabaseclient";
 import getSession from "@/lib/GetSession";
 const inter = Inter({ subsets: ["latin"] });
  
-// type Session = {
-  
-//   data: Session | null
-//   status: "authenticated" | "loading" | "unauthenticated"
-//   update: UpdateSession;
-//   data: Session;
-//   status: "authenticated";
-// }
+//git reset --hard HEAD{3046c18a6cdf9dcbb02a1a64ab73fa82bc2fff65} *LAST VERSION WITHOUT AUTH*
 
 
 function  Home()  {
@@ -34,10 +27,11 @@ function  Home()  {
   }
   // const { data: session } = useSession()
   const sessionRes = getSession()
+  console.log(sessionRes)
   const [loggedinUser, setUser] = useState("")
   sessionRes.then(res => {
     if (res.error == null){
-      console.log(typeof res.data.session?.user.email)
+      console.log( res.data.session == null)
       if (res.data.session?.user.email){
         setUser("You are Logged in with " + res.data.session?.user.email as string)
       }

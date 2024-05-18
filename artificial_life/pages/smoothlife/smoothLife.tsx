@@ -17,6 +17,9 @@ import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
 import { Color } from 'p5';
 import getSession from "@/lib/GetSession";
+import supabase from '@/lib/supabaseclient';
+import { TablesInsert } from '@/database.types';
+import { Session, AuthError } from '@supabase/supabase-js';
 //const fft = require('fftjs')
 const fft = require('jsfft');
 //https://arxiv.org/pdf/1111.1567.pdf
@@ -120,7 +123,7 @@ export default function P5Sketch () {
 
     const setParameters = (set : string) => {
         if (presets != null){
-            console.log(presets)
+            // console.log(presets)
             _setd1(presets[set]["d1"])
             _setd2(presets[set]["d2"])
             _setb1(presets[set]["b1"])
@@ -135,18 +138,110 @@ export default function P5Sketch () {
 
             // }
         }
+    }//0 1
+    const bulkPopulate = (data : {
+        alphaM: number | null
+        alphaN: number | null
+        b1: number | null
+        b2: number | null
+        color: number | null
+        createdAt: string
+        d1: number | null
+        d2: number | null
+        id: number | null
+        ra: number | null
+        ri: number | null
+        seed: number | null
+        title: string | null
+        userID: string
+      }[]) => {
+        let newPresets : {[key: string]: {[key: string] : number }} = {}
+    
+        for (let i = data.length-1; i >= 0; i--){
+            let key = data[i]['title']
+            if (key!= null){
+                newPresets[key] = {"d1" : data[i]["d1"]!, "d2" :  data[i]["d2"]!, "b1" :  data[i]["b1"]!, "b2":  data[i]["b2"]!,
+                "ra" :  data[i]["ra"]!, "ri" :  data[i]["ri"]!, "alphaM" :  data[i]["alphaM"]!, "alphaN" :  data[i]["alphaN"]!, 
+                "color" :  data[i]["color"]!, "seed":  data[i]["seed"]!}
+            }
+
+        }
+
+        
+        if (data[data.length-1] != null && "id" in data[data.length-1]){
+            setpreset_length(data[data.length-1].id! + 1)
+        }
+        _savepreset(newPresets)
+
     }
+        
+    
     const savePreset = () => {
         let newPresets : {[key: string]: {[key: string] : number }} = {}
         inc_length();
-        let length : string=  (preset_length).toString()
-        console.log(length)
+        let length : string | number | undefined=  (preset_length % 10).toString()
+        console.log("l:",length)
         //const copyOfState = structuredClone(state);
         if (presets != null) console.log(Object.keys(presets).length)
 
-        
+
         newPresets[PRESET + length] = {"d1" : d1, "d2" : d2, "b1" : b1, "b2": b2,
          "ra" : ra, "ri" : ri, "alphaM" : alpha_m, "alphaN" : alpha_n, "color" : colorScheme, "seed": seedUser}
+
+        console.log("sessionRes: ", loggedinUser)
+        if (loggedinUser){
+            /*          
+                alphaM: number
+                alphaN: number
+                b1: number
+                b2: number
+                color: number
+                createdAt?: string
+                d1: number
+                d2: number
+                id: number number preset
+                ra: number
+                ri: number
+                seed: number
+                title: string
+                userID: number #logged in user's id
+          */ 
+                //let curr_id : string | undefined = (await sessionRes)!.data.session?.user.id
+
+                length = length as unknown as number
+                if (UID != ""){
+                    let curr_length = (preset_length) % 10 
+                    console.log("curr:",curr_length)
+                    //console.log("current id: ",Number(curr_id)
+
+                    
+                    const newSetting: TablesInsert<'Settings'> ={ 
+                        alphaM: alpha_m,
+                        alphaN: alpha_n,
+                        b1: b1,
+                        b2: b2,
+                        color: colorScheme,
+                        d1: d1,
+                        d2: d2,
+                        id: curr_length ,
+                        ra : ra,
+                        ri: ri,
+                        seed: seedUser,
+                        title: PRESET + length,
+                        userID: UID
+
+                    }
+                    supabase.from("Settings")
+                    .upsert([newSetting]).select('*').then(res => {
+                        console.log(res)
+                    })
+
+                }
+
+
+            
+            
+        }
 
         if (presets != null && Object.keys(presets).length < 10){
             Object.entries(presets).map((entry : any) => (
@@ -288,6 +383,7 @@ export default function P5Sketch () {
     //     console.log(value, i)
     //   });
         //setStrokePolicy(false)
+        console.log("here ")
         let center_grid = (Math.floor(WIDTH_HEIGHT/2))
         let center_diff = (Math.floor((WIDTH_HEIGHT * centerWidth)/2))
         let center_start = center_grid - center_diff
@@ -308,7 +404,7 @@ export default function P5Sketch () {
         // console.log("in resetGrid: ", ra)
         // console.log("in resetGrid: ", ri)
         // console.log("in resetGrid: ", ri_area)
-
+        console.log("pressed")
         if (cellsArray.length > 0){
             cellsArray.fill(0)
         }
@@ -591,7 +687,47 @@ export default function P5Sketch () {
     //         }
     //         gl_FragColor = vec4(0.5-cos(n*17.0)/2.0,0.5-cos(n*13.0)/2.0,0.5-cos(n*23.0)/2.0,1.0);
     //     }`;
+    var sessionRes: Promise<{
+        data: { session: Session; } | { session: null; } | {
+            session: null; //DROP this from database
+        }; error: AuthError | null;
+    }> | null = null
+    console.log(sessionRes)
+    const [loggedinUser, setUser] = useState("")
+    const [UID, setUID] = useState("")
+    var existsUser = false
+    // const [sessionRes, setSesh] = useState(null)
+    sessionRes = getSession()
+    if(loggedinUser == ""  && UID == "" && existsUser == false  ){
+        sessionRes.then(async res => {
+            if (res.error == null && res.data.session != null){
+            let userid = res.data.session?.user.email as string
+            setUser(userid)
+            
+            //console.log(res)
+            let uID = res.data.session?.user.id as string
+            setUID(uID)
+            const { data, error } = await supabase
+                .from('Settings')
+                .select()
+                .eq('userID', uID)
+            if (error == null){
+                bulkPopulate(data)
+                //console.log("data: ",data[0]["title"])
+            }else{
+                console.log("no user: ", error)
+            }
+            console.log(loggedinUser)
+            }else{
+            console.log(res.error)
+            }
+        })
+        existsUser = true
+    }
+    
     useEffect(() => {
+
+
         const p5 = require("p5");
         
         p5.disableFriendlyErrors = true;
@@ -652,19 +788,10 @@ export default function P5Sketch () {
           };
 
 
-    }, [ strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop, colorScheme, alpha_n, alpha_m])
+    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, colorScheme, alpha_n, alpha_m])
 
-    const sessionRes = getSession()
-    const [loggedinUser, setUser] = useState("")
-    sessionRes.then(res => {
-      if (res.error == null){
-        setUser(res.data.session?.user.email as string)
-  
-        console.log(loggedinUser)
-      }else{
-        console.log(res.error)
-      }
-    })
+
+
 //the entropy of the universe is tending to a maximum
     return(
     

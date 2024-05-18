@@ -44,87 +44,52 @@ export type Database = {
       }
       Settings: {
         Row: {
-          alphaM: number
-          alphaN: number
-          b1: number
-          b2: number
-          color: number
+          alphaM: number | null
+          alphaN: number | null
+          b1: number | null
+          b2: number | null
+          color: number | null
           createdAt: string
-          d1: number
-          d2: number
-          id: number
-          ra: number
-          ri: number
-          seed: number
-          title: string
-          userID: number
+          d1: number | null
+          d2: number | null
+          id: number | null
+          ra: number | null
+          ri: number | null
+          seed: number | null
+          title: string | null
+          userID: string
         }
         Insert: {
-          alphaM: number
-          alphaN: number
-          b1: number
-          b2: number
-          color: number
+          alphaM?: number | null
+          alphaN?: number | null
+          b1?: number | null
+          b2?: number | null
+          color?: number | null
           createdAt?: string
-          d1: number
-          d2: number
-          id: number
-          ra: number
-          ri: number
-          seed: number
-          title: string
-          userID: number
+          d1?: number | null
+          d2?: number | null
+          id?: number | null
+          ra?: number | null
+          ri?: number | null
+          seed?: number | null
+          title?: string | null
+          userID: string
         }
         Update: {
-          alphaM?: number
-          alphaN?: number
-          b1?: number
-          b2?: number
-          color?: number
+          alphaM?: number | null
+          alphaN?: number | null
+          b1?: number | null
+          b2?: number | null
+          color?: number | null
           createdAt?: string
-          d1?: number
-          d2?: number
-          id?: number
-          ra?: number
-          ri?: number
-          seed?: number
-          title?: string
-          userID?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "Settings_userID_fkey"
-            columns: ["userID"]
-            isOneToOne: false
-            referencedRelation: "User"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      User: {
-        Row: {
-          createdAt: string
-          email: string
-          id: number
-          password: string
-          updatedAt: string
-          username: string
-        }
-        Insert: {
-          createdAt?: string
-          email: string
-          id?: number
-          password: string
-          updatedAt: string
-          username: string
-        }
-        Update: {
-          createdAt?: string
-          email?: string
-          id?: number
-          password?: string
-          updatedAt?: string
-          username?: string
+          d1?: number | null
+          d2?: number | null
+          id?: number | null
+          ra?: number | null
+          ri?: number | null
+          seed?: number | null
+          title?: string | null
+          userID?: string
         }
         Relationships: []
       }
