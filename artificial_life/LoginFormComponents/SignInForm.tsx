@@ -9,6 +9,7 @@ import GoogleSignInButton from './GoogleSignInButton';
 import styles from './styles.module.css'
 import { useState } from 'react';
 import {signIn} from 'next-auth/react'
+import supabase from '@/lib/supabaseclient';
 //{ message: "Firstname is required" }
 const FormSchema = z
   .object({
@@ -53,19 +54,18 @@ const router = useRouter()
       console.log(values.email)
       console.log(values.password)
 
-      const signinData =  await signIn('Credentials', {
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password,
-        username: values.username,
-        redirect: false,
-      }).then((res) => {
-        if (res?.error) {
-            _set_val_msg("sign in credentials are incorrect")
-           } else {
-            console.log(res)
-            router.push('/');
-           }
-      });
+      })
+      
+      if (error != null) {
+          _set_val_msg("sign in credentials are incorrect")
+      } else {
+          console.log("after successful login: ",data)
+          router.push('/');
+      }
+      
     };
 
 
@@ -78,17 +78,17 @@ const router = useRouter()
           <form onSubmit={handleSubmit(onSubmit)}>
             <label>
               User Name:
-              <input className= {styles.inputstyle} type="text" placeholder={"Create User Name"} {...register("username")}/>
+              <input className= {styles.inputstyle} type="text" placeholder={"Enter User Name"} {...register("username")}/>
             </label>
             {/* <input type="submit" value="Submit" /> */}
             <label>
               E-Mail:
-              <input className= {styles.inputstyle} type="email"  placeholder={"Create Valid E Mail"}  {...register("email")} />
+              <input className= {styles.inputstyle} type="email"  placeholder={"Enter E Mail"}  {...register("email")} />
             </label>
             {/* <input type="password" value="Submit" /> */}
             <label>
               Password:
-              <input className= {styles.inputstyle} type="password" placeholder={"Create Password"}  {...register("password")} />
+              <input className= {styles.inputstyle} type="password" placeholder={"Enter Password"}  {...register("password")} />
             </label>
             {/* <input type="submit" value="Submit" /> */}
             {/* <button className={styles.subbutton} type="submit">Create Account</button> */}

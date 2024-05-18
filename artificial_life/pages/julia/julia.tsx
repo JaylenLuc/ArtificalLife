@@ -7,6 +7,7 @@ import NfoldChooser from '@/JuliaComponents/Nfoldchooser';
 import ColorMode from '@/JuliaComponents/ColorMode';
 import { add, complex, multiply } from 'mathjs';
 import { color } from 'framer-motion';
+import getSession from '@/lib/GetSession';
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
@@ -227,7 +228,19 @@ export default function JuliaMain () {
 
 
     }, [nFold, c, colorMode])
-
+    const sessionRes = getSession()
+    const [loggedinUser, setUser] = useState("")
+    sessionRes.then(res => {
+      if (res.error == null){
+        console.log(typeof res.data.session?.user.email)
+        if (res.data.session?.user.email){
+          setUser("You are Logged in with " + res.data.session?.user.email as string)
+        }
+        console.log(loggedinUser)
+      }else{
+        console.log(res.error)
+      }
+    })
     
 return (
 
@@ -247,6 +260,9 @@ return (
             <span className="--i:9">s</span> 
         </div> 
         {/* END TEMP */}
+        <br></br>
+        {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
+        <br></br>
         <div className={styles.julia_box} ref={renderRef}></div>
         <C_inout c= {c_alias} setC = {_setC_alias}/> 
         <NfoldChooser fold = {nFold} setFold={setFold} setC = {_setC_alias} def={c_DEFUALT} c = {c} def2 = {c2_DEFUALT}/>

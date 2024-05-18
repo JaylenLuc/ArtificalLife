@@ -16,6 +16,7 @@ import Savepreset from '@/SmoothLifeComponents/SavePreset';
 import { memo } from "react";
 import { Mystery_Quest } from 'next/font/google';
 import { Color } from 'p5';
+import getSession from "@/lib/GetSession";
 //const fft = require('fftjs')
 const fft = require('jsfft');
 //https://arxiv.org/pdf/1111.1567.pdf
@@ -142,6 +143,8 @@ export default function P5Sketch () {
         console.log(length)
         //const copyOfState = structuredClone(state);
         if (presets != null) console.log(Object.keys(presets).length)
+
+        
         newPresets[PRESET + length] = {"d1" : d1, "d2" : d2, "b1" : b1, "b2": b2,
          "ra" : ra, "ri" : ri, "alphaM" : alpha_m, "alphaN" : alpha_n, "color" : colorScheme, "seed": seedUser}
 
@@ -651,7 +654,17 @@ export default function P5Sketch () {
 
     }, [ strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, ri_area, ra_area, noLoop, colorScheme, alpha_n, alpha_m])
 
-
+    const sessionRes = getSession()
+    const [loggedinUser, setUser] = useState("")
+    sessionRes.then(res => {
+      if (res.error == null){
+        setUser(res.data.session?.user.email as string)
+  
+        console.log(loggedinUser)
+      }else{
+        console.log(res.error)
+      }
+    })
 //the entropy of the universe is tending to a maximum
     return(
     
@@ -671,7 +684,9 @@ export default function P5Sketch () {
                 The Universe moves to an Entropic Maximum
             </div>
 
-            
+            <br></br>
+            {loggedinUser? <span className={styles.linkers}>You are Logged in with {loggedinUser}</span> : null}
+            <br></br>
             <section> 
                 <div className= {styles.life_box} ref={renderRef}></div>
             </section>
