@@ -1,0 +1,39 @@
+
+
+.form{
+    border-radius: 5px;
+    background-color: #836953;
+    padding: 20px;
+
+}
+
+.inputstyle{
+    background-color: aliceblue;
+    color: #836953;
+    border-radius: 3px;
+    width: auto;
+    height: auto;
+    margin : auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    text-align: center;
+}
+
+.subbutton{
+    display: flex;
+    margin: auto;
+}
+
+.validation_comp {
+    position: absolute;
+    display: flex;
+    border-radius: 5px;
+    background-color: #887c71;
+    padding: 20px;
+    white-space: break-spaces;
+
+}

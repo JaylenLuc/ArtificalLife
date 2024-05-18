@@ -18,14 +18,17 @@ export default async function handler(
     const ra = request.query.ra as string;
     const ri = request.query.ri as string;
     const seed = request.query.seed as string;
+    console.log("fdas")
+    const password = request.query.password as string;
+    console.log(password)
     
     //if (!petName || !ownerName) throw new Error('Pet and owner names required');
     // console.log(`INSERT INTO Settings (id, d1, d2, b1, b2, alphaM, alphaN, color, ra, ri, seed) VALUES (${id}, ${d1}, ${d2}, ${b1}, ${b2}, ${alphaM}, ${alphaN}, ${color}, ${ra}, ${ri}, ${seed});`)
-    await sql`INSERT INTO settings (user_id, id, d1, d2, b1, b2, alpham, alphan, color, ra, ri, seed) VALUES (${user_id},${id}, ${d1}, ${d2}, ${b1}, ${b2}, ${alphaM}, ${alphaN}, ${color}, ${ra}, ${ri}, ${seed});`;
+    await sql`INSERT INTO settings (user_id, password, id, d1, d2, b1, b2, alpham, alphan, color, ra, ri, seed) VALUES (${user_id}, ${password},${id}, ${d1}, ${d2}, ${b1}, ${b2}, ${alphaM}, ${alphaN}, ${color}, ${ra}, ${ri}, ${seed});`;
   } catch (error) {
     console.log(error)
     return response.status(500).json({ error });
   }
  
 }
-//http://localhost:3000/api/add_settings?user_id=1111111&id=2&d1=0.123&d2=0.431&b1=0.7&b2=0.999&m=0.654&n=0.222&color=2&ra=12&ri=4&seed=0
+//http://localhost:3000/api/add_settings?user_id=1111111&password=1323&id=2&d1=0.123&d2=0.431&b1=0.7&b2=0.999&m=0.654&n=0.222&color=2&ra=12&ri=4&seed=0

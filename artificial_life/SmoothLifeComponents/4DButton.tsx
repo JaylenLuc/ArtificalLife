@@ -69,7 +69,7 @@ const FourDButton = ({ setNoLoop, noLoop }: {setNoLoop : Function, noLoop : bool
         },
 
         {
-            duration: 0.1,
+            duration: 0.5,
             onComplete() {
             animate(scope.current, { scale : 1}, { duration: 0.1 }, );
             },

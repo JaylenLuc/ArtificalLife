@@ -11,7 +11,7 @@ export default async function handler(
   ) {
     try {
       const result =
-        await sql`CREATE TABLE Settings (user_id varchar(256), id INT, d1 FLOAT, d2 FLOAT, b1 FLOAT, b2 FLOAT, ra FLOAT, ri FLOAT, alphaM FLOAT, alphaN FLOAT, color FLOAT, seed FLOAT, PRIMARY KEY (user_id, id));`;
+        await sql`CREATE TABLE Settings (user_id varchar(256), password varchar(256), id INT, d1 FLOAT, d2 FLOAT, b1 FLOAT, b2 FLOAT, ra FLOAT, ri FLOAT, alphaM FLOAT, alphaN FLOAT, color FLOAT, seed FLOAT, PRIMARY KEY (user_id, id, password));`;
       return response.status(200).json({ result });
       const results = await listTables();
 
