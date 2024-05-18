@@ -5,7 +5,6 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {useRouter} from 'next/navigation'
 import Link from 'next/link';
-import GoogleSignInButton from './GoogleSignInButton';
 import styles from './styles.module.css'
 import { useState } from 'react';
 import {signIn} from 'next-auth/react'

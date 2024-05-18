@@ -7,7 +7,6 @@ import React, {useEffect, useState } from "react";
 import P5Sketch from "./smoothlife/smoothLife";
 import Link from "next/link";
 import MainImage from '@/home/imageAnimation'
-import { authOptions } from "@/lib/authProvider";
 import { getServerSession } from "next-auth";
 import { use } from "react";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
