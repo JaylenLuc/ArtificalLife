@@ -26,7 +26,9 @@ const fft = require('jsfft');
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
-
+const getUserSessiom = () => {
+    
+}
 export default function P5Sketch () {
 
 
@@ -65,6 +67,7 @@ export default function P5Sketch () {
     var noLoop = false
     const setnoLoop = (loopVal : boolean = !noLoop) => {
         noLoop = loopVal
+        //console.log("LOOP: ", noLoop)
     }
     const [ra, _setOuterRadius] = useState(ra_DEFAULT)
     const [ri, _setInnerRadius] = useState(ra_DEFAULT/3)
@@ -155,23 +158,29 @@ export default function P5Sketch () {
         title: string | null
         userID: string
       }[]) => {
-        let newPresets : {[key: string]: {[key: string] : number }} = {}
-    
-        for (let i = data.length-1; i >= 0; i--){
-            let key = data[i]['title']
-            if (key!= null){
-                newPresets[key] = {"d1" : data[i]["d1"]!, "d2" :  data[i]["d2"]!, "b1" :  data[i]["b1"]!, "b2":  data[i]["b2"]!,
-                "ra" :  data[i]["ra"]!, "ri" :  data[i]["ri"]!, "alphaM" :  data[i]["alphaM"]!, "alphaN" :  data[i]["alphaN"]!, 
-                "color" :  data[i]["color"]!, "seed":  data[i]["seed"]!}
+        try{
+            let newPresets : {[key: string]: {[key: string] : number }} = {}
+        
+            for (let i = data.length-1; i >= 0; i--){
+                let key = data[i]['title']
+                if (key!= null){
+                    newPresets[key] = {"d1" : data[i]["d1"]!, "d2" :  data[i]["d2"]!, "b1" :  data[i]["b1"]!, "b2":  data[i]["b2"]!,
+                    "ra" :  data[i]["ra"]!, "ri" :  data[i]["ri"]!, "alphaM" :  data[i]["alphaM"]!, "alphaN" :  data[i]["alphaN"]!, 
+                    "color" :  data[i]["color"]!, "seed":  data[i]["seed"]!}
+                }
+
             }
 
+            console.log("BULK POP: ",newPresets)
+            if (data[data.length-1] != null && "id" in data[data.length-1]){
+                setpreset_length(data[data.length-1].id! + 1)
+            }
+            _savepreset(newPresets)
+            
+            return true
+        }catch{
+            return false
         }
-
-        
-        if (data[data.length-1] != null && "id" in data[data.length-1]){
-            setpreset_length(data[data.length-1].id! + 1)
-        }
-        _savepreset(newPresets)
 
     }
         
@@ -687,44 +696,57 @@ export default function P5Sketch () {
     //         }
     //         gl_FragColor = vec4(0.5-cos(n*17.0)/2.0,0.5-cos(n*13.0)/2.0,0.5-cos(n*23.0)/2.0,1.0);
     //     }`;
-    var sessionRes: Promise<{
-        data: { session: Session; } | { session: null; } | {
-            session: null; //DROP this from database
-        }; error: AuthError | null;
-    }> | null = null
-    console.log(sessionRes)
+    // var sessionRes: Promise<{
+    //     data: { session: Session; } | { session: null; } | {
+    //         session: null; //DROP this from database
+    //     }; error: AuthError | null;
+    // }> | null = null
+    //console.log(sessionRes)
+    const [sessionFuncCalled, setSessionFuncCalled] = useState(false);
     const [loggedinUser, setUser] = useState("")
     const [UID, setUID] = useState("")
-    var existsUser = false
     // const [sessionRes, setSesh] = useState(null)
-    sessionRes = getSession()
-    if(loggedinUser == ""  && UID == "" && existsUser == false  ){
-        sessionRes.then(async res => {
-            if (res.error == null && res.data.session != null){
-            let userid = res.data.session?.user.email as string
-            setUser(userid)
+    useEffect(() => {
+        if (!sessionFuncCalled){
+        
+            getSession().then(async res => {
+                console.log("in")
+                setSessionFuncCalled(true)
+                if (res != null && res.error == null && res.data.session != null){
+                    let userid = res.data.session?.user.email as string
+                    setUser(userid)
+                    
+                    // //console.log(res)
+                    let uID = res.data.session?.user.id as string
+                    setUID(uID)
+                    supabase
+                    .from('Settings')
+                    .select()
+                    .eq('userID', uID).then( supaRes => {
+                        console.log("res: ,",supaRes)
+                        if (supaRes.error == null){
+                            
+                            bulkPopulate(supaRes.data)
+                            
+                        }else{
+                            
+                            console.log("no user: ", supaRes.error)
+                            return null
+                        }
+                    })
+                    
+                    // console.log(loggedinUser)
+                }else{
+                    console.log(res.error)
+                }
             
-            //console.log(res)
-            let uID = res.data.session?.user.id as string
-            setUID(uID)
-            const { data, error } = await supabase
-                .from('Settings')
-                .select()
-                .eq('userID', uID)
-            if (error == null){
-                bulkPopulate(data)
-                //console.log("data: ",data[0]["title"])
-            }else{
-                console.log("no user: ", error)
-            }
-            console.log(loggedinUser)
-            }else{
-            console.log(res.error)
-            }
-        })
-        existsUser = true
-    }
-    
+                
+            })
+        
+        
+        
+        }   
+    }, [ ]) 
     useEffect(() => {
 
 
@@ -788,7 +810,7 @@ export default function P5Sketch () {
           };
 
 
-    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, colorScheme, alpha_n, alpha_m])
+    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, colorScheme, alpha_n, alpha_m, resetGrid, noLoop])
 
 
 

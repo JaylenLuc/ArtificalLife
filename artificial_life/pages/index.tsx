@@ -48,7 +48,7 @@ function  Home()  {
           <title>artificial life</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <h1 className = {styles.bigwords}>I am the matter of my own work and everyone that I hold to high regard.</h1>
+        <h1 className = {styles.bigwords}>I am the matter of my own work</h1>
         <br></br>
         {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
         <br></br>

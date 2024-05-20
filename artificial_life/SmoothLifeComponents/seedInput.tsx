@@ -14,9 +14,10 @@ const SeedInput = ( {setSeed, seedUser }: { setSeed : Function , seedUser : numb
     const resetSeed = () => {
         if (seedUser != 0){
             setSeed(0)
-            setSeedText("")
+            
 
         }
+        setSeedText("")
         animate(scope1.current, 
             {
                 rotate : 360
