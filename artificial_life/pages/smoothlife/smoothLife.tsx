@@ -20,6 +20,7 @@ import getSession from "@/lib/GetSession";
 import supabase from '@/lib/supabaseclient';
 import { TablesInsert } from '@/database.types';
 import { Session, AuthError } from '@supabase/supabase-js';
+import Link from 'next/link';
 //const fft = require('fftjs')
 const fft = require('jsfft');
 //https://arxiv.org/pdf/1111.1567.pdf
@@ -176,7 +177,7 @@ export default function P5Sketch () {
                 setpreset_length(data[data.length-1].id! + 1)
             }
             _savepreset(newPresets)
-            
+
             return true
         }catch{
             return false
@@ -829,6 +830,7 @@ export default function P5Sketch () {
                     flicker={true}
             />
             <meta name="viewport" content="width=device-height"></meta>
+            <button><Link href="/">GO BACK</Link></button>
             <div className={styles.title}>
                 The Universe moves to an Entropic Maximum
             </div>
