@@ -8,6 +8,7 @@ import ColorMode from '@/JuliaComponents/ColorMode';
 import { add, complex, multiply } from 'mathjs';
 import { color } from 'framer-motion';
 import getSession from '@/lib/GetSession';
+import Link from 'next/link';
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
@@ -247,6 +248,7 @@ return (
     <div className = {styles.foreground}>
         <meta name="viewport" content="width=device-height"></meta>
                 {/* TEMP */}
+
         <div className={styles.wavy}> 
             <span className="--i:1">J</span> 
             <span className="--i:2">u</span> 
@@ -260,8 +262,10 @@ return (
             <span className="--i:9">s</span> 
         </div> 
         {/* END TEMP */}
+        <button><Link href="/">GO BACK</Link></button>
         <br></br>
         {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
+        <br></br>
         <br></br>
         <div className={styles.julia_box} ref={renderRef}></div>
         <C_inout c= {c_alias} setC = {_setC_alias}/> 

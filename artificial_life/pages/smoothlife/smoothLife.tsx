@@ -707,7 +707,7 @@ export default function P5Sketch () {
     const [loggedinUser, setUser] = useState("")
     const [UID, setUID] = useState("")
     // const [sessionRes, setSesh] = useState(null)
-    useEffect(() => {
+    const querySesh = () => {
         if (!sessionFuncCalled){
         
             getSession().then(async res => {
@@ -747,9 +747,10 @@ export default function P5Sketch () {
         
         
         }   
-    }, [ ]) 
-    useEffect(() => {
+    }
+    querySesh()
 
+    useEffect(() => {
 
         const p5 = require("p5");
         
@@ -801,17 +802,16 @@ export default function P5Sketch () {
                 //console.log("FPS: " + fps.toFixed(2));
                 //console.log(p.frameRate());
             }
-
         })
         return () => {
             //console.log("cleaning up...");
-            
+
             // comment this out to get 2 canvases and 2 draw() loops
             p5instance.remove();
           };
 
 
-    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, colorScheme, alpha_n, alpha_m, resetGrid, noLoop])
+    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, colorScheme,alpha_n, alpha_m, noLoop])
 
 
 
