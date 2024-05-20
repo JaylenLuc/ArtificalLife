@@ -137,7 +137,7 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
                     presets != null?
                     
                         <div className = {styles.presetdiv}>
-                            PRESETS:
+                            <div className={styles.presetTextTitle}>PRESETS:</div>
                             <br></br>
                             {Object.entries(presets).map((entry : any) => (
                                 <motion.li className={styles.navlipre} variants={itemVariants} key={entry[0]} onClick = { getPreset}>
@@ -145,7 +145,7 @@ export default function ParamNav({setb1, b1, setb2, b2, setd1, d1, setd2, d2, se
                                 </motion.li>
                             ))}
                             </div> 
-                        : <div className = {styles.presetdiv}> PRESETS: NONE</div>
+                        : <div className = {styles.presetdiv}>  <div className={styles.presetTextTitle}>PRESETS: NONE</div></div>
                     
                     }
 

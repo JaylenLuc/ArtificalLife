@@ -91,6 +91,18 @@
     -webkit-text-stroke-color: black;
 
 }
+.presetTextTitle{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-text-stroke-width: .5px;
+  -webkit-text-stroke-color: black;
+
+}
 
 .presetText {
   -webkit-touch-callout: none;
