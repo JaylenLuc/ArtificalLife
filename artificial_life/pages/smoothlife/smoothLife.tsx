@@ -811,7 +811,7 @@ export default function P5Sketch () {
           };
 
 
-    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, colorScheme,alpha_n, alpha_m, noLoop])
+    }, [strokePolicy, seedUser, initOption, b1, b2, d1, d2, dt, ra, ri, colorScheme,alpha_n, alpha_m, resetGrid,noLoop])
 
 
 
@@ -822,9 +822,9 @@ export default function P5Sketch () {
 
                 <Sparkles
                     color="random"
-                    count={80}
+                    count={100}
                     minSize={9}
-                    maxSize={14}
+                    maxSize={18}
                     overflowPx={80}
                     fadeOutSpeed={30}
                     flicker={true}
