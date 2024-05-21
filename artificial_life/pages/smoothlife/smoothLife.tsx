@@ -815,7 +815,7 @@ export default function P5Sketch () {
 
 
 
-//the entropy of the universe is tending to a maximum
+//the entropy of the universe is tending to a maximum.
     return(
     
         <div className={styles.foreground}>
