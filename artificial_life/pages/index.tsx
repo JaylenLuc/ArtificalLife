@@ -16,6 +16,26 @@ const inter = Inter({ subsets: ["latin"] });
  
 //git reset --hard HEAD{3046c18a6cdf9dcbb02a1a64ab73fa82bc2fff65} *LAST VERSION WITHOUT AUTH*
 
+const generateRand = () => {
+  
+}
+
+const MovingFrame = () => {
+  const TOKEN1 = "@"
+  const TOKEN2 = "o"
+  const TOKEN3 = "+"
+  const TOKEN4 = "-"
+  const TOKEN5 = "."
+
+  var tokenArr : string[] = []
+
+
+  return (
+    <div>
+      <title>artificial life</title>
+    </div>
+  );
+}
 
 function  Home()  {
   const signingout = async () => {
@@ -45,7 +65,8 @@ function  Home()  {
    
       <div className={styles.main}>
         <Head>
-          <title>artificial life</title>
+
+          <MovingFrame/>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <h1 className = {styles.bigwords}>I am the matter of my own work</h1>
@@ -57,9 +78,12 @@ function  Home()  {
         <br></br>
         <Link href="/julia/julia"><span className={styles.linkers}>GO TO julia- THIS IS TEMP</span></Link>
         <br></br>
+        <Link href="https://jaylenluc.github.io/TheMortalCoil/"><span className={styles.linkers}>The human mind is half Folly, half Wisdom. When humans are aware, we become powerful</span></Link>
+        <br></br>
         <Link href="/userauth/signup"><span className={styles.linkers}>SIGN UP</span></Link>
         <br></br>
         <Link href="/userauth/signin"><span className={styles.linkers}>SIGN IN</span></Link>
+
         <br></br>
         <button onClick={signingout}>SIGN OUT</button>
         <MainImage />
