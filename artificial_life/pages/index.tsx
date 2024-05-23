@@ -12,32 +12,14 @@ import { use } from "react";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import supabase from "@/lib/supabaseclient";
 import getSession from "@/lib/GetSession";
+import MovingFrame from "@/home/MovingFrame";
 const inter = Inter({ subsets: ["latin"] });
  
 //git reset --hard HEAD{3046c18a6cdf9dcbb02a1a64ab73fa82bc2fff65} *LAST VERSION WITHOUT AUTH*
 
-const generateRand = () => {
-  
-}
-
-const MovingFrame = () => {
-  const TOKEN1 = "@"
-  const TOKEN2 = "o"
-  const TOKEN3 = "+"
-  const TOKEN4 = "-"
-  const TOKEN5 = "."
-
-  var tokenArr : string[] = []
-
-
-  return (
-    <div>
-      <title>artificial life</title>
-    </div>
-  );
-}
 
 function  Home()  {
+
   const signingout = async () => {
     const { error } = await supabase.auth.signOut()
     console.log(error)
@@ -65,11 +47,10 @@ function  Home()  {
    
       <div className={styles.main}>
         <Head>
-
-          <MovingFrame/>
           <link rel="icon" href="/favicon.ico" />
+          <title>苦/दुःख/སྡུག་བསྔལ།</title>
         </Head>
-        <h1 className = {styles.bigwords}>I am the matter of my own work</h1>
+        <MovingFrame/>
         <br></br>
         {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
         <br></br>
