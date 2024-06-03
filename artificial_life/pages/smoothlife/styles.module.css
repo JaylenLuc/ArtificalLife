@@ -92,6 +92,29 @@
 
   }
 
+  @media (pointer:none), (pointer:coarse){
+    .title{
+        word-break:break-word;
+        color: #e9e5e5;
+        font-size: 2vh;
+        text-align: center;
+        opacity: 1 ;
+        pointer-events: none;
+        user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        text-shadow: 5px 5px rgb(126, 123, 123);
+        border-right: 7px solid #ffffff;
+        animation: cursor 1s infinite step-end, typing 4.6s infinite steps(41);
+        white-space: nowrap;
+        overflow: hidden;
+        margin : auto;
+        
+        
+    }
+  }
+
+
 
 @keyframes cursor{
     0%, 100%{border-color: transparent;}
