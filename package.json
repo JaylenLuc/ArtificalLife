@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "gpu.js": "^2.16.0"
+    "gpu.js": "^2.16.0",
+    "install": "^0.13.0"
   }
 }
