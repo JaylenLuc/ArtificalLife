@@ -36,15 +36,30 @@
 .linkers{
     color: black;
 }
+@media (min-width: 701px) {
+    .bigwords{
+        color: black;
+        text-align: center;
+    }
 
-.bigwords{
-    color: black;
-    text-align: center;
-}
+
+  }
+  
+  @media (max-width: 700px) {
+    .bigwords{
+        color: black;
+        text-align: center;
+        font-size: small;
+    }
+
+
+
+  }
+
 
 .smallwords{
     color: black;
     text-align: center;
-    font-size: xx-small;
+    font-size: small;
 }
 
