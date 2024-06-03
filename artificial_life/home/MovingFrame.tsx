@@ -13,7 +13,7 @@ const MovingFrame = () => {
   const generateRand = () => {
     let newTokens = [];
 
-    for (let i = 0; i < 640; i++) {
+    for (let i = 0; i < 120; i++) {
       if  (Math.random() > 0.5){
         newTokens.push(tokensArr[Math.floor(Math.random() * token_length)]);
       }
