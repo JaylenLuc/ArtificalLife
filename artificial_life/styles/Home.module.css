@@ -35,11 +35,24 @@
 
 .linkers{
     color: black;
+    
 }
 @media (min-width: 701px) {
     .bigwords{
         color: black;
         text-align: center;
+    }
+    .waveback{
+        color: black;
+        text-align: center;
+        font-size: small;
+    }
+
+    .wavefront{
+        color: black;
+        text-align: center;
+        font-size: large;
+        /* font-size: small; */
     }
 
 
@@ -49,7 +62,17 @@
     .bigwords{
         color: black;
         text-align: center;
-        font-size: small;
+        font-size: medium;
+    }
+    .waveback{
+        color: black;
+        text-align: center;
+        font-size: xx-small;
+    }
+    .wavefront{
+        color: black;
+        text-align: center;
+        font-size: smaller;
     }
 
 

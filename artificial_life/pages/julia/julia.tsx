@@ -246,7 +246,7 @@ export default function JuliaMain () {
 return (
 
     <div className = {styles.foreground}>
-        <meta name="viewport" content="width=device-height"></meta>
+        <meta name="viewport" content="width=device-width; width=device-width;"></meta>
                 {/* TEMP */}
 
         <div className={styles.wavy}> 

@@ -829,7 +829,7 @@ export default function P5Sketch () {
                     fadeOutSpeed={30}
                     flicker={true}
             />
-            <meta name="viewport" content="width=device-height"></meta>
+            <meta name="viewport" content="width=device-width; width=device-width;"></meta>
             <button><Link href="/">GO BACK</Link></button>
             <div className={styles.title}>
                 The Universe moves to an Entropic Maximum
