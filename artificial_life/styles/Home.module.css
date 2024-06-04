@@ -40,34 +40,21 @@
 .waveback{
     color: black;
     text-align: center;
-    font-size: small;
+    font-size: large;
 }
 .wavefront{
     color: black;
     text-align: center;
-    font-size: large;
+    font-size: xx-large;
 }
-@media (min-width: 701px) {
-    .bigwords{
-        color: black;
-        text-align: center;
-    }
+
+.bigwords{
+    color: black;
+    text-align: center;
+}
 
 
 
-  }
-  
-  @media (max-width: 700px) {
-    .bigwords{
-        color: black;
-        text-align: center;
-        font-size: medium;
-    }
-
-
-
-
-  }
 
 
 

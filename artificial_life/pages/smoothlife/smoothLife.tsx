@@ -161,7 +161,7 @@ export default function P5Sketch () {
       }[]) => {
         try{
             let newPresets : {[key: string]: {[key: string] : number }} = {}
-        
+            
             for (let i = data.length-1; i >= 0; i--){
                 let key = data[i]['title']
                 if (key!= null){
