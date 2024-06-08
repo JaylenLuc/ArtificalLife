@@ -9,11 +9,13 @@ import { add, complex, multiply } from 'mathjs';
 import { color } from 'framer-motion';
 import getSession from '@/lib/GetSession';
 import Link from 'next/link';
+import { RgbaColorPicker } from "react-colorful";
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
 
 export default function JuliaMain () {
+    const [mode1color, setMode1Color] = useState({ r: 200, g: 150, b: 35, a: 0.5 });
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 760
     var MAX_ITER =200;
@@ -150,10 +152,12 @@ export default function JuliaMain () {
                     //color = normalize_to_scale(0, 1, iterations, 0, MAX_ITER) 
                     //color = (255 * iterations / MAX_ITER)
                     color = normalize_to_scale(0, 255, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
+                    //LERP between white and some color, in this case that some color is cyan 
                     if (colorMode == 1){
+                        //console.log(color);
                         blue = color * 255
                         green = color *255
-                        red = color  
+                        red = 0  
                     }
                 }
                 //console.log("out : ",red," ",green, " ",blue)
@@ -229,19 +233,24 @@ export default function JuliaMain () {
 
 
     }, [nFold, c, colorMode])
-    const sessionRes = getSession()
+
+    
     const [loggedinUser, setUser] = useState("")
-    sessionRes.then(res => {
-      if (res.error == null){
-        console.log(typeof res.data.session?.user.email)
-        if (res.data.session?.user.email){
-          setUser("You are Logged in with " + res.data.session?.user.email as string)
-        }
-        console.log(loggedinUser)
-      }else{
-        console.log(res.error)
-      }
-    })
+    if (loggedinUser == ""){
+        const sessionRes = getSession()
+        sessionRes.then(res => {
+            if (res.error == null){
+              console.log(typeof res.data.session?.user.email)
+              if (res.data.session?.user.email){
+                setUser("You are Logged in with " + res.data.session?.user.email as string)
+              }
+              console.log(loggedinUser)
+            }else{
+              console.log(res.error)
+            }
+          })
+    }
+
     
 return (
 
@@ -267,6 +276,7 @@ return (
         {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
         <br></br>
         <br></br>
+        {colorMode == 1?  <RgbaColorPicker color={mode1color} onChange={setMode1Color} />: null}
         <div className={styles.julia_box} ref={renderRef}></div>
         <C_inout c= {c_alias} setC = {_setC_alias}/> 
         <NfoldChooser fold = {nFold} setFold={setFold} setC = {_setC_alias} def={c_DEFUALT} c = {c} def2 = {c2_DEFUALT}/>
