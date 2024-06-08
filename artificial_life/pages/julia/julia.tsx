@@ -15,7 +15,8 @@ import { RgbaColorPicker } from "react-colorful";
 
 
 export default function JuliaMain () {
-    const [mode1color, setMode1Color] = useState({ r: 200, g: 150, b: 35, a: 0.5 });
+    const DEFAULT_COLOR = { r: 0, g: 255, b: 255, a: 0.5 }
+    const [mode1color, setMode1Color] = useState({ r: 0, g: 255, b: 255, a: 0.5 });
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 760
     var MAX_ITER =200;
@@ -153,15 +154,16 @@ export default function JuliaMain () {
                     //color = (255 * iterations / MAX_ITER)
                     color = normalize_to_scale(0, 255, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
                     //LERP between white and some color, in this case that some color is cyan 
+            
                     if (colorMode == 1){
                         //console.log(color);
-                        blue = color * 255
-                        green = color *255
-                        red = 0  
+                        blue = normalize_to_scale(0, mode1color.b, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1) 
+                        green = normalize_to_scale(0, mode1color.g, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
+                        red = normalize_to_scale(0, mode1color.r, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1) 
                     }
                 }
                 //console.log("out : ",red," ",green, " ",blue)
-                push_cellsAray(p, row, col, [red ,green ,blue, color])
+                push_cellsAray(p, row, col, [red ,green ,blue, color * mode1color.a])
             }
 
         }
@@ -232,7 +234,7 @@ export default function JuliaMain () {
         
 
 
-    }, [nFold, c, colorMode])
+    }, [nFold, c, colorMode, mode1color])
 
     
     const [loggedinUser, setUser] = useState("")
