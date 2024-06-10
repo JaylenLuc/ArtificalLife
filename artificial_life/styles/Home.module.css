@@ -57,16 +57,28 @@
 
 .main{
     background-color: white;
-    height: 120vh;
+    height: 140vh;
     width: 100vw;
 
 }
-.col {
-    float: left;
-    flex: auto;
-    width: 50%;
+@media (min-width: 701px){
+    .col {
+        float: left;
+        flex: auto;
+        width: 50%;
+    
+    }
 
 }
+@media (max-width: 700px){
+    .col {
+        float: left;
+        flex: auto;
+        width: 100%;
+    
+    }
+}
+
 
 .linkers{
     color: black;
