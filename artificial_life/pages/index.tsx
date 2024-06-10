@@ -13,6 +13,10 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import supabase from "@/lib/supabaseclient";
 import getSession from "@/lib/GetSession";
 import MovingFrame from "@/home/MovingFrame";
+import ButtonOne from "@/home/buttonAnimation";
+import ClickAway from "@/home/clickAway";
+import JuliaButton from "@/home/juliaButton";
+import LifeButton from "@/home/lifeButton";
 const inter = Inter({ subsets: ["latin"] });
  
 //git reset --hard HEAD{3046c18a6cdf9dcbb02a1a64ab73fa82bc2fff65} *LAST VERSION WITHOUT AUTH*
@@ -52,22 +56,30 @@ function  Home()  {
         </Head>
         <MovingFrame/>
         <br></br>
+       
+        <div className={styles.col}>
         {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
-        <br></br>
-        <br></br>
-        <Link href="/smoothlife/smoothLife"><span className={styles.linkers}>GO TO SMOOTHLIFE- THIS IS TEMP</span></Link>
-        <br></br>
-        <Link href="/julia/julia"><span className={styles.linkers}>GO TO julia- THIS IS TEMP</span></Link>
-        <br></br>
-        <Link href="https://jaylenluc.github.io/TheMortalCoil/"><span className={styles.linkers}>The human mind is half Folly, half Wisdom. When humans are aware, we become powerful</span></Link>
-        <br></br>
-        <Link href="/userauth/signup"><span className={styles.linkers}>SIGN UP</span></Link>
-        <br></br>
-        <Link href="/userauth/signin"><span className={styles.linkers}>SIGN IN</span></Link>
-
-        <br></br>
-        <button onClick={signingout}>SIGN OUT</button>
-        <MainImage />
+          <br></br>
+          <br></br>
+          <ClickAway/>
+          <br></br>
+          <Link href="/smoothlife/smoothLife"><span className={styles.linkers}> <ButtonOne/></span></Link>
+          <br></br>
+          <Link href="/julia/julia"><span className={styles.linkers}><JuliaButton/></span></Link>
+          <br></br>
+          <Link href="https://jaylenluc.github.io/TheMortalCoil/"><span className={styles.linkers}><LifeButton/></span></Link>
+          <br></br>
+          <Link href="/userauth/signup"><span className={styles.linkers}>SIGN UP</span></Link>
+          <br></br>
+          <Link href="/userauth/signin"><span className={styles.linkers}>SIGN IN</span></Link>
+          {/* <Link href= "https://the-biomes-atlas.vercel.app/"> </Link> THIS SECTION IS ABOUT MAPS AND ARCGIS AND ML*/}
+          <br></br>
+          <button onClick={signingout}>SIGN OUT</button>
+        </div>
+        <div className={styles.col}>
+          <MainImage />
+        </div>
+        
       </div>
 
   );

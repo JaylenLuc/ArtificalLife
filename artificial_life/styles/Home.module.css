@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh; /* Adjust as needed */
+    height: 70vw; /* Adjust as needed */
     background-color: white;
 
 }
@@ -26,11 +26,46 @@
 
 
 }
+@media (min-width: 701px){
+    .buttonone {
+        /* align-items and justify-content properties to center. */
+     
+        /* max-width: 50%;
+        height : 100vh;
+        text-align: center; */
+        width: 250px;
+        height: 150px;
+        /* object-fit: contain; */
+    
+    }
+
+}
+@media (max-width: 700px){
+    .buttonone {
+        /* align-items and justify-content properties to center. */
+     
+        /* max-width: 50%;
+        height : 100vh;
+        text-align: center; */
+        width: 150px;
+        height: 100px;
+        /* object-fit: contain; */
+    
+    }
+
+}
 
 .main{
     background-color: white;
-    height: 100vh;
-    background-color: white;
+    height: 120vh;
+    width: 100vw;
+
+}
+.col {
+    float: left;
+    flex: auto;
+    width: 50%;
+
 }
 
 .linkers{
