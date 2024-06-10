@@ -11,7 +11,10 @@ import getSession from '@/lib/GetSession';
 import Link from 'next/link';
 import { RgbaColorPicker } from "react-colorful";
 
-//FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
+/*
+-allow users to save up to 0-9 color presets 
+-allow deletion 
+*/
 
 
 export default function JuliaMain () {
