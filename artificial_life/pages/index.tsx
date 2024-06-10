@@ -58,7 +58,7 @@ function  Home()  {
         <br></br>
        
         <div className={styles.col}>
-        {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
+           {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
           <br></br>
           <br></br>
           <ClickAway/>

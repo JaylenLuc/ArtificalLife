@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vw; /* Adjust as needed */
+    height: 100vh; /* Adjust as needed */
     background-color: white;
 
 }
@@ -57,8 +57,8 @@
 
 .main{
     background-color: white;
-    height: 140vh;
-    width: 100vw;
+    height: 250vh;
+    container: flex;
 
 }
 @media (min-width: 701px){
@@ -74,7 +74,7 @@
     .col {
         float: left;
         flex: auto;
-        width: 100%;
+        width: 70%;
     
     }
 }
