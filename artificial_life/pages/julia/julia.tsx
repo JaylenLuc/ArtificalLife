@@ -91,7 +91,7 @@ export default function JuliaMain () {
 
     const generate_julia = (p : any, slider : any ) => {
         if (colorMode == 2) MAX_ITER = 75
-        else MAX_ITER = 200
+        else MAX_ITER = 175
         for  (let row = 0 ; row < WIDTH_HEIGHT; row ++){
             for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
                 let b = normalize_to_scale(-R, R, row, 0, WIDTH_HEIGHT)
@@ -147,6 +147,7 @@ export default function JuliaMain () {
                         red = red * 255
                         green = green * 255
                         blue = blue * 255
+                        
                     }
                     //console.log(red," ",green, " ",blue)
 
@@ -160,10 +161,14 @@ export default function JuliaMain () {
                         blue = normalize_to_scale(0, mode1color.b, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1) 
                         green = normalize_to_scale(0, mode1color.g, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
                         red = normalize_to_scale(0, mode1color.r, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1) 
+                        color = (color * mode1color.a) + (mode1color.a *250)
                     }
+                    
+                    //push_cellsAray(p, row, col, [red ,green ,blue, color ])
                 }
+                push_cellsAray(p, row, col, [red ,green ,blue, color])
                 //console.log("out : ",red," ",green, " ",blue)
-                push_cellsAray(p, row, col, [red ,green ,blue, color * mode1color.a])
+               
             }
 
         }
