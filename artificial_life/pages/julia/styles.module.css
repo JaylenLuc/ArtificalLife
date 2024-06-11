@@ -45,4 +45,12 @@
         transform: translateY(0px); 
     } 
 } 
+
+.savebutton{
+    width : 120px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+
+}
 /* END TEMP */

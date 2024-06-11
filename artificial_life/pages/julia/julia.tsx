@@ -8,13 +8,11 @@ import ColorMode from '@/JuliaComponents/ColorMode';
 import { add, complex, multiply } from 'mathjs';
 import { color } from 'framer-motion';
 import getSession from '@/lib/GetSession';
+import supabase from '@/lib/supabaseclient';
 import Link from 'next/link';
 import { RgbaColorPicker } from "react-colorful";
-
-/*
--allow users to save up to 0-9 color presets 
--allow deletion 
-*/
+import { TablesInsert } from '@/database.types';
+import Savepreset from '@/SmoothLifeComponents/SavePreset';
 
 
 export default function JuliaMain () {
@@ -164,7 +162,7 @@ export default function JuliaMain () {
                         blue = normalize_to_scale(0, mode1color.b, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1) 
                         green = normalize_to_scale(0, mode1color.g, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1)
                         red = normalize_to_scale(0, mode1color.r, Math.sqrt(normalize_to_scale(0, 1, iterations, 0, MAX_ITER-1)), 0, 1) 
-                        color = (color * mode1color.a) + (mode1color.a *250)
+                        color = (color *( mode1color.a)) + ((mode1color.a*3) *150)
                     }
                     
                     //push_cellsAray(p, row, col, [red ,green ,blue, color ])
@@ -177,6 +175,42 @@ export default function JuliaMain () {
         }
 
     }
+
+    const set_color = () => {
+        //setMode1Color({ r: r, g: g, b: b, a: a })
+        if (loggedinUser && UID != ""){
+            const newSetting: TablesInsert<'julia_prev'> ={ 
+                r: mode1color.r,
+                g: mode1color.g,
+                b: mode1color.b,
+                a: mode1color.a,
+                userID: UID
+
+            }
+            supabase.from("julia_prev")
+            .upsert([newSetting]).select('*').then(res => {
+                console.log("pushed res : ",res)
+            })
+        }
+        //set current color !
+
+        
+        
+
+    }
+    const del_color = () => {
+        //console.log("curr: ", UID)
+        if (loggedinUser && UID != ""){
+            supabase
+            .from('julia_prev')
+            .delete()
+            .eq('userID', UID).then(res => {console.log(res)})
+        }
+
+    }
+    //delete the current saved color
+
+    //upon load there must be a fetch for the setting and if it exists then set the color
 
 
 
@@ -246,6 +280,8 @@ export default function JuliaMain () {
 
     
     const [loggedinUser, setUser] = useState("")
+    const [UID, setUID] = useState("")
+    // const [hasPrev, setHasPrev] = useState(false)
     if (loggedinUser == ""){
         const sessionRes = getSession()
         sessionRes.then(res => {
@@ -253,7 +289,19 @@ export default function JuliaMain () {
               console.log(typeof res.data.session?.user.email)
               if (res.data.session?.user.email){
                 setUser("You are Logged in with " + res.data.session?.user.email as string)
+                let uID = res.data.session?.user.id as string
+                setUID(uID)
+                supabase
+                .from("julia_prev")
+                .select()
+                .eq("userID", uID).then (res => {
+                    console.log("res:: ",res.data)
+                    if (res.data){
+                        setMode1Color({r: res.data[0].r!, g: res.data[0].g!, b: res.data[0].b!, a: res.data[0].a!})
+                    }
+                })
               }
+              
               console.log(loggedinUser)
             }else{
               console.log(res.error)
@@ -285,12 +333,16 @@ return (
         <br></br>
         {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
         <br></br>
+        {colorMode == 1 && loggedinUser?  <button className={styles.savebutton} onClick={set_color}>Save Color Preset</button>: null}
+        {colorMode == 1 && loggedinUser?  <button className={styles.savebutton} onClick={del_color}>Delete Color Preset</button>: null}
         <br></br>
         {colorMode == 1?  <RgbaColorPicker color={mode1color} onChange={setMode1Color} />: null}
+        
         <div className={styles.julia_box} ref={renderRef}></div>
         <C_inout c= {c_alias} setC = {_setC_alias}/> 
         <NfoldChooser fold = {nFold} setFold={setFold} setC = {_setC_alias} def={c_DEFUALT} c = {c} def2 = {c2_DEFUALT}/>
         <ColorMode mode = {colorMode} setColor = {setMode}/>
+        
     </div>
 
     )
