@@ -1,8 +1,5 @@
 # ArtificalLife
 
-![image](https://github.com/JaylenLuc/ArtificalLife/assets/91278747/60954b57-0d63-4fc6-a570-699ff62b4858)
-
-
 Currently designed for Deskptop usage.
 
 A generalization of 2D discrete totalistic cellular automata to a continous domain with simulated smooth time stepping where each cell 
