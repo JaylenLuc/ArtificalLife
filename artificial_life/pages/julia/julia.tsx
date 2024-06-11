@@ -296,7 +296,7 @@ export default function JuliaMain () {
                 .select()
                 .eq("userID", uID).then (res => {
                     console.log("res:: ",res.data)
-                    if (res.data){
+                    if (res.data && res.data.length > 0){
                         setMode1Color({r: res.data[0].r!, g: res.data[0].g!, b: res.data[0].b!, a: res.data[0].a!})
                     }
                 })
