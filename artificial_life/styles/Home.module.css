@@ -16,12 +16,13 @@
         /* height: 100vh;
         width: 100vh; */
         
-        display: flex;
+       
         justify-content: center;
         align-items: center;
         height: 100vw; /* Adjust as needed */
         background-color: white;
-        margin-top: -50%;
+        margin-top: -25%;
+        margin-left: -20%;
         
     
     }
@@ -32,7 +33,7 @@
         /* max-width: 50%;
         height : 100vh;
         text-align: center; */
-        max-width: 110%;
+        max-width: 90%;
         
         /* object-fit: contain; */
     }
