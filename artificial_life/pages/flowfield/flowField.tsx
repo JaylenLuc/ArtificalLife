@@ -16,7 +16,7 @@ export default function FlowField () {
     const SPEED_CONST = 1.5
 
     const emod = (pos1 : number, pos2 : number,  p : any, width : boolean = false ) => {
-        if ( pos1 >= 0 && pos1 <= WIDTH_HEIGHT && pos1 >= 0 && pos1 <= WIDTH_HEIGHT){
+        if ( pos1 >= 0 && pos1 <= WIDTH_HEIGHT && pos2 >= 0 && pos2 <= WIDTH_HEIGHT){
             return true 
         }else {
             return false
