@@ -69,15 +69,14 @@ function  Home()  {
           <br></br>
           <Link href="https://jaylenluc.github.io/TheMortalCoil/"><span className={styles.linkers}><LifeButton/></span></Link>
           <br></br>
+          <Link href="/flowfield/flowField"><span className={styles.linkers}>FLOW FIELD</span></Link>
+          <br></br>
           <Link href="/userauth/signup"><span className={styles.linkers}>SIGN UP</span></Link>
           <br></br>
           <Link href="/userauth/signin"><span className={styles.linkers}>SIGN IN</span></Link>
           {/* <Link href= "https://the-biomes-atlas.vercel.app/"> </Link> THIS SECTION IS ABOUT MAPS AND ARCGIS AND ML*/}
           <br></br>
           <button onClick={signingout}>SIGN OUT</button>
-        </div>
-        <div className={styles.col}>
-          <MainImage />
         </div>
         
       </div>
