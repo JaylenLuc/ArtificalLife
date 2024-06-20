@@ -77,11 +77,10 @@ function  Home()  {
           {/* <Link href= "https://the-biomes-atlas.vercel.app/"> </Link> THIS SECTION IS ABOUT MAPS AND ARCGIS AND ML*/}
           <br></br>
           <button onClick={signingout}>SIGN OUT</button>
-          <div className={styles.col}>
-            <MainImage />
-          </div>
         </div>
-        
+        <div className={styles.col}>
+          <MainImage />
+        </div>
       </div>
 
   );
