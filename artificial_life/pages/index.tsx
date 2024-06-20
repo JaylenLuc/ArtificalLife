@@ -56,7 +56,7 @@ function  Home()  {
         </Head>
         <MovingFrame/>
         <br></br>
-       
+        <meta name="viewport" content="height=device-height; width=device-width; "></meta>
         <div className={styles.col}>
            {loggedinUser? <span className={styles.linkers}>{loggedinUser}</span> : null}
           <br></br>
