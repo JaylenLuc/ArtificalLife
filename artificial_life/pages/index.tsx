@@ -72,11 +72,11 @@ function  Home()  {
           <br></br>
           <Link href="/flowfield/flowField"><span className={styles.linkers}><FlowButton/></span></Link>
           <br></br>
-          <Link href="/flowfield/flowField"><span className={styles.linkers}>WORLD BIOMES MAP</span></Link>
+          <Link href="https://the-biomes-atlas.vercel.app/"><span className={styles.linkers}>WORLD BIOMES MAP</span></Link>
           <br></br>
           <Link href="/userauth/signup"><span className={styles.linkers}>SIGN UP</span></Link>
           <br></br>
-          <Link href="https://the-biomes-atlas.vercel.app/"><span className={styles.linkers}>SIGN IN</span></Link>
+          <Link href="/userauth/signin"><span className={styles.linkers}>SIGN IN</span></Link>
           {/* <Link href= "https://the-biomes-atlas.vercel.app/"> </Link> THIS SECTION IS ABOUT MAPS AND ARCGIS AND ML*/}
           <br></br>
           <button onClick={signingout}>SIGN OUT</button>
