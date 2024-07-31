@@ -17,6 +17,7 @@ import ButtonOne from "@/home/buttonAnimation";
 import ClickAway from "@/home/clickAway";
 import JuliaButton from "@/home/juliaButton";
 import LifeButton from "@/home/lifeButton";
+import FlowButton from "@/home/flowButton";
 const inter = Inter({ subsets: ["latin"] });
  
 //git reset --hard HEAD{3046c18a6cdf9dcbb02a1a64ab73fa82bc2fff65} *LAST VERSION WITHOUT AUTH*
@@ -69,11 +70,13 @@ function  Home()  {
           <br></br>
           <Link href="https://jaylenluc.github.io/TheMortalCoil/"><span className={styles.linkers}><LifeButton/></span></Link>
           <br></br>
-          <Link href="/flowfield/flowField"><span className={styles.linkers}>FLOW FIELD</span></Link>
+          <Link href="/flowfield/flowField"><span className={styles.linkers}><FlowButton/></span></Link>
+          <br></br>
+          <Link href="/flowfield/flowField"><span className={styles.linkers}>WORLD BIOMES MAP</span></Link>
           <br></br>
           <Link href="/userauth/signup"><span className={styles.linkers}>SIGN UP</span></Link>
           <br></br>
-          <Link href="/userauth/signin"><span className={styles.linkers}>SIGN IN</span></Link>
+          <Link href="https://the-biomes-atlas.vercel.app/"><span className={styles.linkers}>SIGN IN</span></Link>
           {/* <Link href= "https://the-biomes-atlas.vercel.app/"> </Link> THIS SECTION IS ABOUT MAPS AND ARCGIS AND ML*/}
           <br></br>
           <button onClick={signingout}>SIGN OUT</button>
