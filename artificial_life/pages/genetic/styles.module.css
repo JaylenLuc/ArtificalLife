@@ -1,0 +1,18 @@
+.main{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100%;
+    background-color: #161616;
+
+      
+}
+
+.playButt {
+    width: 20vw;
+    height : 10vh;
+    z-index: 10000;
+    background-color: pink;
+}
