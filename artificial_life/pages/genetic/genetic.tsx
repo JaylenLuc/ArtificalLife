@@ -84,8 +84,19 @@ export default function Genetic () {
                 Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2);
             brush.fitness =1/dist; 
     }
-
-    const cross = () => {
+    function mutate(stroke : BrushStroke, mutationRate = 0.2) {
+        if (random() < mutationRate) stroke.startX += random(-150, 150) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.startY += random(-150, 150) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.endX += random(-150, 150) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.endY += random(-150, 150) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.controlX1 += random(-50, 50);
+        if (random() < mutationRate) stroke.controlY1 += random(-50, 50);
+        if (random() < mutationRate) stroke.controlX2 += random(-50, 50);
+        if (random() < mutationRate) stroke.controlY2 += random(-50, 50);
+        if (random() < mutationRate) stroke.strokeWeight = random() < .5?  stroke.strokeWeight += random(-20, 20) : random(1,20);
+        if (random() < mutationRate) stroke.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
+    } 
+   const cross = () => {
         obj_arr.sort((brush1 : BrushStroke, brush2 : BrushStroke) =>  brush2.fitness - brush1.fitness );
         const top_k = obj_arr.slice(0, Math.floor(NUM_OBJ / 2 ));
         let mating_individuals = [];
@@ -107,9 +118,14 @@ export default function Genetic () {
         child.controlX2 = random() < 0.5 ? parent1.controlX2 : parent2.controlX2;
         child.controlY2 = random() < 0.5 ? parent1.controlY2 : parent2.controlY2;
         child.strokeWeight = random() < 0.5 ? parent1.strokeWeight : parent2.strokeWeight;
-        child.strokeColor = GLOB_p!.lerpColor(parent1.strokeColor, parent2.strokeColor, 0.5); // Mix colors
-        delete obj_arr[(NUM_OBJ-5) + Math.floor(NUM_OBJ - Math.floor(NUM_OBJ / 2) * Math.random())]
+        child.strokeColor = GLOB_p!.lerpColor(parent1.strokeColor, 
+            parent2.strokeColor, 0.5); // Mix colors
+        let index = (NUM_OBJ-Math.floor((NUM_OBJ * .5))) + Math.floor(NUM_OBJ - Math.floor(NUM_OBJ / 2) * Math.random())
         
+        delete obj_arr[index];
+        
+        
+        mutate(child);
         obj_arr.push(child);
         //console.log(child.fitness)
 
