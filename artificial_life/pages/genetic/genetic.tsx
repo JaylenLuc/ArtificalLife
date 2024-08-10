@@ -32,14 +32,14 @@ export default function Genetic () {
         strokeColor : number;
 
         constructor() {
-            this.startX = random(WIDTH_HEIGHT);
-            this.startY = random(WIDTH_HEIGHT);
-            this.endX = this.startX + random(-200, 200);
-            this.endY = this.startY + random(-200, 200);
-            this.controlX1 = this.startX + random(-350, 350);
-            this.controlY1 = this.startY + random(-350, 350);
-            this.controlX2 = this.endX + random(-150, 150);
-            this.controlY2 = this.endY + random(-150, 150);
+            this.startX = (random(WIDTH_HEIGHT));
+            this.startY = (random(WIDTH_HEIGHT)) ;
+            this.endX = (((this.startX + random(-200, 200)) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+            this.endY = (((this.startY + random(-200, 200) )% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;;
+            this.controlX1 = ((this.startX + random(-350, 350)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+            this.controlY1 = ((this.startY + random(-350, 350)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;;
+            this.controlX2 = ((this.endX + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;;
+            this.controlY2 = ((this.endY + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;;
             this.strokeWeight = random(2, 20);
             this.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
         }
