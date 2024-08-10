@@ -101,7 +101,7 @@ export default function Genetic () {
         const top_k = obj_arr.slice(0, Math.floor(NUM_OBJ / 2 ));
         let mating_individuals = [];
         for (let i = 0 ; i < 2; i++){
-            mating_individuals.push(obj_arr[Math.floor(top_k.length * Math.random())]);
+            mating_individuals.push(top_k[Math.floor(top_k.length * Math.random())]);
         }
 
         const [parent1, parent2] = mating_individuals;
