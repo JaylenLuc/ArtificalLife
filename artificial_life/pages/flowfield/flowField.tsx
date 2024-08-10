@@ -61,7 +61,7 @@ export default function FlowField () {
                 for (let i = 0 ; i < NUM_PART; i ++){
                     let part = part_arr[i]
                     
-                    let noise = p.noise(part.x * NOISE_CONST, part.y * NOISE_CONST)
+                    let noise = p.noise(part.x * NOISE_CONST, part.y* NOISE_CONST ) 
                     let angle_rad = p.TAU * noise 
                     let x_pos =part.x + p.cos(angle_rad) * SPEED_CONST
                     let y_pos = part.y + p.sin(angle_rad)  * SPEED_CONST

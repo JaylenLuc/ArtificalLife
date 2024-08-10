@@ -33,7 +33,7 @@ const MovingFrame = () => {
   
   return (
     <div>
-      <div className = {styles.smallwords}>{currTokens.map(token => <span className={styles.waveback}>{token}</span>)}</div>      
+      <div className = {styles.smallwords}>{currTokens.map(token => <span  className={styles.waveback}>{token}</span>)}</div>      
       <h1 className = {styles.bigwords}>I am the matter of my own work</h1>
       <div className = {styles.smallwords}>{currTokens.reverse().map(token => <span className={styles.wavefront}>{token}</span>)}</div>
     </div>
