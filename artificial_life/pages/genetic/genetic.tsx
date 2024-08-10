@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from "./styles.module.css";
-import { add, complex, distance, forEach, i, multiply, random, sqrt } from 'mathjs';
+import { add, complex, distance, forEach, i, multiply, random, sin, sqrt } from 'mathjs';
 
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
@@ -82,7 +82,7 @@ export default function Genetic () {
             
             let dist = Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2) + 
                 Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2);
-            brush.fitness =1/dist; 
+            brush.fitness =1/dist * sin(dist); 
     }
     function mutate(stroke : BrushStroke, mutationRate = 0.2) {
         if (random() < mutationRate) stroke.startX += random(-150, 150) % WIDTH_HEIGHT;
