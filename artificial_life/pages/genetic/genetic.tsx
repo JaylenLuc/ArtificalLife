@@ -14,8 +14,8 @@ export default function Genetic () {
     }
     let  GLOB_p = null;
     const renderRef = useRef(null);
-    const WIDTH_HEIGHT = 760
-    const NUM_OBJ = 5;
+    const WIDTH_HEIGHT = 1024
+    const NUM_OBJ = 15;
     let obj_arr : BrushStroke[] = [];
 
     class BrushStroke {
@@ -85,20 +85,20 @@ export default function Genetic () {
             brush.fitness =1/dist * sin(dist); 
     }
     function mutate(stroke : BrushStroke, mutationRate = 0.2) {
-        if (random() < mutationRate) stroke.startX += random(-150, 150) % WIDTH_HEIGHT;
-        if (random() < mutationRate) stroke.startY += random(-150, 150) % WIDTH_HEIGHT;
-        if (random() < mutationRate) stroke.endX += random(-150, 150) % WIDTH_HEIGHT;
-        if (random() < mutationRate) stroke.endY += random(-150, 150) % WIDTH_HEIGHT;
-        if (random() < mutationRate) stroke.controlX1 += random(-50, 50);
-        if (random() < mutationRate) stroke.controlY1 += random(-50, 50);
-        if (random() < mutationRate) stroke.controlX2 += random(-50, 50);
-        if (random() < mutationRate) stroke.controlY2 += random(-50, 50);
+        if (random() < mutationRate) stroke.startX = ((stroke.startX += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.startY = ((stroke.startY += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.endX = ((stroke.endX += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.endY = ((stroke.endY += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.controlX1 = ((stroke.controlX1 += random(-50, 50) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.controlY1 = ((stroke.controlY1 += random(-50, 50) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.controlX2 = ((stroke.controlX2 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.controlY2 = ((stroke.controlY2 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.strokeWeight = random() < .5?  stroke.strokeWeight += random(-20, 20) : random(1,20);
         if (random() < mutationRate) stroke.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
     } 
    const cross = () => {
         obj_arr.sort((brush1 : BrushStroke, brush2 : BrushStroke) =>  brush2.fitness - brush1.fitness );
-        const top_k = obj_arr.slice(0, Math.floor(NUM_OBJ / 2 ));
+        const top_k = obj_arr.slice(0, Math.floor(NUM_OBJ / 3 ));
         let mating_individuals = [];
         for (let i = 0 ; i < 2; i++){
             mating_individuals.push(top_k[Math.floor(top_k.length * Math.random())]);
