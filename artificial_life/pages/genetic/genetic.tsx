@@ -12,11 +12,15 @@ export default function Genetic () {
     const setPlay = () => {
         play = !play;
     }
-    let  GLOB_p = null;
+    const [perp, setPerp] = useState(false);
+    let  GLOB_p: any  = null;
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 1024
-    const NUM_OBJ = 15;
+    const NUM_OBJ = 32;
+
+    let half = NUM_OBJ-Math.floor((NUM_OBJ * .5));
     let obj_arr : BrushStroke[] = [];
+    //let obj_arr = new Array<BrushStroke>(NUM_OBJ);
 
     class BrushStroke {
         fitness : number = -1;
@@ -98,7 +102,7 @@ export default function Genetic () {
     } 
    const cross = () => {
         obj_arr.sort((brush1 : BrushStroke, brush2 : BrushStroke) =>  brush2.fitness - brush1.fitness );
-        const top_k = obj_arr.slice(0, Math.floor(NUM_OBJ / 3 ));
+        const top_k = obj_arr.slice(0, Math.floor(NUM_OBJ / 4 ));
         let mating_individuals = [];
         for (let i = 0 ; i < 2; i++){
             mating_individuals.push(top_k[Math.floor(top_k.length * Math.random())]);
@@ -118,16 +122,21 @@ export default function Genetic () {
         child.controlX2 = random() < 0.5 ? parent1.controlX2 : parent2.controlX2;
         child.controlY2 = random() < 0.5 ? parent1.controlY2 : parent2.controlY2;
         child.strokeWeight = random() < 0.5 ? parent1.strokeWeight : parent2.strokeWeight;
-        child.strokeColor = GLOB_p!.lerpColor(parent1.strokeColor, 
-            parent2.strokeColor, 0.5); // Mix colors
-        let index = (NUM_OBJ-Math.floor((NUM_OBJ * .5))) + Math.floor(NUM_OBJ - Math.floor(NUM_OBJ / 2) * Math.random())
-        
-        delete obj_arr[index];
-        
+        child.strokeColor = GLOB_p!.lerpColor(parent1.strokeColor, parent2.strokeColor, 0.5); // Mix colors
+
+        let index = (half + Math.floor((half * Math.random()))-1);
+        //console.log("index : ", index);
+        //obj_arr.splice(index, 1);
         
         mutate(child);
-        obj_arr.push(child);
-        //console.log(child.fitness)
+        calcFitnessCurvature(child)
+        if (!perp){
+            obj_arr[index] = child;
+            console.log("after: ",obj_arr.length);
+        }else{
+            //index = (Math.floor(obj_arr.length/2) + Math.floor((obj_arr.length/2) * Math.random()) )
+            obj_arr.push(child);
+        }
 
     }
 
@@ -148,7 +157,7 @@ export default function Genetic () {
                 p.strokeWeight(2);
                 p.willReadFrequently = true
                 initRepr();
-
+                console.log("length in setup : ",obj_arr.length);
                 
 
             }
@@ -159,10 +168,11 @@ export default function Genetic () {
 
             p.draw = () => {
                 if (play){
+                    p.clear(); 
                     obj_arr.forEach((brush) => {
                         brush.draw();
                     })
-                    calcFitnessCurvature(obj_arr[obj_arr.length - 1]);
+                    
                     cross();
                 }
             }
@@ -173,7 +183,7 @@ export default function Genetic () {
         
 
 
-    }, [ ])
+    }, [perp ])
 
     
 return (
@@ -186,6 +196,13 @@ return (
             }
         } 
         >Pause</button>
+        <button id="perp" className={styles.playButt} onClick={() => {
+                setPerp(!perp);
+                let currButton = document.getElementById("perp");
+                currButton!.innerHTML = play? "in perpituity" : "with Replacement";
+            }
+        } 
+        >in perpituity</button>
         <div ref={renderRef} className = {styles.main}>
             <meta name="viewport" content="width=device-height"></meta>
         </div>
