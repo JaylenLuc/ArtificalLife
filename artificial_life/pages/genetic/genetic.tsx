@@ -199,7 +199,7 @@ return (
         <button id="perp" className={styles.playButt} onClick={() => {
                 setPerp(!perp);
                 let currButton = document.getElementById("perp");
-                currButton!.innerHTML = play? "in perpituity" : "with Replacement";
+                currButton!.innerHTML = perp? "in perpituity" : "with Replacement";
             }
         } 
         >in perpituity</button>
