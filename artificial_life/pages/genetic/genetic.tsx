@@ -133,10 +133,10 @@ export default function Genetic () {
             console.log("after: ",obj_arr.length);
         }else{
             //index = (Math.floor(obj_arr.length/2) + Math.floor((obj_arr.length/2) * Math.random()) )
-            obj_arr.push(child);
-            if (obj_arr.length > 100){
+            if (obj_arr.length >= 1024){
                 obj_arr.pop();
-            }
+                }
+            obj_arr.unshift(child);
             console.log("len : ",obj_arr.length)
         }
 
