@@ -135,7 +135,7 @@ export default function Genetic () {
             //index = (Math.floor(obj_arr.length/2) + Math.floor((obj_arr.length/2) * Math.random()) )
             obj_arr.push(child);
             if (obj_arr.length > 100){
-                obj_arr.shift();
+                obj_arr.pop();
             }
             console.log("len : ",obj_arr.length)
         }
