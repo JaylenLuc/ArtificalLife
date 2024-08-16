@@ -44,7 +44,7 @@ export default function Genetic () {
             this.controlY1 = ((this.startY + random(-350, 350)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;;
             this.controlX2 = ((this.endX + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;;
             this.controlY2 = ((this.endY + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;;
-            this.strokeWeight = random(2, 20);
+            this.strokeWeight = random(2, 15);
             this.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
         }
 
@@ -54,10 +54,8 @@ export default function Genetic () {
             GLOB_p!.noFill();
             GLOB_p!.beginShape();
             GLOB_p!.curveVertex(this.startX, this.startY);
-            GLOB_p!.curveVertex(this.startX, this.startY);
             GLOB_p!.curveVertex(this.controlX1, this.controlY1);
             GLOB_p!.curveVertex(this.controlX2, this.controlY2);
-            GLOB_p!.curveVertex(this.endX, this.endY);
             GLOB_p!.curveVertex(this.endX, this.endY);
             GLOB_p!.endShape();
         }
@@ -86,9 +84,9 @@ export default function Genetic () {
             
             let dist = Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2) + 
                 Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2);
-            brush.fitness =1/dist * sin(dist); 
+            brush.fitness =1/dist * Math.cos(dist); 
     }
-    function mutate(stroke : BrushStroke, mutationRate = 0.2) {
+    function mutate(stroke : BrushStroke, mutationRate = 0.05) {
         if (random() < mutationRate) stroke.startX = ((stroke.startX += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.startY = ((stroke.startY += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.endX = ((stroke.endX += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
@@ -124,7 +122,7 @@ export default function Genetic () {
         child.strokeWeight = random() < 0.5 ? parent1.strokeWeight : parent2.strokeWeight;
         child.strokeColor = GLOB_p!.lerpColor(parent1.strokeColor, parent2.strokeColor, 0.5); // Mix colors
 
-        let index = (half + Math.floor((half * Math.random()))-1);
+        let index = (half + Math.floor((half * Math.random())));
         //console.log("index : ", index);
         //obj_arr.splice(index, 1);
         
@@ -136,6 +134,10 @@ export default function Genetic () {
         }else{
             //index = (Math.floor(obj_arr.length/2) + Math.floor((obj_arr.length/2) * Math.random()) )
             obj_arr.push(child);
+            if (obj_arr.length > 100){
+                obj_arr.shift();
+            }
+            console.log("len : ",obj_arr.length)
         }
 
     }
