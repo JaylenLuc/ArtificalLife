@@ -4,9 +4,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from "./styles.module.css";
 import { add, complex, distance, forEach, i, multiply, random, sin, sqrt } from 'mathjs';
 
-//FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
-
-
 export default function Genetic () {
     let play = true
     const setPlay = () => {
@@ -17,6 +14,18 @@ export default function Genetic () {
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 1024
     const NUM_OBJ = 32;
+    let size = WIDTH_HEIGHT;
+    
+    const box_sizes : number[] = []
+
+    while (size >= 2){
+        let boxSideLength = Math.floor(size/2);
+        box_sizes.push(boxSideLength);
+        size = boxSideLength;
+    }
+    console.log(box_sizes);
+
+    let mask = Array<number>();
 
     let half = NUM_OBJ-Math.floor((NUM_OBJ * .5));
     let obj_arr : BrushStroke[] = [];
@@ -80,11 +89,44 @@ export default function Genetic () {
 
     }
 
+    const createMask = (p : any ) => {
+        p.loadPixels(); //pixels array
+
+        for (let row  = 0 ; row < WIDTH_HEIGHT; row ++ ){
+            for (let col = 0 ; col < WIDTH_HEIGHT; col ++){
+                let indexStart = ((WIDTH_HEIGHT * row) + col ) * 4;
+                mask[(row * WIDTH_HEIGHT) + col] = p.pixels[indexStart] > 0 ||
+                                            p.pixels[indexStart + 1] > 0  ||
+                                            p.pixels[indexStart + 2] > 0  ||
+                                            p.pixels[indexStart + 3] > 0 ? 1 : 0; 
+            }
+
+        }
+
+        //console.log("mask : ", mask);
+    }
+
+    const boxCount = () => {
+        box_sizes.forEach(size => {
+            for (let row = 0 ; row < WIDTH_HEIGHT; row += size ){
+                for (let col = 0 ; col < WIDTH_HEIGHT; col += size){
+                    let found = false;
+                    //once remainding rows and columns are less than teh box size then count 
+                    //the rest (if box size left to count is greater than the area remainding then just take the min)
+                    const maxRow = Math.min(row + size, WIDTH_HEIGHT);
+                    const maxCol = Math.min(col + size, WIDTH_HEIGHT);
+                }
+            }             
+
+
+        });
+    }
+
     const calcFitnessCurvature = (brush : BrushStroke) => {
             
             let dist = Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2) + 
                 Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2);
-            brush.fitness =1/dist * Math.cos(dist); 
+            brush.fitness =1/dist * Math.tan(dist); 
     }
     function mutate(stroke : BrushStroke, mutationRate = 0.05) {
         if (random() < mutationRate) stroke.startX = ((stroke.startX += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
@@ -95,7 +137,7 @@ export default function Genetic () {
         if (random() < mutationRate) stroke.controlY1 = ((stroke.controlY1 += random(-50, 50) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.controlX2 = ((stroke.controlX2 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.controlY2 = ((stroke.controlY2 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
-        if (random() < mutationRate) stroke.strokeWeight = random() < .5?  stroke.strokeWeight += random(-20, 20) : random(1,20);
+        if (random() < mutationRate) stroke.strokeWeight = random() < .5?  (((stroke.strokeWeight += random(-3, 3)) % 15) + 15) % 15 : random(1,15);
         if (random() < mutationRate) stroke.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
     } 
    const cross = () => {
@@ -130,14 +172,12 @@ export default function Genetic () {
         calcFitnessCurvature(child)
         if (!perp){
             obj_arr[index] = child;
-            console.log("after: ",obj_arr.length);
         }else{
             //index = (Math.floor(obj_arr.length/2) + Math.floor((obj_arr.length/2) * Math.random()) )
             if (obj_arr.length >= 1024){
                 obj_arr.pop();
                 }
             obj_arr.unshift(child);
-            console.log("len : ",obj_arr.length)
         }
 
     }
@@ -154,7 +194,7 @@ export default function Genetic () {
             //   }
             p.setup = () => {
                 p.createCanvas( WIDTH_HEIGHT, WIDTH_HEIGHT).parent(renderRef.current);
-                //p.pixelDensity(1)
+                p.pixelDensity(1)
                 p.colorMode(p.RGB);
                 p.strokeWeight(2);
                 p.willReadFrequently = true
@@ -170,12 +210,13 @@ export default function Genetic () {
 
             p.draw = () => {
                 if (play){
-                    p.clear(); 
+
+                    if (!perp) p.clear(); 
                     obj_arr.forEach((brush) => {
                         brush.draw();
                     })
-                    
                     cross();
+                    //createMask(p);
                 }
             }
         })
