@@ -217,6 +217,7 @@ export default function Genetic () {
                     })
                     cross();
                     //createMask(p);
+                    //boxCount();
                 }
             }
         })
