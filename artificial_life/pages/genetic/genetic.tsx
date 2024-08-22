@@ -107,7 +107,9 @@ export default function Genetic () {
     }
 
     const boxCount = () => {
+        let counts : number[] = []
         box_sizes.forEach(size => {
+            let count = 0 ;
             for (let row = 0 ; row < WIDTH_HEIGHT; row += size ){
                 for (let col = 0 ; col < WIDTH_HEIGHT; col += size){
                     let found = false;
@@ -115,11 +117,25 @@ export default function Genetic () {
                     //the rest (if box size left to count is greater than the area remainding then just take the min)
                     const maxRow = Math.min(row + size, WIDTH_HEIGHT);
                     const maxCol = Math.min(col + size, WIDTH_HEIGHT);
+
+                    for (let boxRow = row; boxRow < maxRow; boxRow ++){
+                        for (let boxCol = col ; boxCol < maxCol; boxCol ++){
+                            if (mask[(boxRow * WIDTH_HEIGHT) + boxCol]){
+                                found = true;
+                                count ++;
+                                break;
+                            }
+
+                        }
+                        if (found) break;
+                    }
+
                 }
             }             
-
+            counts.push(count); 
 
         });
+        return counts;
     }
 
     const calcFitnessCurvature = (brush : BrushStroke) => {
