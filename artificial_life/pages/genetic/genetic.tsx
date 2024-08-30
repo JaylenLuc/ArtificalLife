@@ -14,8 +14,10 @@ export default function Genetic () {
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 1024
     const NUM_OBJ = 32;
+    const fractal_WEIGHT = 1.3;
     let size = WIDTH_HEIGHT;
-    
+    let childindex : number | null = null;
+    let prevDim : number | null = null;
     const box_sizes : number[] = []
 
     while (size >= 2){
@@ -82,7 +84,7 @@ export default function Genetic () {
     const initRepr = () => {
         for (let i = 0; i < NUM_OBJ; i++){
             let newStroke = new BrushStroke();
-            calcFitnessCurvature(newStroke);
+            calcFitnessCurvature(newStroke, false, null, 0);
             obj_arr.push(newStroke);
 
         }
@@ -137,13 +139,34 @@ export default function Genetic () {
         });
         return counts;
     }
+    const linearRegression = () => {
+        //log(N(E))/log(E)
+        //x = sizes y = count
+        let log_e = box_sizes.map(size => Math.log(size));
+        let N_of_e : number[] =  boxCount().map(count => Math.log(count));
+        let sigma_xy = (log_e.reduce((acc, size, index) => acc + (size* N_of_e[index]), 0  ));
+       //console.log(sigma_xy);
+        let sigmaxsquared = log_e.reduce((acc, size) => acc + size**2, 0);
+       //console.log(sigmaxsquared);
+        let alpha : number =  sigma_xy/sigmaxsquared;
+        //console.log("alpha: ",alpha)
+        return alpha
+        //alpha=∑xiyi/∑x2i.
 
-    const calcFitnessCurvature = (brush : BrushStroke) => {
-            
-            let dist = Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2) + 
-                Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2);
-            brush.fitness =1/dist * Math.tan(dist); 
+
+
+
     }
+    const calcFitnessCurvature = (brush : BrushStroke, applyWeight: boolean = false, prevDim : number| null = null, currDim : number | null = null) => {
+        console.log("-------------------------------------------")
+        console.log("prev: ", prevDim );
+        console.log("now: ", currDim)
+        console.log("--------------------------------------------")
+        let dist = Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2) + 
+            Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2);
+        let cosine = (1/dist * Math.tan(dist)) * (applyWeight? (1- fractal_WEIGHT ) : 1) ;
+        brush.fitness = (prevDim == null? currDim! : currDim! - prevDim!)* (applyWeight? fractal_WEIGHT : 1); 
+}
     function mutate(stroke : BrushStroke, mutationRate = 0.05) {
         if (random() < mutationRate) stroke.startX = ((stroke.startX += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.startY = ((stroke.startY += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
@@ -157,6 +180,13 @@ export default function Genetic () {
         if (random() < mutationRate) stroke.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
     } 
    const cross = () => {
+        if (childindex != null && prevDim != null){
+            let currDim = fractalDimensionality();
+            console.log("score before: ",obj_arr[childindex].fitness);
+            calcFitnessCurvature(obj_arr[childindex], true, prevDim, currDim );
+            console.log("score after: ",obj_arr[childindex].fitness);
+                    }
+        prevDim = fractalDimensionality();
         obj_arr.sort((brush1 : BrushStroke, brush2 : BrushStroke) =>  brush2.fitness - brush1.fitness );
         const top_k = obj_arr.slice(0, Math.floor(NUM_OBJ / 4 ));
         let mating_individuals = [];
@@ -180,14 +210,13 @@ export default function Genetic () {
         child.strokeWeight = random() < 0.5 ? parent1.strokeWeight : parent2.strokeWeight;
         child.strokeColor = GLOB_p!.lerpColor(parent1.strokeColor, parent2.strokeColor, 0.5); // Mix colors
 
-        let index = (half + Math.floor((half * Math.random())));
+        childindex = (half + Math.floor((half * Math.random())));
         //console.log("index : ", index);
         //obj_arr.splice(index, 1);
-        
         mutate(child);
-        calcFitnessCurvature(child)
         if (!perp){
-            obj_arr[index] = child;
+            obj_arr[childindex] = child;
+            
         }else{
             //index = (Math.floor(obj_arr.length/2) + Math.floor((obj_arr.length/2) * Math.random()) )
             if (obj_arr.length >= 1024){
@@ -197,7 +226,11 @@ export default function Genetic () {
         }
 
     }
+    const fractalDimensionality = () => {
+        createMask(GLOB_p);
+        return linearRegression();
 
+}
     useEffect(() => {
         const p5 = require("p5");
         var myShader: any;
@@ -232,8 +265,7 @@ export default function Genetic () {
                         brush.draw();
                     })
                     cross();
-                    //createMask(p);
-                    //boxCount();
+                    
                 }
             }
         })
