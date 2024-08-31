@@ -14,7 +14,7 @@ export default function Genetic () {
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 1024
     const NUM_OBJ = 32;
-    const fractal_WEIGHT = 1.3;
+    const fractal_WEIGHT = 0.01;
     let size = WIDTH_HEIGHT;
     let childindex : number | null = null;
     let prevDim : number | null = null;
@@ -165,7 +165,7 @@ export default function Genetic () {
         let dist = Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2) + 
             Math.pow(Math.sqrt(brush.controlX2 - brush.controlX1), 2);
         let cosine = (1/dist * Math.tan(dist)) * (applyWeight? (1- fractal_WEIGHT ) : 1) ;
-        brush.fitness = (prevDim == null? currDim! : currDim! - prevDim!)* (applyWeight? fractal_WEIGHT : 1); 
+        brush.fitness =(prevDim == null? currDim! : currDim! - prevDim!)* (applyWeight? fractal_WEIGHT : 1); 
 }
     function mutate(stroke : BrushStroke, mutationRate = 0.05) {
         if (random() < mutationRate) stroke.startX = ((stroke.startX += random(-150, 150) % WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
