@@ -226,6 +226,10 @@ export default function Genetic () {
         child.controlY1 = random() < 0.5 ? parent1.controlY1 : parent2.controlY1;
         child.controlX2 = random() < 0.5 ? parent1.controlX2 : parent2.controlX2;
         child.controlY2 = random() < 0.5 ? parent1.controlY2 : parent2.controlY2;
+        child.controlX3 = random() < 0.5 ? parent1.controlX3 : parent2.controlX3;
+        child.controlX3 = random() < 0.5 ? parent1.controlX3 : parent2.controlX3;
+        child.controlY4 = random() < 0.5 ? parent1.controlY4 : parent2.controlY4;
+        child.controlY4 = random() < 0.5 ? parent1.controlY4 : parent2.controlY4;
         child.strokeWeight = random() < 0.5 ? parent1.strokeWeight : parent2.strokeWeight;
         child.strokeColor = GLOB_p!.lerpColor(parent1.strokeColor, parent2.strokeColor, 0.5); // Mix colors
 
