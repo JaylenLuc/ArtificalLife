@@ -45,6 +45,8 @@ export default function Genetic () {
         controlY1 : number;
         controlX3 : number;
         controlY3 : number;
+        controlY4 : number;
+        controlX4 : number;
         strokeWeight : number;
         strokeColor : number;
 
@@ -59,6 +61,8 @@ export default function Genetic () {
             this.controlY2 = ((this.endY + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
             this.controlX3 =  ((this.startX + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
             this.controlY3 =  ((this.endY + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+            this.controlX4 =  ((this.startX + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+            this.controlY4 =  ((this.endY + random(-150, 150)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
 
             this.strokeWeight = random(2, 15);
             this.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
@@ -73,6 +77,8 @@ export default function Genetic () {
             GLOB_p!.curveVertex(this.controlX1, this.controlY1);
             GLOB_p!.curveVertex(this.controlX2, this.controlY2);
             GLOB_p!.curveVertex(this.controlX3, this.controlY3);
+            GLOB_p!.curveVertex(this.controlX4, this.controlY4);
+            
 
             GLOB_p!.curveVertex(this.endX, this.endY);
             GLOB_p!.endShape();
@@ -169,8 +175,8 @@ export default function Genetic () {
         console.log("prev: ", prevDim );
         console.log("now: ", currDim)
         console.log("--------------------------------------------")
-        let dist = Math.sqrt(Math.pow((brush.controlX3 - brush.controlX1), 2) + 
-            Math.pow((brush.controlY3 - brush.controlY1), 2));
+        let dist = Math.sqrt(Math.pow((brush.controlX4 - brush.controlX1), 2) + 
+            Math.pow((brush.controlY4 - brush.controlY1), 2));
         console.log("dist",dist)
         let adder = ( 1/dist * sin(dist)) * (applyWeight? (1- fractal_WEIGHT ) : 1) ;
         brush.fitness =  adder * (prevDim == null? currDim! : currDim! - prevDim!)* (applyWeight? fractal_WEIGHT : 1); 
@@ -186,6 +192,8 @@ export default function Genetic () {
         if (random() < mutationRate) stroke.controlY2 = ((stroke.controlY2 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.controlY3 = ((stroke.controlY3 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
         if (random() < mutationRate) stroke.controlX3 = ((stroke.controlX3 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.controlY4 = ((stroke.controlY3 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
+        if (random() < mutationRate) stroke.controlX4 = ((stroke.controlX3 += random(-50, 50)% WIDTH_HEIGHT) + WIDTH_HEIGHT) % WIDTH_HEIGHT;
 
         if (random() < mutationRate) stroke.strokeWeight = random() < .5?  (((stroke.strokeWeight += random(-3, 3)) % 15) + 15) % 15 : random(1,15);
         if (random() < mutationRate) stroke.strokeColor = GLOB_p!.color(random(0, 255), random(0, 255), random(0, 255), random(100, 255));
