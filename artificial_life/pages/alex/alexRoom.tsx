@@ -7,6 +7,7 @@ import { OrbitControls } from '@react-three/drei';
 export default function AlexRoom() {
     useEffect(() => {
         // Any client-side effects can go here
+        //current idea is make an immersive art experience, a digital museum
     }, []);
 
     return (
