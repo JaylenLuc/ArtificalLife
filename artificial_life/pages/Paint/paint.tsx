@@ -56,7 +56,6 @@ export default function Paint () {
 
             p.draw = () => {
   
-                p.background(0, 10);
                 // for (let i = 0 ; i < NUM_PART; i ++){
                 //     let part = part_arr[i]
                     
