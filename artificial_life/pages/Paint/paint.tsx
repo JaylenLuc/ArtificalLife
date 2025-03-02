@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import styles from "@/styles/Home.module.css";
-import { add, complex, multiply } from 'mathjs';
-
+import styles from "./styles.module.css";
+import { abs } from 'mathjs';
+const fft = require('jsfft');
+import dynamic from "next/dynamic"; 
+import { BlockMath, InlineMath } from 'react-katex';
+import 'katex/dist/katex.min.css';
 //FEATURE: move buttons anywhere the user likes, just drag ! left click hold or swipe on phone
 
 
@@ -11,80 +14,128 @@ export default function Paint () {
     const renderRef = useRef(null);
     const WIDTH_HEIGHT = 760
     const NUM_OBJ = 40
-    let obj_arr = []
-    // symmetry, color harmony, or complexity.
-//     1) Randomly initialize populations p
-//      2) Determine fitness of population
-//      3) Until convergence repeat:
-//       a) Select parents from population
-//       b) Crossover and generate new population
-//       c) Perform mutation on new population
-//       d) Calculate fitness for new population
-    const initRepr = (p : any ) => {
-        for (let i = 0; i < NUM_OBJ; i++){
-            obj_arr.push();
+    const MAX_TERMS = 50
+    const [curr_eq, set_eq] = useState("")
+    let R: number[][] = []
+    let G: number[][]= []
+    let B: number[][] = []
+    const [curr_file, setCurrFile] = useState("")
+    const handleFileUpload = (e: any) => {
+        const file = e.target.files[0]
+        if (file) setCurrFile(URL.createObjectURL(file))
+
+    } 
+
+
+    const computeFastFFT = (matrix: number[][]): number[][] => {
+        const size = matrix.length;
+        const real = new Array(size).fill(0);
+        const imag = new Array(size).fill(0);
+    
+        // Convert rows into real and imaginary parts
+        for (let i = 0; i < size; i++) {
+            real[i] = matrix[i];
+            imag[i] = new Array(size).fill(0); // No imaginary components initially
+        }
+    
+        // Perform 1D FFT on rows
+        for (let i = 0; i < size; i++) {
+            const ffti = new fft.ComplexArray(real[i]);
+            ffti.FFT();
+            real[i] = ffti.real;
+            imag[i] = ffti.imag;
+        }
+    
+        return real; // Return real components of the FFT
+    };
+    
+    const processImage = async () => {
+        R = []
+        G = []
+        B = []
+        const img = new Image();
+        img.src = curr_file
+
+        await new Promise((resolve) => (img.onload = resolve))
+
+        const canvas = document.createElement("canvas")
+        canvas.width = img.width
+        canvas.height = img.height
+
+        const ctx = canvas.getContext("2d")
+        ctx?.drawImage(img,0,0)
+
+        const imageData = ctx?.getImageData(0,0, canvas.width, canvas.height)
+        
+        for (let y = 0; y < imageData!.height; y++){
+            const rowR: number[] = []
+            const rowG: number[] = []
+            const rowB: number[] = []
+            for (let x = 0; x < imageData!.width; x++){
+                const index = (y * imageData!.width + x) * 4
+                const r = imageData!.data[index]
+                const g = imageData!.data[index +1]
+                const b = imageData!.data[index + 2]
+                rowR.push(r)
+                rowG.push(g)
+                rowB.push(b)
+            }
+            R.push(rowR)
+            G.push(rowG)
+            B.push(rowB)
+
         }
 
     }
 
+    const fftMode = (fftResult: any[][],threshold=.0001) => {
+        let equations : string[] = []
+        let termCount = 0
+
+        for (let y = 0; y < fftResult.length; y++){
+            for (let x = 0; x < fftResult[0].length; x++) {
+                if (abs(fftResult[y][x]) > threshold) {
+                    equations.push(`A_{${x}${y}} \\sin(${x} f_x + ${y} f_y)`);
+                    termCount += 1
+                    if (termCount >= MAX_TERMS) break;
+                }
+                
+                
+            }
+            if (termCount >= MAX_TERMS) break;
+        }
+        
+        return  equations.join(" + ");
+  };
+
+    const handleSub = async () => {
+        await processImage() 
+
+        set_eq("\\text{Computing frequencies, converting from spatial to frequency domain beep boop beep...} ")
+        let current = ""
+        console.log("here")
+        //FFT MODE
+        if (R.length === 0 || G.length === 0 || B.length === 0) {
+            console.error("⚠️ Image data not loaded! Aborting FFT.");
+            return;
+        }
+        
+        console.log("Running FFT...");
+    
+        setTimeout(() => {
+            const fftR = computeFastFFT(R);
+            const fftG = computeFastFFT(G);
+            const fftB = computeFastFFT(B);
+    
+            let current = `${fftMode(fftR)} + ${fftMode(fftG)} + ${fftMode(fftB)}`;
+            set_eq(current);
+            
+            console.log("✅ FFT Complete:", current);
+        }, 100); // Delay to allow UI to update
+    }
 
     useEffect(() => {
-        const p5 = require("p5");
-        var myShader: any;
-        p5.disableFriendlyErrors = true;
-        const p5instance = new p5((p : any) => {
 
-            //  p.preload = () => {
-            //     // load each shader file (don't worry, we will come back to these!)
-            //     myShader = p.createShader(vertex, fragment);
-            //   }
-            p.setup = () => {
-                p.createCanvas( WIDTH_HEIGHT, WIDTH_HEIGHT).parent(renderRef.current);
-                //p.pixelDensity(1)
-                p.colorMode(p.RGB);
-                p.strokeWeight(2);
-                p.willReadFrequently = true
-                initRepr(p);
-
-                
-
-            }
-
-            p.mouseClicked = () => {
-            
-            }
-
-            p.draw = () => {
-  
-                // for (let i = 0 ; i < NUM_PART; i ++){
-                //     let part = part_arr[i]
-                    
-                //     let noise = p.noise(part.x * NOISE_CONST, part.y* NOISE_CONST ) 
-                //     let angle_rad = p.TAU * noise 
-                //     let x_pos =part.x + p.cos(angle_rad) * SPEED_CONST
-                //     let y_pos = part.y + p.sin(angle_rad)  * SPEED_CONST
-                //     if (emod(x_pos, y_pos, p, )){
-                //             part.x = x_pos 
-                //             part.y = y_pos
-                //     }else{
-                //         part.x = p.random(p.width)
-                //         part.y = p.random(p.height)
-                //     }
-
-                //     p.stroke(p.map(part.x, 0, p.width, 50, 255), 
-                //             p.map(part.y, 0, p.height, 50, 255), 
-                //             p.map(part.x, 0, p.width, 255, 150) )
-                //     // p.fill(255)
-                //     p.point(part.x,part.y)
-                // }
-                //if (free) generateJuliaSet(p);
-                // console.log(p.frameRate());
-            }
-        })
-        return () => {
-            p5instance.remove();
-          };
-        
 
 
     }, [ ])
@@ -92,8 +143,29 @@ export default function Paint () {
     
 return (
 
-    <div ref={renderRef} className = {styles.main}>
-        <meta name="viewport" content="width=device-height"></meta>
+    <div className = {styles.main}>
+        <div>
+            <h1 style={{ color: "black" }}>Upload an Image for Equations Recognizing its Magnitude and Phase Information with 500 coefficient compression Using Fast Fourier Transformations</h1>
+            <div >
+            <label htmlFor="file-upload" className={styles.uploadthing}>
+                Select File
+            </label>
+            <input
+                type="file"
+                id="file-upload"
+                style={{ display: "none" }} // Hide the file input
+                onChange={handleFileUpload}
+            />
+            </div>
+            {curr_file && <img className={styles.pic} src={curr_file} style={{ minWidth:"30%", maxWidth: "30%", marginTop: "10px" }} ></img>} 
+            <br></br>
+        <button className={styles.button}disabled={!curr_file} onClick={handleSub}>Upload</button>
+        </div>
+        {/* {<span style={{ color: "black" }}>{curr_eq}</span>} */}
+        <div className={styles.matheq} >
+            <InlineMath  math={curr_eq} />
+        </div>
+
     </div>
 
     )
