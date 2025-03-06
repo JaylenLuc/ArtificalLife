@@ -46,7 +46,7 @@ export default function Paint () {
             imag[i] = ffti.imag;
         }
     
-        return real; // Return real components of the FFT
+        return [real, imag]; // Return real components of the FFT
     };
     
     const processImage = async () => {
@@ -88,14 +88,15 @@ export default function Paint () {
 
     }
 
-    const fftMode = (fftResult: any[][],threshold=.0001) => {
+    const fftMode = (fftResult: any[], imgRes: any[],threshold=.0001) => {
         let equations : string[] = []
         let termCount = 0
 
         for (let y = 0; y < fftResult.length; y++){
             for (let x = 0; x < fftResult[0].length; x++) {
                 if (abs(fftResult[y][x]) > threshold) {
-                    equations.push(`A_{${x}${y}} \\sin(${x} f_x + ${y} f_y)`);
+                    const phase = Math.atan2(imgRes[y][x], fftResult[y][x]);
+                    equations.push(`A_{${x}${y}} \\sin(${x} f_x + ${y} f_y + \\phi_{${x}${y}})`);
                     termCount += 1
                     if (termCount >= MAX_TERMS) break;
                 }
@@ -123,11 +124,11 @@ export default function Paint () {
         console.log("Running FFT...");
     
         setTimeout(() => {
-            const fftR = computeFastFFT(R);
-            const fftG = computeFastFFT(G);
-            const fftB = computeFastFFT(B);
+            const [fftR, imgR] = computeFastFFT(R);
+            const [fftG, imgG] = computeFastFFT(G);
+            const [fftB, imgB] = computeFastFFT(B);
     
-            let current = `${fftMode(fftR)} + ${fftMode(fftG)} + ${fftMode(fftB)}`;
+            let current = `${fftMode(fftR, imgR)} + ${fftMode(fftG, imgG)} + ${fftMode(fftB, imgB)}`;
             set_eq(current);
             
             console.log("✅ FFT Complete:", current);
