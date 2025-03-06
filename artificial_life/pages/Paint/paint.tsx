@@ -95,8 +95,9 @@ export default function Paint () {
         for (let y = 0; y < fftResult.length; y++){
             for (let x = 0; x < fftResult[0].length; x++) {
                 if (abs(fftResult[y][x]) > threshold) {
+                    let magnitude = Math.sqrt(fftResult[y][x] ** 2 + imgRes[y][x] ** 2);
                     const phase = Math.atan2(imgRes[y][x], fftResult[y][x]);
-                    equations.push(`A_{${x}${y}} \\sin(${x} f_x + ${y} f_y + \\phi_{${x}${y}})`);
+                    equations.push(`${magnitude.toFixed(2)} \\sin(${x} f_x + ${y} f_y + ${phase.toFixed(2)})`);
                     termCount += 1
                     if (termCount >= MAX_TERMS) break;
                 }
@@ -105,8 +106,8 @@ export default function Paint () {
             }
             if (termCount >= MAX_TERMS) break;
         }
-        
-        return  equations.join(" + ");
+        let res = equations.join(" + ")
+        return  res;
   };
 
     const handleSub = async () => {
@@ -163,6 +164,10 @@ return (
         <button className={styles.button}disabled={!curr_file} onClick={handleSub}>Upload</button>
         </div>
         {/* {<span style={{ color: "black" }}>{curr_eq}</span>} */}
+
+        <div style={{color : 'black'}}>
+            <InlineMath math={"`A_{xy} \\sin(x f_x + y f_y + \\phi_{xy})`"}></InlineMath> 
+        </div>
         <div className={styles.matheq} >
             <InlineMath  math={curr_eq} />
         </div>
