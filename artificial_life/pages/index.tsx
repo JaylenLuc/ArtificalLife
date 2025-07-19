@@ -78,6 +78,8 @@ function  Home()  {
           <br></br>
           <Link href="/genetic/genetic"><span className={styles.linkers}>Evolving Art</span></Link>
           <br></br>
+          <Link href="/Paint/paint"><span className={styles.linkers}>Pics to Math</span></Link>
+          <br></br>
           <Link href="/art/art"><span className={styles.linkers}>World as Images</span></Link>
           <br></br>
           <Link href="/userauth/signin"><span className={styles.linkers}>SIGN IN</span></Link>

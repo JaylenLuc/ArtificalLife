@@ -1,11 +1,84 @@
 .main{
-
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-    width: 100%;
-    background-color: white;
+    flex-direction: column; /* Arrange children in a column (vertically) */
+    justify-content: flex-start; /* Align items vertically at the top */
+    align-items: stretch; /* Ensure the child elements stretch across the width */
+    width: 100%; /* Optional: To ensure it takes the full available width */
+    height: auto; /* Adjusts the height based on the content */
+    min-height: 100vh;
+    background-color: #D4C2B4;
 
       
 }
+.button{
+    height: 80px;
+    width: 100px;
+    border-radius: 20px;
+    text-align: center;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+}
+}
+
+.uploadthing{
+    display: inline-block;
+    /* flex-direction: column; */
+    gap: 30px;
+    background: whitesmoke;
+    background: linear-gradient(-95deg,#C1E1C1, #C3B1E1, #A7C7E7, #F8C8DC);
+    background-size: 400% 300%;
+    animation-name: gradient;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count:infinite;
+    height: 80px;
+    width: 100px;
+    border-radius: 20px;
+    text-align: center;
+
+}
+.pic{
+    padding: 10px;          /* Optional padding to make space between the border and content */
+    border: 2px solid #ffffff; /* Black border */
+    border-radius: 20px;    /* Rounded corners */
+}
+.matheq { /* Adjust the font size */
+    font-size: 1.5vh;
+    white-space: normal; /* Allow wrapping */
+    word-wrap: break-word; /* Break long lines if needed */
+    word-break: break-word; /* Ensure words break on long equations */
+    max-width: 80%;
+    overflow-wrap: break-word; /* Ensure content breaks when needed */
+    padding: 10px;          /* Optional padding to make space between the border and content */
+    border: 2px solid #ffffff; /* Black border */
+    border-radius: 20px;    /* Rounded corners */
+    text-align: left; /* Optional: Center the equation */
+    color: black;
+  }
+
+  @media( max-width: 700px) {
+    .matheq {
+        font-size: 2vw;
+    }
+  }
+  
+  .mjx-chtml {
+    color: black !important;
+    display: inline-block; /* Allow the KaTeX to behave inline */
+    word-wrap: break-word; /* Ensure the KaTeX container can wrap */
+  }
+  
+  .katex-display {
+    display: block !important;
+    word-wrap: break-word; /* Ensure wrapped equations */
+    overflow-wrap: break-word;
+    white-space: normal; /* Allow content to wrap */
+  }

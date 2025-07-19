@@ -32,10 +32,13 @@ return (
 
                 <img src='/images/collage3.jpg' style={{'width':'100%'}}></img>
             </div>
+            <div className={styles.col}>
+                <img src='/images/collage4.jpeg' style={{'width':'100%'}}></img>
+            </div>
         </div> 
         <div className={styles.row}>
             <div className={styles.col}>
-
+             <img src='/images/collage5.jpg' style={{'width': '100%'}}></img>
             </div>
         </div>
     </div>
